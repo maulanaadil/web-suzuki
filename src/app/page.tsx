@@ -7,6 +7,7 @@ import Header from "../layouts/header";
 import Footer from "../layouts/footer";
 import {
   ChevronDown,
+  ChevronLeft,
   ChevronRight,
   ChevronUp,
   InfoIcon,
@@ -14,7 +15,7 @@ import {
   PlusIcon,
   Star,
 } from "lucide-react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import type { ComponentType } from "react";
 import CarMPVIcon from "../assets/icons/car-mpv";
@@ -28,10 +29,11 @@ export default function Home() {
       <HeroSection />
 
       <FindYourSuzukiSection />
-
-      <DealerAndService />
+      <Articles />
 
       <Testimonials />
+
+      <DealerAndService />
 
       <Contact />
 
@@ -460,21 +462,205 @@ function CarItemCard() {
   );
 }
 
+const articlesData = [
+  {
+    id: "1",
+    image:
+      "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=400&h=260&fit=crop",
+    category: "News",
+    title:
+      "Suzuki Indonesia Launches New Ertiga Hybrid with Enhanced Fuel Efficiency",
+    snippet:
+      "Suzuki Indonesia today announced the launch of the all-new Ertiga Hybrid, featuring improved fuel economy and lower emissions for families looking for a practical and eco-friendly choice...",
+    date: "5 Feb, 2026",
+  },
+  {
+    id: "2",
+    image:
+      "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=400&h=260&fit=crop",
+    category: "Events",
+    title: "Growing The Future Together: Suzuki Jimny Experience 2026",
+    snippet:
+      "Suzuki Indonesia and its dealer network are pleased to announce the Jimny Experience 2026, an off-road adventure series that lets customers experience the capability of the Jimny...",
+    date: "20 Jan, 2026",
+  },
+  {
+    id: "3",
+    image:
+      "https://images.unsplash.com/photo-1619767886558-efdc259cde1a?w=400&h=260&fit=crop",
+    category: "Technology",
+    title: "Suzuki Announces Smart Hybrid Technology for Next-Gen Models",
+    snippet:
+      "Suzuki Motor Corporation today unveiled its latest Smart Hybrid technology at an event in Jakarta, presenting a bold vision for more efficient and connected vehicles across the lineup...",
+    date: "7 Jan, 2026",
+  },
+  {
+    id: "4",
+    image:
+      "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=400&h=260&fit=crop",
+    category: "Global",
+    title: "Suzuki Global and Indonesian Market Expansion Plans",
+    snippet:
+      "Suzuki continues to strengthen its presence in Southeast Asia with new investments in Indonesia, connecting local manufacturing with Suzuki's worldwide audience in new ways...",
+    date: "28 Dec, 2025",
+  },
+];
+
+function ArticleCard({
+  image,
+  category,
+  title,
+  snippet,
+  date,
+}: (typeof articlesData)[number]) {
+  return (
+    <article className="shrink-0 w-[320px] sm:w-[360px] flex flex-col bg-white rounded-lg overflow-hidden group cursor-pointer hover:shadow-lg transition-shadow">
+      <div className="relative w-full aspect-video bg-gray-200">
+        <Image
+          src={image}
+          alt=""
+          fill
+          className="object-cover"
+          sizes="(max-width: 640px) 320px, 360px"
+        />
+      </div>
+      <div className="p-4 flex flex-col gap-2">
+        <span className="font-sans text-sm text-primary-suzuki font-medium">
+          {category}
+        </span>
+        <h3 className="font-sans text-foreground font-bold text-base leading-snug line-clamp-2">
+          {title}
+        </h3>
+        <p className="font-sans text-gray-500 text-sm leading-relaxed line-clamp-3">
+          {snippet}
+        </p>
+        <p className="font-sans text-gray-400 text-xs mt-1">{date}</p>
+      </div>
+    </article>
+  );
+}
+
+function Articles() {
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  const scroll = (direction: "left" | "right") => {
+    if (!scrollRef.current) return;
+    const step = 380;
+    const offset = direction === "left" ? -step : step;
+    scrollRef.current.scrollBy({ left: offset, behavior: "smooth" });
+  };
+
+  return (
+    <section
+      id="articles-section"
+      className="w-full bg-white py-16 container mx-auto px-4"
+    >
+      <h2 className="text-2xl font-semibold font-suzuki-pro-headline text-foreground mb-8">
+        Articles
+      </h2>
+      <div className="flex flex-col gap-8">
+        <div
+          className="overflow-x-auto overflow-y-hidden scroll-smooth scrollbar-hide"
+          ref={scrollRef}
+        >
+          <div className="flex gap-6 pb-4">
+            {articlesData.map((article) => (
+              <ArticleCard key={article.id} {...article} />
+            ))}
+          </div>
+        </div>
+
+        <div className="h-px bg-gray-200 w-full" aria-hidden />
+
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => scroll("left")}
+              className="p-2 rounded text-gray-500 hover:text-foreground hover:bg-gray-100 transition-colors"
+              aria-label="Previous articles"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+            <button
+              type="button"
+              onClick={() => scroll("right")}
+              className="p-2 rounded text-gray-500 hover:text-foreground hover:bg-gray-100 transition-colors"
+              aria-label="Next articles"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+const dealerMapEmbed =
+  "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.4368540471655!2d107.77797017507909!3d-6.957683668119986!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68c500b460afab%3A0x7cecc2f19f0f1560!2sSuzuki%20Rancaekek%20PT.Nusantara%20Jaya%20Sentosa!5e0!3m2!1sen!2sid!4v1773599673566!5m2!1sen!2sid";
+
+const dealerInfo = {
+  name: "Suzuki Rancaekek PT. Nusantara Jaya Sentosa",
+  mapsUrl:
+    "https://www.google.com/maps/search/?api=1&query=Suzuki+Rancaekek+PT.Nusantara+Jaya+Sentosa",
+};
+
 function DealerAndService() {
   return (
     <div
       id="dealer-and-service-section"
-      className="w-full h-full bg-white grid grid-cols-2 gap-4 min-h-80 container mx-auto"
+      className="w-full bg-white py-16 container mx-auto px-4"
     >
-      <div className="w-full h-full">
-        <p className="text-2xl font-semibold font-suzuki-pro-headline text-foreground">
-          Dealer
-        </p>
-      </div>
-      <div className="w-full h-full">
-        <p className="text-2xl font-semibold font-suzuki-pro-headline text-foreground">
-          Service Center
-        </p>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {/* Dealer: map + info */}
+        <div className="flex flex-col gap-4">
+          <p className="text-2xl font-semibold font-suzuki-pro-headline text-foreground">
+            Dealer
+          </p>
+          <div className="rounded-xl overflow-hidden border border-gray-200 shadow-sm">
+            <div className="relative w-full aspect-4/3 min-h-[280px]">
+              <iframe
+                src={dealerMapEmbed}
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Suzuki Rancaekek - PT. Nusantara Jaya Sentosa location"
+                className="absolute inset-0 w-full h-full"
+              />
+            </div>
+            <div className="p-4 bg-gray-50 border-t border-gray-200">
+              <p className="font-sans font-semibold text-foreground">
+                {dealerInfo.name}
+              </p>
+              <a
+                href={dealerInfo.mapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 mt-2 text-sm font-sans text-primary-suzuki hover:underline"
+              >
+                <ChevronRight className="w-4 h-4" />
+                View on Google Maps
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {/* Service Center */}
+        <div className="flex flex-col gap-4">
+          <p className="text-2xl font-semibold font-suzuki-pro-headline text-foreground">
+            Service Center
+          </p>
+          <div className="rounded-xl border border-gray-200 shadow-sm p-6 min-h-[200px] flex flex-col justify-center">
+            <p className="font-sans text-gray-600">
+              Visit our service center for maintenance, repairs, and genuine
+              parts. Same location as our dealer for your convenience.
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -604,7 +790,7 @@ function Testimonials() {
       className="w-full container mx-auto py-16 bg-white"
     >
       <p className="text-2xl font-semibold font-suzuki-pro-headline text-foreground mb-8">
-        Testimonials
+        Our beloved customers
       </p>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 auto-rows-fr">
         {featured && (
@@ -630,7 +816,10 @@ function Contact() {
     >
       <div className="w-full max-w-3xl relative pt-12 pb-12">
         {/* Horizontal line */}
-        <div className="absolute inset-x-0 top-1/2 h-px bg-gray-300 -translate-y-1/2" aria-hidden />
+        <div
+          className="absolute inset-x-0 top-1/2 h-px bg-gray-300 -translate-y-1/2"
+          aria-hidden
+        />
         {/* Profile circle centered on the line */}
         <div className="relative flex justify-center">
           <div className="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center text-2xl font-bold text-gray-600 border-4 border-white shrink-0 overflow-hidden">

@@ -56,3 +56,13 @@ body {
   border: none;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
+
+/* Hide scrollbar while keeping scroll behavior */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
