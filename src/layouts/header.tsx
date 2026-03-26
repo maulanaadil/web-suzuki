@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import SuzukiLogo from "../assets/icons/suzuki-logo";
 import Link from "next/link";
 import { MenuIcon, SearchIcon, XIcon } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
+import { usePathname, useRouter } from "next/navigation";
 
 const headerLinks = [
   {
@@ -31,9 +32,14 @@ const headerLinks = [
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const isHomePage = pathname === "/";
+
   return (
     <>
-      <header className="px-4 py-5 bg-transparent mx-auto">
+      <header className={`px-4 py-5 ${isHomePage ? "" : "container"} mx-auto`}>
         <div className="flex items-center justify-between">
           <div className="flex items-center px-5 py-3 bg-transparent justify-center">
             <Link
@@ -44,13 +50,19 @@ export default function Header() {
             </Link>
           </div>
           <div className="flex items-center justify-between gap-32">
-            <SearchInput />
+            <SearchInput
+              variant={isHomePage ? "white" : "black"}
+              onSelect={(href) => router.push(href)}
+              onSearch={(query) => router.push(`/search?q=${encodeURIComponent(query)}`)}
+            />
             <div className="flex items-center gap-2 mr-8">
               <MenuIcon
-                className="w-4 h-4 text-white"
+                className={`w-4 h-4 ${isHomePage ? "text-white" : "text-black"}`}
                 onClick={() => setIsOpen(true)}
               />
-              <p className="font-normal text-base text-white font-suzuki-pro-headline">
+              <p
+                className={`font-normal text-base ${isHomePage ? "text-white" : "text-black"} font-suzuki-pro-headline`}
+              >
                 Menu
               </p>
             </div>
@@ -64,15 +76,148 @@ export default function Header() {
   );
 }
 
-function SearchInput() {
+type SearchProduct = {
+  id: string;
+  slug: string;
+  name: string;
+};
+
+const searchablePages = [
+  { label: "Home", href: "/" },
+  { label: "Cars", href: "/cars" },
+  { label: "Contact", href: "/contact" },
+  { label: "Reviews", href: "/reviews" },
+];
+
+function SearchInput({
+  variant,
+  onSelect,
+  onSearch,
+}: {
+  variant: "white" | "black";
+  onSelect: (href: string) => void;
+  onSearch: (query: string) => void;
+}) {
+  const [query, setQuery] = useState("");
+  const [products, setProducts] = useState<SearchProduct[]>([]);
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    const loadProducts = async () => {
+      try {
+        const response = await fetch("/api/cars");
+        if (!response.ok) return;
+        const payload = (await response.json()) as { data?: SearchProduct[] };
+        setProducts(payload.data ?? []);
+      } catch {
+        setProducts([]);
+      }
+    };
+    void loadProducts();
+  }, []);
+
+  const normalizedQuery = query.trim().toLowerCase();
+  const pageMatches = useMemo(() => {
+    if (!normalizedQuery) return [];
+    return searchablePages.filter((page) =>
+      page.label.toLowerCase().includes(normalizedQuery),
+    );
+  }, [normalizedQuery]);
+  const productMatches = useMemo(() => {
+    if (!normalizedQuery) return [];
+    return products
+      .filter((product) => product.name.toLowerCase().includes(normalizedQuery))
+      .slice(0, 6);
+  }, [normalizedQuery, products]);
+
+  const hasMatches = pageMatches.length > 0 || productMatches.length > 0;
+
+  const handleSearchSubmit = () => {
+    const trimmed = query.trim();
+    if (!trimmed) return;
+    setIsOpen(false);
+    setQuery("");
+    onSearch(trimmed);
+  };
+
   return (
-    <div className="flex items-center gap-2 flex-1">
-      <SearchIcon className="w-4 h-4 text-white" />
-      <input
-        type="text"
-        placeholder="Search"
-        className="w-64 outline-none font-sans text-white placeholder:text-white"
-      />
+    <div className="relative">
+      <div
+        className={`flex items-center gap-2 px-2 py-2 rounded-lg flex-1 ${variant === "white" ? "bg-transparent" : "bg-neutral-100"}`}
+      >
+        <SearchIcon
+          className={`w-4 h-4 ${variant === "white" ? "text-white" : "text-black"}`}
+        />
+        <input
+          type="text"
+          value={query}
+          onFocus={() => setIsOpen(true)}
+          onBlur={() => setTimeout(() => setIsOpen(false), 120)}
+          onChange={(event) => setQuery(event.target.value)}
+          onKeyDown={(event) => {
+            if (event.key === "Enter") {
+              event.preventDefault();
+              handleSearchSubmit();
+            }
+          }}
+          placeholder="Cari halaman atau produk..."
+          className={`w-64 outline-none font-sans ${variant === "white" ? "text-white" : "text-black"} placeholder:${variant === "white" ? "text-white/90" : "text-black/60"}`}
+        />
+      </div>
+
+      {isOpen && normalizedQuery && (
+        <div className="absolute left-0 top-[calc(100%+8px)] z-50 w-80 rounded-xl border border-gray-200 bg-white p-2 shadow-xl">
+          {!hasMatches && (
+            <p className="px-3 py-2 text-sm text-gray-500">
+              Tidak ada hasil, tekan Enter untuk cari semua.
+            </p>
+          )}
+
+          {pageMatches.length > 0 && (
+            <div className="mb-2">
+              <p className="px-3 py-1 text-xs font-semibold uppercase tracking-wide text-gray-400">
+                Halaman
+              </p>
+              {pageMatches.map((page) => (
+                <button
+                  key={page.href}
+                  type="button"
+                  className="w-full rounded-lg px-3 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
+                  onMouseDown={() => {
+                    setIsOpen(false);
+                    setQuery("");
+                    onSelect(page.href);
+                  }}
+                >
+                  {page.label}
+                </button>
+              ))}
+            </div>
+          )}
+
+          {productMatches.length > 0 && (
+            <div>
+              <p className="px-3 py-1 text-xs font-semibold uppercase tracking-wide text-gray-400">
+                Produk
+              </p>
+              {productMatches.map((product) => (
+                <button
+                  key={product.id}
+                  type="button"
+                  className="w-full rounded-lg px-3 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
+                  onMouseDown={() => {
+                    setIsOpen(false);
+                    setQuery("");
+                    onSelect(`/cars/${product.slug}`);
+                  }}
+                >
+                  {product.name}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }

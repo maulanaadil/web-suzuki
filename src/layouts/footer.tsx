@@ -1,19 +1,13 @@
 "use client";
 
+import { ChevronUp, Facebook, Instagram } from "lucide-react";
 import Link from "next/link";
+import { SVGProps } from "react";
 import SuzukiLogo from "../assets/icons/suzuki-logo";
-import { ChevronUp, Facebook, Instagram, Youtube } from "lucide-react";
+import WhatsappIcon from "../assets/icons/whatsapp";
+import { WHATSAPP_NUMBER } from "../constants/whatsapp";
 
 const socialLinks = [
-  {
-    label: "Twitter",
-    href: "https://twitter.com/suzukiindonesia",
-    Icon: () => (
-      <svg viewBox="0 0 24 24" className="w-5 h-5" fill="currentColor" aria-hidden>
-        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-      </svg>
-    ),
-  },
   {
     label: "Facebook",
     href: "https://facebook.com/suzukiindonesia",
@@ -25,9 +19,11 @@ const socialLinks = [
     Icon: Instagram,
   },
   {
-    label: "Youtube",
-    href: "https://youtube.com/suzukiindonesia",
-    Icon: Youtube,
+    label: "Whatsapp",
+    href: `https://wa.me/${WHATSAPP_NUMBER}`,
+    Icon: (props: SVGProps<SVGSVGElement>) => (
+      <WhatsappIcon size={24} color="#003478" {...props} />
+    ),
   },
 ];
 
@@ -38,7 +34,6 @@ export default function Footer() {
 
   return (
     <footer className="w-full bg-white">
-      {/* Upper section */}
       <div className="container mx-auto px-4 py-12 flex flex-col md:flex-row md:items-start md:justify-between gap-10">
         <Link
           href="/"
@@ -53,7 +48,7 @@ export default function Footer() {
             {socialLinks.map(({ label, href, Icon }) => (
               <a
                 key={label}
-                href={href}
+                href={`${href}?from=suzuki-website`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="font-sans text-foreground text-sm flex items-center gap-2 hover:text-primary-suzuki hover:underline underline-offset-2 transition-colors"
@@ -82,15 +77,15 @@ export default function Footer() {
       </div>
 
       {/* Lower section */}
-      <div className="bg-gray-100 border-t border-gray-200">
+      <div className="bg-foreground border-t border-gray-200">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <p className="font-sans text-gray-600 text-sm">
+          <p className="font-sans text-white text-sm">
             © 2026 Suzuki Indonesia. All rights reserved.
           </p>
           <button
             type="button"
             onClick={scrollToTop}
-            className="flex items-center justify-center w-10 h-10 rounded bg-primary-suzuki text-white hover:opacity-90 transition-opacity"
+            className="flex items-center justify-center w-10 h-10 rounded bg-background text-foreground hover:opacity-90 transition-opacity"
             aria-label="Scroll to top"
           >
             <ChevronUp className="w-5 h-5" />

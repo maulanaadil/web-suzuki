@@ -1,0 +1,152 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum CarCategory {
+  SUV
+  MPV
+  CITY_CAR
+  COMMERCIAL
+  HATCHBACK
+  SEDAN
+  CROSSOVER
+  OTHER
+}
+
+enum VehicleType {
+  PASSENGER
+  COMMERCIAL
+}
+
+enum PriceSource {
+  OTR_IMAGE
+  SUZUKI_WEB
+  MANUAL
+}
+
+enum IngestionStatus {
+  RUNNING
+  SUCCESS
+  FAILED
+}
+
+model CarModel {
+  id          String       @id @default(cuid())
+  slug        String       @unique
+  name        String
+  tagline     String?
+  category    CarCategory?
+  vehicleType VehicleType?
+  heroImage   String?
+  isActive    Boolean      @default(true)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  variants    CarVariant[]
+  colors      CarColor[]
+  prices      CarPrice[]
+}
+
+model CarVariant {
+  id           String     @id @default(cuid())
+  carModelId   String
+  name         String
+  transmission String?
+  engine       String?
+  drivetrain   String?
+  isHybrid     Boolean    @default(false)
+  sortOrder    Int        @default(0)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  carModel     CarModel   @relation(fields: [carModelId], references: [id], onDelete: Cascade)
+  specs        CarSpec[]
+  prices       CarPrice[]
+
+  @@unique([carModelId, name])
+  @@index([carModelId])
+}
+
+model CarColor {
+  id               String   @id @default(cuid())
+  carModelId       String
+  name             String
+  hexCode          String?
+  hexCodePrimary   String?
+  hexCodeSecondary String?
+  imageUrl         String?
+  sortOrder        Int      @default(0)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  carModel         CarModel @relation(fields: [carModelId], references: [id], onDelete: Cascade)
+
+  @@unique([carModelId, name])
+  @@index([carModelId])
+}
+
+model CarSpec {
+  id           String     @id @default(cuid())
+  carVariantId String
+  specGroup    String
+  specKey      String
+  specValue    String
+  unit         String?
+  sortOrder    Int        @default(0)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  carVariant   CarVariant @relation(fields: [carVariantId], references: [id], onDelete: Cascade)
+
+  @@index([carVariantId])
+}
+
+model PriceList {
+  id            String      @id @default(cuid())
+  source        PriceSource
+  region        String?
+  dealer        String?
+  effectiveDate DateTime?
+  currency      String      @default("IDR")
+  notes         String?
+  isActive      Boolean     @default(true)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  prices        CarPrice[]
+
+  @@index([source, createdAt])
+}
+
+model CarPrice {
+  id          String      @id @default(cuid())
+  priceListId String
+  carModelId  String
+  variantId   String?
+  otrPrice    BigInt
+  discount    BigInt?
+  netPrice    BigInt?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  priceList   PriceList   @relation(fields: [priceListId], references: [id], onDelete: Cascade)
+  carModel    CarModel    @relation(fields: [carModelId], references: [id], onDelete: Cascade)
+  variant     CarVariant? @relation(fields: [variantId], references: [id], onDelete: SetNull)
+
+  @@unique([priceListId, carModelId, variantId])
+  @@index([carModelId])
+  @@index([priceListId])
+  @@index([variantId])
+}
+
+model DataIngestionRun {
+  id              String          @id @default(cuid())
+  source          String
+  status          IngestionStatus @default(RUNNING)
+  startedAt       DateTime        @default(now())
+  endedAt         DateTime?
+  recordsRead     Int             @default(0)
+  recordsUpserted Int             @default(0)
+  notes           String?
+  error           String?
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+}

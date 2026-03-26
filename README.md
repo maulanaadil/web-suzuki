@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# web-suzuki
 
-## Getting Started
+Next.js app with PostgreSQL running in Docker and Prisma as ORM.
 
-First, run the development server:
+## Setup
+
+1. Install dependencies:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Copy environment file:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+cp .env.example .env
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+3. Start PostgreSQL in Docker:
 
-## Learn More
+```bash
+pnpm docker:db:up
+```
 
-To learn more about Next.js, take a look at the following resources:
+4. Generate Prisma Client:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+pnpm prisma:generate
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+5. Apply migrations:
 
-## Deploy on Vercel
+```bash
+pnpm prisma:migrate:deploy
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+6. Import Suzuki catalog + OTR prices:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+pnpm ingest:suzuki
+```
+
+7. Run the app:
+
+```bash
+pnpm dev
+```
+
+## Useful Commands
+
+- `pnpm docker:db:up` - start PostgreSQL container
+- `pnpm docker:db:down` - stop and remove containers
+- `pnpm docker:db:logs` - view PostgreSQL logs
+- `pnpm prisma:generate` - regenerate Prisma Client
+- `pnpm prisma:migrate:dev` - create/apply migration in development
+- `pnpm prisma:migrate:deploy` - apply existing migrations in non-dev environments
+- `pnpm prisma:studio` - open Prisma Studio
+- `pnpm ingest:suzuki:dry` - scrape and parse without database writes
+- `pnpm ingest:suzuki` - scrape Suzuki catalog and upsert catalog + prices
