@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import localFont from "next/font/local";
 import "../styles/globals.css";
 import Header from "../layouts/header";
@@ -46,6 +47,18 @@ export default function RootLayout({
         {children}
         <Footer />
         <WhatsAppWidget />
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-TRFF392KJJ"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-TRFF392KJJ');
+          `}
+        </Script>
       </body>
     </html>
   );
