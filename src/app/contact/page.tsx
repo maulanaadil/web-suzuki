@@ -1,29 +1,28 @@
-import { PhoneCall } from "lucide-react";
-
+import Image from "next/image";
+import SALES_ADVISOR_IMAGE from "../../../public/images/sales-profile.jpeg";
 import WhatsappIcon from "../../assets/icons/whatsapp";
 import { WHATSAPP_NUMBER } from "../../constants/whatsapp";
 
-const SALES_ADVISOR_NAME = "Fauzi";
-const SALES_ADVISOR_PHONE = "+62 813-2570-2219";
+const SALES_ADVISOR_NAME = "Zulham Fauzi";
 
 export default function ContactPage() {
   return (
     <main className="bg-white">
-      <section className="container mx-auto px-4 py-16 md:py-20">
+      <section className="container mx-auto px-4 py-8">
         <div className="mx-auto max-w-3xl text-center">
           <p className="text-sm font-medium uppercase tracking-wide text-primary-suzuki">
             Contact Suzuki
           </p>
           <h1 className="mt-3 font-suzuki-pro-headline text-4xl text-foreground md:text-5xl">
-            Let&apos;s find your next Suzuki
+            Temukan dan atur semua model Suzuki.
           </h1>
           <p className="mt-4 text-base text-gray-600 md:text-lg">
-            Get model recommendations, latest promo details, and financing
-            guidance from our sales advisor.
+            Dapatkan rekomendasi model, detail promo terbaru, dan petunjuk
+            kredit dari sales advisor kami.
           </p>
         </div>
 
-        <div className="mx-auto mt-12 grid max-w-5xl gap-8 rounded-3xl border border-gray-200 bg-gray-50 p-6 md:grid-cols-[2fr_1fr] md:p-10">
+        <div className="mx-auto mt-12 grid max-w-5xl gap-8 border border-gray-200 bg-gray-50 p-6 md:grid-cols-[2fr_1fr] md:p-10">
           <div>
             <div className="relative w-full max-w-2xl pt-10 pb-10">
               <div
@@ -32,7 +31,12 @@ export default function ContactPage() {
               />
               <div className="relative flex justify-center">
                 <div className="flex h-24 w-24 items-center justify-center overflow-hidden rounded-full border-4 border-gray-50 bg-gray-200 text-2xl font-bold text-gray-700">
-                  FI
+                  <Image
+                    src={SALES_ADVISOR_IMAGE}
+                    alt={SALES_ADVISOR_NAME}
+                    width={96}
+                    height={96}
+                  />
                 </div>
               </div>
             </div>
@@ -41,8 +45,8 @@ export default function ContactPage() {
               {SALES_ADVISOR_NAME}
             </h2>
             <p className="mt-2 max-w-xl text-gray-600">
-              I&apos;m here to help you choose the right Suzuki car for your
-              daily needs, family plans, and budget.
+              Saya siap membantu Anda memilih mobil Suzuki yang tepat untuk
+              kebutuhan sehari-hari, rencana keluarga, dan anggaran Anda.
             </p>
 
             <div className="mt-8 flex flex-wrap items-center gap-3">
@@ -55,24 +59,17 @@ export default function ContactPage() {
                 <WhatsappIcon className="h-5 w-5" />
                 Chat on WhatsApp
               </a>
-              <a
-                href={`tel:${WHATSAPP_NUMBER}`}
-                className="inline-flex items-center gap-2 rounded-full border border-gray-300 bg-white px-6 py-3 text-sm font-medium text-foreground transition-colors hover:bg-gray-100"
-              >
-                <PhoneCall className="h-4 w-4" />
-                {SALES_ADVISOR_PHONE}
-              </a>
             </div>
           </div>
 
-          <aside className="rounded-2xl border border-gray-200 bg-white p-6">
+          <aside className="border border-gray-200 bg-white p-6">
             <p className="text-sm font-semibold uppercase tracking-wide text-gray-500">
-              Why contact us
+              Mengapa menghubungi kami
             </p>
             <ul className="mt-4 space-y-3 text-sm text-gray-600">
-              <li>Fast response for test-drive booking.</li>
-              <li>Up-to-date promo and financing simulation.</li>
-              <li>Help comparing variants before purchase.</li>
+              <li>Respons cepat untuk pemesanan test drive.</li>
+              <li>Promo dan simulasi kredit terbaru.</li>
+              <li>Bantuan membandingkan varian sebelum pembelian.</li>
             </ul>
           </aside>
         </div>

@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:auto.suzuki.co.id)",
+      "Bash(npx tsc:*)",
+      "Bash(npx prisma:*)",
+      "Bash(find /Users/maulanaadil/Development/personal/web-suzuki/node_modules -path \"*prisma*\" -name \"*.d.ts\" -exec grep -l \"CarColor\" {} \\\\;)",
+      "Bash(curl -s \"http://localhost:5556\")",
+      "Bash(npx tsx -e ':*)"
+    ]
+  }
+}

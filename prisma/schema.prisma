@@ -6,147 +6,194 @@ datasource db {
   provider = "postgresql"
 }
 
-enum CarCategory {
-  SUV
-  MPV
-  CITY_CAR
-  COMMERCIAL
-  HATCHBACK
-  SEDAN
-  CROSSOVER
-  OTHER
-}
-
-enum VehicleType {
-  PASSENGER
-  COMMERCIAL
-}
-
-enum PriceSource {
-  OTR_IMAGE
-  SUZUKI_WEB
-  MANUAL
-}
-
-enum IngestionStatus {
-  RUNNING
-  SUCCESS
-  FAILED
-}
-
 model CarModel {
-  id          String       @id @default(cuid())
-  slug        String       @unique
-  name        String
-  tagline     String?
-  category    CarCategory?
-  vehicleType VehicleType?
-  heroImage   String?
-  isActive    Boolean      @default(true)
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
-  variants    CarVariant[]
-  colors      CarColor[]
-  prices      CarPrice[]
+  id            String           @id @default(cuid())
+  slug          String           @unique @db.VarChar(255)
+  name          String           @db.VarChar(255)
+  category      CarCategory?
+  vehicleType   CarVehicleType?
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+  variants      CarVariant[]
+  colors        CarColor[]
+  images        CarImage[]
+  testimonials  Testimonial[]
+  orderForms    CarOrderForm?
+  detailBanner  CarDetailBanner[] @relation("CarDetailBanner")
+  detailCarousel CarDetailCarousel[] @relation("CarDetailCarousel")
 }
 
 model CarVariant {
   id           String     @id @default(cuid())
   carModelId   String
-  name         String
-  transmission String?
-  engine       String?
-  drivetrain   String?
-  isHybrid     Boolean    @default(false)
+  carModel     CarModel   @relation(fields: [carModelId], references: [id], onDelete: Cascade)
+  code         String     @unique
+  name         String?
   sortOrder    Int        @default(0)
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
-  carModel     CarModel   @relation(fields: [carModelId], references: [id], onDelete: Cascade)
   specs        CarSpec[]
-  prices       CarPrice[]
+  price        CarPrice?
+  colors       CarColor[]
 
-  @@unique([carModelId, name])
-  @@index([carModelId])
-}
-
-model CarColor {
-  id               String   @id @default(cuid())
-  carModelId       String
-  name             String
-  hexCode          String?
-  hexCodePrimary   String?
-  hexCodeSecondary String?
-  imageUrl         String?
-  sortOrder        Int      @default(0)
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
-  carModel         CarModel @relation(fields: [carModelId], references: [id], onDelete: Cascade)
-
-  @@unique([carModelId, name])
   @@index([carModelId])
 }
 
 model CarSpec {
-  id           String     @id @default(cuid())
-  carVariantId String
-  specGroup    String
-  specKey      String
-  specValue    String
-  unit         String?
-  sortOrder    Int        @default(0)
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
-  carVariant   CarVariant @relation(fields: [carVariantId], references: [id], onDelete: Cascade)
+  id             String     @id @default(cuid())
+  carVariantId   String
+  carVariant     CarVariant @relation(fields: [carVariantId], references: [id], onDelete: Cascade)
+  group          String
+  key            String
+  value          String
+  sortOrder      Int        @default(0)
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
 
   @@index([carVariantId])
 }
 
-model PriceList {
-  id            String      @id @default(cuid())
-  source        PriceSource
-  region        String?
-  dealer        String?
-  effectiveDate DateTime?
-  currency      String      @default("IDR")
-  notes         String?
-  isActive      Boolean     @default(true)
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
-  prices        CarPrice[]
-
-  @@index([source, createdAt])
-}
-
 model CarPrice {
-  id          String      @id @default(cuid())
-  priceListId String
-  carModelId  String
-  variantId   String?
-  otrPrice    BigInt
-  discount    BigInt?
-  netPrice    BigInt?
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-  priceList   PriceList   @relation(fields: [priceListId], references: [id], onDelete: Cascade)
-  carModel    CarModel    @relation(fields: [carModelId], references: [id], onDelete: Cascade)
-  variant     CarVariant? @relation(fields: [variantId], references: [id], onDelete: SetNull)
-
-  @@unique([priceListId, carModelId, variantId])
-  @@index([carModelId])
-  @@index([priceListId])
-  @@index([variantId])
+  id             String     @id @default(cuid())
+  carVariantId   String     @unique
+  carVariant     CarVariant @relation(fields: [carVariantId], references: [id], onDelete: Cascade)
+  otrPrice       BigInt
+  currency       String     @default("IDR")
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
 }
 
-model DataIngestionRun {
-  id              String          @id @default(cuid())
-  source          String
-  status          IngestionStatus @default(RUNNING)
-  startedAt       DateTime        @default(now())
-  endedAt         DateTime?
-  recordsRead     Int             @default(0)
-  recordsUpserted Int             @default(0)
-  notes           String?
-  error           String?
-  createdAt       DateTime        @default(now())
-  updatedAt       DateTime        @updatedAt
+model CarColor {
+  id               String     @id @default(cuid())
+  carModelId       String
+  name             String?     @db.Text
+  carModel         CarModel   @relation(fields: [carModelId], references: [id], onDelete: Cascade)
+  carVariantCode   String
+  carVariant       CarVariant @relation(fields: [carVariantCode], references: [code], onDelete: Cascade)
+  colorCode        String     @db.VarChar(255)
+  type             CarColorType @default(ONE_TONE)
+  primaryColorCode String?     @db.VarChar(255)
+  secondaryColorCode String?     @db.VarChar(255)
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+
+  @@unique([carVariantCode, colorCode])
+  @@index([carModelId])
+}
+
+model CarImage {
+  id          String       @id @default(cuid())
+  carModelId  String
+  carModel    CarModel     @relation(fields: [carModelId], references: [id], onDelete: Cascade)
+  url         String       @db.VarChar(255)
+  type        CarImageType
+  contents    CarImageContent?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  @@unique([carModelId, url])
+  @@index([carModelId])
+}
+
+model CarImageContent {
+  id          String       @id @default(cuid())
+  carImageId  String       @unique
+  carImage    CarImage?    @relation(fields: [carImageId], references: [id])
+  title       String       @db.Text
+  content     String       @db.Text
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@index([carImageId])
+}
+
+model Testimonial {
+  id          String   @id @default(cuid())
+  carModelId  String
+  carModel    CarModel @relation(fields: [carModelId], references: [id], onDelete: Cascade)
+  name        String   @db.VarChar(255)
+  quote       String   @db.VarChar(255)
+  imageUrl    String   @db.VarChar(255)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model CarOrderForm {
+  id             String   @id @default(cuid())
+  carModelId     String   @unique
+  carModel       CarModel @relation(fields: [carModelId], references: [id], onDelete: Cascade)
+  name           String   @db.VarChar(255)
+  email          String   @db.VarChar(255)
+  idCardNumber   String   @unique @db.VarChar(255)
+  phone          String   @db.VarChar(255)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model CarDetailBanner {
+  id String @id @default(cuid())
+  carModelId String 
+  carModel CarModel[] @relation("CarDetailBanner")
+  title String @db.VarChar(255)
+  bannerVariant CarImageType @default(INTERIOR)
+  description String @db.VarChar(255)
+  buttonLabel String @db.VarChar(255)
+  buttonHref String @db.VarChar(255)
+  imageUrl String @db.VarChar(255)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model CarDetailCarousel {
+  id String @id @default(cuid())
+  carModelId String 
+  carModel CarModel[] @relation("CarDetailCarousel")
+  carouselVariant CarImageType @default(CAROUSEL)
+  variant CarDetailCarouselVariant @default(SAFETY)
+  carouselContent CarDetailCarouselContent[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model CarDetailCarouselContent {
+  id String @id @default(cuid())
+  carDetailCarouselId String
+  carDetailCarousel CarDetailCarousel @relation(fields: [carDetailCarouselId], references: [id], onDelete: Cascade)
+  title String @db.Text
+  content String @db.Text
+  imageUrl String @db.VarChar(255)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum CarColorType {
+  ONE_TONE
+  SECONDARY
+}
+
+enum CarDetailCarouselVariant {
+  SAFETY
+  SECURITY
+  PERFORMANCE
+}
+
+enum CarImageType {
+  BANNER
+  CAROUSEL
+  INTERIOR
+  PREVIEW
+  EKSTERIOR
+}
+
+enum CarCategory {
+  SUV
+  MPV
+  CITY_CAR
+  COMMERCIAL
+}
+
+enum CarVehicleType {
+  PASSENGER
+  COMMERCIAL
 }

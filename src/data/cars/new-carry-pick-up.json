@@ -1,0 +1,290 @@
+{
+  "name": "New Carry Pick Up",
+  "features": [
+    {
+      "featureName": " Fire Extinguisher",
+      "v3": "Tersedia",
+      "order_index": "2",
+      "v2": "Tersedia",
+      "v1": "Tersedia"
+    },
+    {
+      "featureName": "Immobilizer",
+      "v3": "Tersedia",
+      "order_index": "1",
+      "v2": "Tersedia",
+      "v1": "Tersedia"
+    },
+    {
+      "featureName": "Seat Belt",
+      "v3": "Tersedia",
+      "order_index": "3",
+      "v2": "Tersedia",
+      "v1": "Tersedia"
+    }
+  ],
+  "performance": [
+    {
+      "featureName": " Ground Clearance (mm)              ",
+      "v3": "180 mm",
+      "order_index": "5",
+      "v2": "180 mm",
+      "v1": "180 mm"
+    },
+    {
+      "featureName": "Capacity",
+      "v3": "3 Persons (Max. Capacity) & 43 litres (Max. Tank)",
+      "order_index": "13",
+      "v2": "3 Persons (Max. Capacity) & 43 litres (Max. Tank)",
+      "v1": "3 Persons (Max. Capacity) & 43 litres (Max. Tank)"
+    },
+    {
+      "featureName": "Daya Maksimal",
+      "v3": "97 Ps/ 5600 rpm",
+      "order_index": "8",
+      "v2": "97 Ps/ 5600 rpm",
+      "v1": "97 Ps/ 5600 rpm"
+    },
+    {
+      "featureName": "Panjang Keseluruhan",
+      "v3": "4,150 mm",
+      "order_index": "4",
+      "v2": "4,150 mm",
+      "v1": "4,150 mm"
+    },
+    {
+      "featureName": "Radius Putar",
+      "v3": "4,3 m",
+      "order_index": "6",
+      "v2": "4,3 m",
+      "v1": "4,3 m"
+    },
+    {
+      "featureName": "Sistem Pengereman",
+      "v3": "Ventilated Disc (Depan) & Drum (Belakang",
+      "order_index": "12",
+      "v2": "Ventilated Disc (Depan) & Drum (Belakang",
+      "v1": "Ventilated Disc (Depan) & Drum (Belakang"
+    },
+    {
+      "featureName": "Spesifikasi Mesin",
+      "v3": "4 Cylinder/ K15B-C (1.462 cc)/ 16 Valve with Multi Point Injection",
+      "order_index": "7",
+      "v2": "4 Cylinder/ K15B-C (1.462 cc)/ 16 Valve with Multi Point Injection",
+      "v1": "4 Cylinder/ K15B-C (1.462 cc)/ 16 Valve with Multi Point Injection"
+    },
+    {
+      "featureName": "Suspensi",
+      "v3": "McPherson Strut and Leaf Rigid Axis ",
+      "order_index": "11",
+      "v2": "McPherson Strut and Leaf Rigid Axis ",
+      "v1": "McPherson Strut and Leaf Rigid Axis "
+    },
+    {
+      "featureName": "Torsi Maksimal",
+      "v3": "135 Nm/ 4400rpm",
+      "order_index": "9",
+      "v2": "135 Nm/ 4400rpm",
+      "v1": "135 Nm/ 4400rpm"
+    },
+    {
+      "featureName": "Transmisi",
+      "v3": "5 M/T",
+      "order_index": "10",
+      "v2": "5 M/T",
+      "v1": "5 M/T"
+    }
+  ],
+  "prices": [
+    {
+      "code": "SP202600082",
+      "startDate": "2026-01-22T00:00:00.000Z",
+      "endDate": "2026-07-01T00:00:00.000Z",
+      "status": true,
+      "country": {
+        "code": "IDN",
+        "name": "INDONESIA"
+      },
+      "currency": {
+        "code": "IDR"
+      },
+      "sellingPriceDetails": [
+        {
+          "dealerCode": "*",
+          "isArchived": false,
+          "dealer": "*",
+          "salesType": "1",
+          "modelCode": "NEW-CARRY-03",
+          "variantCode": "AEV415W.44WDMTP",
+          "color": "*",
+          "colorCode": "*",
+          "landingPrice": 181500000,
+          "price1": 181500000,
+          "price2": 181500000,
+          "addressLevel1": "*",
+          "addressLevel2": "*",
+          "addressLevel3": "*",
+          "addressLevel4": "*",
+          "taxChargeDetails": []
+        }
+      ],
+      "isArchived": false
+    },
+    {
+      "code": "SP202600082",
+      "startDate": "2026-01-22T00:00:00.000Z",
+      "endDate": "2026-07-01T00:00:00.000Z",
+      "status": true,
+      "country": {
+        "code": "IDN",
+        "name": "INDONESIA"
+      },
+      "currency": {
+        "code": "IDR"
+      },
+      "sellingPriceDetails": [
+        {
+          "dealerCode": "*",
+          "isArchived": false,
+          "dealer": "*",
+          "salesType": "1",
+          "modelCode": "NEW-CARRY-03",
+          "variantCode": "AEV415P.34FDMTP",
+          "color": "*",
+          "colorCode": "*",
+          "landingPrice": 172600000,
+          "price1": 172600000,
+          "price2": 172600000,
+          "addressLevel1": "*",
+          "addressLevel2": "*",
+          "addressLevel3": "*",
+          "addressLevel4": "*",
+          "taxChargeDetails": []
+        },
+        {
+          "dealerCode": "*",
+          "isArchived": false,
+          "dealer": "*",
+          "salesType": "1",
+          "modelCode": "NEW-CARRY-03",
+          "variantCode": "AEV415W.34WDMTP",
+          "color": "*",
+          "colorCode": "*",
+          "landingPrice": 173700000,
+          "price1": 173700000,
+          "price2": 173700000,
+          "addressLevel1": "*",
+          "addressLevel2": "*",
+          "addressLevel3": "*",
+          "addressLevel4": "*",
+          "taxChargeDetails": []
+        },
+        {
+          "dealerCode": "*",
+          "isArchived": false,
+          "dealer": "*",
+          "salesType": "1",
+          "modelCode": "NEW-CARRY-03",
+          "variantCode": "AEV415P.44FDMTP",
+          "color": "*",
+          "colorCode": "*",
+          "landingPrice": 180600000,
+          "price1": 180600000,
+          "price2": 180600000,
+          "addressLevel1": "*",
+          "addressLevel2": "*",
+          "addressLevel3": "*",
+          "addressLevel4": "*",
+          "taxChargeDetails": []
+        },
+        {
+          "dealerCode": "*",
+          "isArchived": false,
+          "dealer": "*",
+          "salesType": "1",
+          "modelCode": "NEW-CARRY-03",
+          "variantCode": "AEV415W.44WDMTP",
+          "color": "*",
+          "colorCode": "*",
+          "landingPrice": 181500000,
+          "price1": 181500000,
+          "price2": 181500000,
+          "addressLevel1": "*",
+          "addressLevel2": "*",
+          "addressLevel3": "*",
+          "addressLevel4": "*",
+          "taxChargeDetails": []
+        }
+      ],
+      "isArchived": false
+    },
+    {
+      "code": "SP202600082",
+      "startDate": "2026-01-22T00:00:00.000Z",
+      "endDate": "2026-07-01T00:00:00.000Z",
+      "status": true,
+      "country": {
+        "code": "IDN",
+        "name": "INDONESIA"
+      },
+      "currency": {
+        "code": "IDR"
+      },
+      "sellingPriceDetails": [
+        {
+          "dealerCode": "*",
+          "isArchived": false,
+          "dealer": "*",
+          "salesType": "1",
+          "modelCode": "NEW-CARRY-03",
+          "variantCode": "AEV415P.44FDMTP",
+          "color": "*",
+          "colorCode": "*",
+          "landingPrice": 180600000,
+          "price1": 180600000,
+          "price2": 180600000,
+          "addressLevel1": "*",
+          "addressLevel2": "*",
+          "addressLevel3": "*",
+          "addressLevel4": "*",
+          "taxChargeDetails": []
+        }
+      ],
+      "isArchived": false
+    },
+    {
+      "code": "SP202600082",
+      "startDate": "2026-01-22T00:00:00.000Z",
+      "endDate": "2026-07-01T00:00:00.000Z",
+      "status": true,
+      "country": {
+        "code": "IDN",
+        "name": "INDONESIA"
+      },
+      "currency": {
+        "code": "IDR"
+      },
+      "sellingPriceDetails": [
+        {
+          "dealerCode": "*",
+          "isArchived": false,
+          "dealer": "*",
+          "salesType": "1",
+          "modelCode": "NEW-CARRY-03",
+          "variantCode": "AEV415W.34WDMTP",
+          "color": "*",
+          "colorCode": "*",
+          "landingPrice": 173700000,
+          "price1": 173700000,
+          "price2": 173700000,
+          "addressLevel1": "*",
+          "addressLevel2": "*",
+          "addressLevel3": "*",
+          "addressLevel4": "*",
+          "taxChargeDetails": []
+        }
+      ],
+      "isArchived": false
+    }
+  ]
+}

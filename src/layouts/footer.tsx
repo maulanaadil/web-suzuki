@@ -10,12 +10,12 @@ import { WHATSAPP_NUMBER } from "../constants/whatsapp";
 const socialLinks = [
   {
     label: "Facebook",
-    href: "https://facebook.com/suzukiindonesia",
+    href: "https://www.facebook.com/people/Suzuki_rancaekek/100087901575418/",
     Icon: Facebook,
   },
   {
     label: "Instagram",
-    href: "https://instagram.com/suzukiindonesia",
+    href: "https://www.instagram.com/servicenjs_rancaekek",
     Icon: Instagram,
   },
   {
@@ -63,15 +63,14 @@ export default function Footer() {
 
           <div className="font-sans text-foreground text-sm space-y-1">
             <p className="font-semibold">Suzuki Indonesia</p>
-            <p className="font-normal">Address</p>
             <p className="font-normal leading-relaxed">
-              Jl. Raya Bekasi Km. 19
+              Jl. Rancaekek No.km 22, Jelegong, Kec. Rancaekek
               <br />
-              Pulogadung, Jakarta Timur
+              Kabupaten Bandung, Jawa Barat
               <br />
-              (13920), DKI Jakarta, Indonesia
+              (40391), Kabupaten Bandung, Jawa Barat
             </p>
-            <p className="font-normal pt-1">Telephone: (+021) 2955 4800</p>
+            <p className="font-normal pt-1">Telephone: (+62) 81325702219</p>
           </div>
         </div>
       </div>

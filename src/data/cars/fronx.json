@@ -1,0 +1,407 @@
+{
+  "name": "Fronx",
+  "features": [
+    {
+      "featureName": " ISOFIX",
+      "v3": "Tersedia",
+      "order_index": 0,
+      "v2": "Tersedia",
+      "v1": "Tersedia"
+    },
+    {
+      "featureName": "6 Airbags",
+      "v3": "Tersedia",
+      "order_index": 0,
+      "v2": "Tersedia",
+      "v1": "Tersedia"
+    },
+    {
+      "featureName": "ABS (Anti-lock braking system)",
+      "v3": "Tersedia",
+      "order_index": 0,
+      "v2": "Tersedia",
+      "v1": "Tersedia"
+    },
+    {
+      "featureName": "ESP®",
+      "v3": "Tersedia",
+      "order_index": 0,
+      "v2": "Tersedia",
+      "v1": "Tersedia"
+    },
+    {
+      "featureName": "Hill Hold Control",
+      "v3": "Tersedia",
+      "order_index": 0,
+      "v2": "Tersedia",
+      "v1": "Tersedia"
+    },
+    {
+      "featureName": "Immobilizer and Security Alarm",
+      "v3": "Tersedia",
+      "order_index": 0,
+      "v2": "Tersedia",
+      "v1": "Tersedia"
+    },
+    {
+      "featureName": "Pedestrian Protection",
+      "v3": "Tersedia",
+      "order_index": 0,
+      "v2": "Tersedia",
+      "v1": "Tersedia"
+    },
+    {
+      "featureName": "Rear Parking Sensor",
+      "v3": "Tersedia",
+      "order_index": 0,
+      "v2": "Tersedia",
+      "v1": "Tersedia"
+    },
+    {
+      "featureName": "Seat Belt",
+      "v3": "Tersedia",
+      "order_index": 0,
+      "v2": "Tersedia",
+      "v1": "Tersedia"
+    },
+    {
+      "featureName": "TECT BODY",
+      "v3": "Tersedia",
+      "order_index": 0,
+      "v2": "Tersedia",
+      "v1": "Tersedia"
+    },
+    {
+      "featureName": "Dual Sensor Brake Support II (DSBSII)",
+      "v3": "-",
+      "v2": "Tersedia",
+      "v1": "Tersedia"
+    },
+    {
+      "featureName": "Adaptive Cruise Control (ACC)",
+      "v3": "-",
+      "v2": "Tersedia",
+      "v1": "Tersedia"
+    },
+    {
+      "featureName": "Lane Keep Assist (LKA)",
+      "v3": "-",
+      "v2": "Tersedia",
+      "v1": "Tersedia"
+    },
+    {
+      "featureName": "Lane Departure Prevention (LDP)",
+      "v3": "-",
+      "v2": "Tersedia",
+      "v1": "Tersedia"
+    },
+    {
+      "featureName": "Vehicle Swaying Warning (Peringatan Vehicle Swaying)",
+      "v3": "-",
+      "v2": "Tersedia",
+      "v1": "Tersedia"
+    },
+    {
+      "featureName": "Blind Spot Monitor (BSM)",
+      "v3": "-",
+      "v2": "Tersedia",
+      "v1": "Tersedia"
+    },
+    {
+      "featureName": "Rear Cross Traffic Alert (RCTA)",
+      "v3": "-",
+      "v2": "Tersedia",
+      "v1": "Tersedia"
+    },
+    {
+      "featureName": "360° View Camera (Kamera Tampilan 360)",
+      "v3": "-",
+      "v2": "Tersedia",
+      "v1": "Tersedia"
+    },
+    {
+      "featureName": "High Beam Assist (HBA)",
+      "v3": "-",
+      "v2": "Tersedia",
+      "v1": "Tersedia"
+    },
+    {
+      "featureName": "Head-Up Display (Tampilan Head-Up)",
+      "v3": "-",
+      "v2": "Tersedia",
+      "v1": "Tersedia"
+    }
+  ],
+  "performance": [
+    {
+      "featureName": " Ground Clearance (mm)              ",
+      "v3": "170 mm",
+      "order_index": 0,
+      "v2": "170 mm",
+      "v1": "170 mm"
+    },
+    {
+      "featureName": "Berat",
+      "v3": "1,480 kg",
+      "order_index": 0,
+      "v2": "1,480 kg",
+      "v1": "1,480 kg"
+    },
+    {
+      "featureName": "Sistem Pengereman",
+      "v3": "Ventilated Disc and Drum",
+      "order_index": 0,
+      "v2": "Ventilated Disc and Drum",
+      "v1": "Ventilated Disc and Drum"
+    },
+    {
+      "featureName": "Spesifikasi Mesin",
+      "v3": "K15C / 1,462 CC / 4 Cylinder /",
+      "order_index": 0,
+      "v2": "K15C / 1,462 CC / 4 Cylinder /",
+      "v1": "K15C / 1,462 CC / 4 Cylinder /"
+    },
+    {
+      "featureName": "Transmisi",
+      "v3": "A/T 6 Speed",
+      "order_index": 0,
+      "v2": "A/T 6 Speed",
+      "v1": "A/T 6 Speed"
+    },
+    {
+      "featureName": "Ukuran Ban",
+      "v3": "195/60 R16",
+      "order_index": 0,
+      "v2": "195/60 R16",
+      "v1": "195/60 R16"
+    }
+  ],
+  "prices": [
+    {
+      "code": "SP202600083",
+      "startDate": "2026-01-23T00:00:00.000Z",
+      "endDate": "2026-07-01T00:00:00.000Z",
+      "status": true,
+      "country": {
+        "code": "IDN",
+        "name": "INDONESIA"
+      },
+      "currency": {
+        "code": "IDR"
+      },
+      "sellingPriceDetails": [
+        {
+          "dealerCode": "*",
+          "isArchived": false,
+          "dealer": "*",
+          "salesType": "1",
+          "modelCode": "FRONX",
+          "variantCode": "A3L415FM00SXATS",
+          "color": "*",
+          "colorCode": "*",
+          "landingPrice": 328300000,
+          "price1": 328300000,
+          "price2": 328300000,
+          "addressLevel1": "*",
+          "addressLevel2": "*",
+          "addressLevel3": "*",
+          "addressLevel4": "*",
+          "taxChargeDetails": []
+        }
+      ],
+      "isArchived": false
+    },
+    {
+      "code": "SP202600083",
+      "startDate": "2026-01-23T00:00:00.000Z",
+      "endDate": "2026-07-01T00:00:00.000Z",
+      "status": true,
+      "country": {
+        "code": "IDN",
+        "name": "INDONESIA"
+      },
+      "currency": {
+        "code": "IDR"
+      },
+      "sellingPriceDetails": [
+        {
+          "dealerCode": "*",
+          "isArchived": false,
+          "dealer": "*",
+          "salesType": "1",
+          "modelCode": "FRONX",
+          "variantCode": "A3L415FM01SXATS",
+          "color": "*",
+          "colorCode": "*",
+          "landingPrice": 330300000,
+          "price1": 330300000,
+          "price2": 330300000,
+          "addressLevel1": "*",
+          "addressLevel2": "*",
+          "addressLevel3": "*",
+          "addressLevel4": "*",
+          "taxChargeDetails": []
+        }
+      ],
+      "isArchived": false
+    },
+    {
+      "code": "SP202600083",
+      "startDate": "2026-01-23T00:00:00.000Z",
+      "endDate": "2026-07-01T00:00:00.000Z",
+      "status": true,
+      "country": {
+        "code": "IDN",
+        "name": "INDONESIA"
+      },
+      "currency": {
+        "code": "IDR"
+      },
+      "sellingPriceDetails": [
+        {
+          "dealerCode": "*",
+          "isArchived": false,
+          "dealer": "*",
+          "salesType": "1",
+          "modelCode": "FRONX",
+          "variantCode": "A3L415FM00GXATS",
+          "color": "*",
+          "colorCode": "*",
+          "landingPrice": 302200000,
+          "price1": 302200000,
+          "price2": 302200000,
+          "addressLevel1": "*",
+          "addressLevel2": "*",
+          "addressLevel3": "*",
+          "addressLevel4": "*",
+          "taxChargeDetails": []
+        }
+      ],
+      "isArchived": false
+    },
+    {
+      "code": "SP202600083",
+      "startDate": "2026-01-23T00:00:00.000Z",
+      "endDate": "2026-07-01T00:00:00.000Z",
+      "status": true,
+      "country": {
+        "code": "IDN",
+        "name": "INDONESIA"
+      },
+      "currency": {
+        "code": "IDR"
+      },
+      "sellingPriceDetails": [
+        {
+          "dealerCode": "*",
+          "isArchived": false,
+          "dealer": "*",
+          "salesType": "1",
+          "modelCode": "FRONX",
+          "variantCode": "A3L415FM00GLMTS",
+          "color": "*",
+          "colorCode": "*",
+          "landingPrice": 261500000,
+          "price1": 261500000,
+          "price2": 261500000,
+          "addressLevel1": "*",
+          "addressLevel2": "*",
+          "addressLevel3": "*",
+          "addressLevel4": "*",
+          "taxChargeDetails": []
+        },
+        {
+          "dealerCode": "*",
+          "isArchived": false,
+          "dealer": "*",
+          "salesType": "1",
+          "modelCode": "FRONX",
+          "variantCode": "A3L415FM00GLATS",
+          "color": "*",
+          "colorCode": "*",
+          "landingPrice": 272500000,
+          "price1": 272500000,
+          "price2": 272500000,
+          "addressLevel1": "*",
+          "addressLevel2": "*",
+          "addressLevel3": "*",
+          "addressLevel4": "*",
+          "taxChargeDetails": []
+        },
+        {
+          "dealerCode": "*",
+          "isArchived": false,
+          "dealer": "*",
+          "salesType": "1",
+          "modelCode": "FRONX",
+          "variantCode": "A3L415FM00GXMTS",
+          "color": "*",
+          "colorCode": "*",
+          "landingPrice": 283900000,
+          "price1": 283900000,
+          "price2": 283900000,
+          "addressLevel1": "*",
+          "addressLevel2": "*",
+          "addressLevel3": "*",
+          "addressLevel4": "*",
+          "taxChargeDetails": []
+        },
+        {
+          "dealerCode": "*",
+          "isArchived": false,
+          "dealer": "*",
+          "salesType": "1",
+          "modelCode": "FRONX",
+          "variantCode": "A3L415FM00GXATS",
+          "color": "*",
+          "colorCode": "*",
+          "landingPrice": 302200000,
+          "price1": 302200000,
+          "price2": 302200000,
+          "addressLevel1": "*",
+          "addressLevel2": "*",
+          "addressLevel3": "*",
+          "addressLevel4": "*",
+          "taxChargeDetails": []
+        },
+        {
+          "dealerCode": "*",
+          "isArchived": false,
+          "dealer": "*",
+          "salesType": "1",
+          "modelCode": "FRONX",
+          "variantCode": "A3L415FM00SXATS",
+          "color": "*",
+          "colorCode": "*",
+          "landingPrice": 328300000,
+          "price1": 328300000,
+          "price2": 328300000,
+          "addressLevel1": "*",
+          "addressLevel2": "*",
+          "addressLevel3": "*",
+          "addressLevel4": "*",
+          "taxChargeDetails": []
+        },
+        {
+          "dealerCode": "*",
+          "isArchived": false,
+          "dealer": "*",
+          "salesType": "1",
+          "modelCode": "FRONX",
+          "variantCode": "A3L415FM01SXATS",
+          "color": "*",
+          "colorCode": "*",
+          "landingPrice": 330300000,
+          "price1": 330300000,
+          "price2": 330300000,
+          "addressLevel1": "*",
+          "addressLevel2": "*",
+          "addressLevel3": "*",
+          "addressLevel4": "*",
+          "taxChargeDetails": []
+        }
+      ],
+      "isArchived": false
+    }
+  ]
+}

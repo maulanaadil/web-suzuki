@@ -6,6 +6,7 @@ import Header from "../layouts/header";
 import { Geist, Geist_Mono } from "next/font/google";
 import Footer from "../layouts/footer";
 import WhatsAppWidget from "../layouts/whatsapp-widget";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -41,9 +42,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${suzukiFont.variable} antialiased relative`}
       >
-        <div className="absolute top-0 left-0 right-0 z-30">
-          <Header />
-        </div>
+        <Header />
         {children}
         <Footer />
         <WhatsAppWidget />

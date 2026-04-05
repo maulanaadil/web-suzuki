@@ -1,0 +1,404 @@
+{
+  "name": "Jimny",
+  "features": [
+    {
+      "featureName": " Fire Extinguisher",
+      "v3": "Tersedia",
+      "order_index": "",
+      "v2": "Tersedia",
+      "v1": "Tersedia"
+    },
+    {
+      "featureName": " Hill Descent Control",
+      "v3": "Tersedia",
+      "order_index": "",
+      "v2": "Tersedia",
+      "v1": "Tersedia"
+    },
+    {
+      "featureName": " ISOFIX",
+      "v3": "Tersedia",
+      "order_index": "",
+      "v2": "Tersedia",
+      "v1": "Tersedia"
+    },
+    {
+      "featureName": " TECT Body",
+      "v3": "Tersedia",
+      "order_index": "",
+      "v2": "Tersedia",
+      "v1": "Tersedia"
+    },
+    {
+      "featureName": "Anti-Lock Braking Systems (ABS)",
+      "v3": "Tersedia",
+      "order_index": "",
+      "v2": "Tersedia",
+      "v1": "Tersedia"
+    },
+    {
+      "featureName": "Bake LSD Traction Control",
+      "v3": "Tersedia",
+      "order_index": "",
+      "v2": "Tersedia",
+      "v1": "Tersedia"
+    },
+    {
+      "featureName": "Dual SRS Aribags",
+      "v3": "Tersedia",
+      "order_index": "",
+      "v2": "Tersedia",
+      "v1": "Tersedia"
+    },
+    {
+      "featureName": "Electronic Stability Programme (ESP)",
+      "v3": "Tersedia",
+      "order_index": "",
+      "v2": "Tersedia",
+      "v1": "Tersedia"
+    },
+    {
+      "featureName": "Hill Hold Control (HHC)",
+      "v3": "Tersedia",
+      "order_index": "",
+      "v2": "Tersedia",
+      "v1": "Tersedia"
+    }
+  ],
+  "performance": [
+    {
+      "featureName": " Ground Clearance (mm)              ",
+      "v3": "210 mm",
+      "order_index": "",
+      "v2": "210 mm",
+      "v1": "210 mm"
+    },
+    {
+      "featureName": "Daya Maksimal",
+      "v3": "77kW (104,7ps/6.000) KW/rpm",
+      "order_index": "",
+      "v2": "77kW (104,7ps/6.000) KW/rpm",
+      "v1": "77kW (104,7ps/6.000) KW/rpm"
+    },
+    {
+      "featureName": "Kapasitas",
+      "v3": "4 orang",
+      "order_index": "",
+      "v2": "4 orang",
+      "v1": "4 orang"
+    },
+    {
+      "featureName": "Panjang Keseluruhan",
+      "v3": "3,965 mm",
+      "order_index": "",
+      "v2": "3,965 mm",
+      "v1": "3,965 mm"
+    },
+    {
+      "featureName": "Radius Putar",
+      "v3": "5,7 m",
+      "order_index": "",
+      "v2": "5,7 m",
+      "v1": "5,7 m"
+    },
+    {
+      "featureName": "Sistem Pengereman",
+      "v3": "Ventilated Disc (Front Brake) & Drum (Rear Brake)",
+      "order_index": "",
+      "v2": "Ventilated Disc (Front Brake) & Drum (Rear Brake)",
+      "v1": "Ventilated Disc (Front Brake) & Drum (Rear Brake)"
+    },
+    {
+      "featureName": "Spesifikasi Mesin",
+      "v3": "4 Cylinder/ K15B (1.462 cc)/ 16 valve VVT",
+      "order_index": "",
+      "v2": "4 Cylinder/ K15B (1.462 cc)/ 16 valve VVT",
+      "v1": "4 Cylinder/ K15B (1.462 cc)/ 16 valve VVT"
+    },
+    {
+      "featureName": "Suspensi",
+      "v3": "3-Link Rigid Axle with Coil Spring ",
+      "order_index": "",
+      "v2": "3-Link Rigid Axle with Coil Spring ",
+      "v1": "3-Link Rigid Axle with Coil Spring "
+    },
+    {
+      "featureName": "Torsi Maksimal",
+      "v3": "138 / 4.400Nm / rpm",
+      "order_index": "",
+      "v2": "138 / 4.400Nm / rpm",
+      "v1": "138 / 4.400Nm / rpm"
+    },
+    {
+      "featureName": "Transmisi",
+      "v3": "5 M/T",
+      "order_index": "",
+      "v2": "4 A/T",
+      "v1": "4 A/T"
+    }
+  ],
+  "prices": [
+    {
+      "code": "SP202600081",
+      "startDate": "2026-01-21T00:00:00.000Z",
+      "endDate": "2026-07-01T00:00:00.000Z",
+      "status": true,
+      "country": {
+        "code": "IDN",
+        "name": "INDONESIA"
+      },
+      "currency": {
+        "code": "IDR"
+      },
+      "sellingPriceDetails": [
+        {
+          "dealerCode": "*",
+          "isArchived": false,
+          "dealer": "*",
+          "salesType": "1",
+          "modelCode": "ALL-NEW-ERTIGA-06",
+          "variantCode": "ARK415FM05GLMTP",
+          "color": "*",
+          "colorCode": "*",
+          "landingPrice": 259700000,
+          "price1": 259700000,
+          "price2": 259700000,
+          "addressLevel1": "*",
+          "addressLevel2": "*",
+          "addressLevel3": "*",
+          "addressLevel4": "*",
+          "taxChargeDetails": []
+        },
+        {
+          "dealerCode": "*",
+          "isArchived": false,
+          "dealer": "*",
+          "salesType": "1",
+          "modelCode": "ALL-NEW-ERTIGA-06",
+          "variantCode": "ARK415FM05GLATP",
+          "color": "*",
+          "colorCode": "*",
+          "landingPrice": 270700000,
+          "price1": 270700000,
+          "price2": 270700000,
+          "addressLevel1": "*",
+          "addressLevel2": "*",
+          "addressLevel3": "*",
+          "addressLevel4": "*",
+          "taxChargeDetails": []
+        },
+        {
+          "dealerCode": "*",
+          "isArchived": false,
+          "dealer": "*",
+          "salesType": "1",
+          "modelCode": "ALL-NEW-ERTIGA-06",
+          "variantCode": "ARK415FM06GXMTR",
+          "color": "*",
+          "colorCode": "*",
+          "landingPrice": 274900000,
+          "price1": 274900000,
+          "price2": 274900000,
+          "addressLevel1": "*",
+          "addressLevel2": "*",
+          "addressLevel3": "*",
+          "addressLevel4": "*",
+          "taxChargeDetails": []
+        },
+        {
+          "dealerCode": "*",
+          "isArchived": false,
+          "dealer": "*",
+          "salesType": "1",
+          "modelCode": "ALL-NEW-ERTIGA-06",
+          "variantCode": "ARK415FM06GXATR",
+          "color": "*",
+          "colorCode": "*",
+          "landingPrice": 285900000,
+          "price1": 285900000,
+          "price2": 285900000,
+          "addressLevel1": "*",
+          "addressLevel2": "*",
+          "addressLevel3": "*",
+          "addressLevel4": "*",
+          "taxChargeDetails": []
+        },
+        {
+          "dealerCode": "*",
+          "isArchived": false,
+          "dealer": "*",
+          "salesType": "1",
+          "modelCode": "ALL-NEW-ERTIGA-06",
+          "variantCode": "ARK415FM09SSMTR",
+          "color": "*",
+          "colorCode": "*",
+          "landingPrice": 287800000,
+          "price1": 287800000,
+          "price2": 287800000,
+          "addressLevel1": "*",
+          "addressLevel2": "*",
+          "addressLevel3": "*",
+          "addressLevel4": "*",
+          "taxChargeDetails": []
+        },
+        {
+          "dealerCode": "*",
+          "isArchived": false,
+          "dealer": "*",
+          "salesType": "1",
+          "modelCode": "ALL-NEW-ERTIGA-06",
+          "variantCode": "ARK415FM19SSMTR",
+          "color": "*",
+          "colorCode": "*",
+          "landingPrice": 289800000,
+          "price1": 289800000,
+          "price2": 289800000,
+          "addressLevel1": "*",
+          "addressLevel2": "*",
+          "addressLevel3": "*",
+          "addressLevel4": "*",
+          "taxChargeDetails": []
+        },
+        {
+          "dealerCode": "*",
+          "isArchived": false,
+          "dealer": "*",
+          "salesType": "1",
+          "modelCode": "ALL-NEW-ERTIGA-06",
+          "variantCode": "ARK415FM09SSATR",
+          "color": "*",
+          "colorCode": "*",
+          "landingPrice": 298800000,
+          "price1": 298800000,
+          "price2": 298800000,
+          "addressLevel1": "*",
+          "addressLevel2": "*",
+          "addressLevel3": "*",
+          "addressLevel4": "*",
+          "taxChargeDetails": []
+        },
+        {
+          "dealerCode": "*",
+          "isArchived": false,
+          "dealer": "*",
+          "salesType": "1",
+          "modelCode": "ALL-NEW-ERTIGA-06",
+          "variantCode": "ARK415FM19SSATR",
+          "color": "*",
+          "colorCode": "*",
+          "landingPrice": 300800000,
+          "price1": 300800000,
+          "price2": 300800000,
+          "addressLevel1": "*",
+          "addressLevel2": "*",
+          "addressLevel3": "*",
+          "addressLevel4": "*",
+          "taxChargeDetails": []
+        }
+      ],
+      "isArchived": false
+    },
+    {
+      "code": "SP202600076",
+      "startDate": "2026-01-15T00:00:00.000Z",
+      "endDate": "2026-07-15T00:00:00.000Z",
+      "status": true,
+      "country": {
+        "code": "IDN",
+        "name": "INDONESIA"
+      },
+      "currency": {
+        "code": "IDR"
+      },
+      "sellingPriceDetails": [
+        {
+          "dealerCode": "*",
+          "isArchived": false,
+          "dealer": "*",
+          "salesType": "1",
+          "modelCode": "NEW-JIMNY-FE",
+          "variantCode": "6N415VX00012MTR",
+          "color": "*",
+          "colorCode": "*",
+          "landingPrice": 477800000,
+          "price1": 477800000,
+          "price2": 477800000,
+          "addressLevel1": "*",
+          "addressLevel2": "*",
+          "addressLevel3": "*",
+          "addressLevel4": "*",
+          "taxChargeDetails": []
+        }
+      ],
+      "isArchived": false
+    },
+    {
+      "code": "SP202600076",
+      "startDate": "2026-01-15T00:00:00.000Z",
+      "endDate": "2026-07-15T00:00:00.000Z",
+      "status": true,
+      "country": {
+        "code": "IDN",
+        "name": "INDONESIA"
+      },
+      "currency": {
+        "code": "IDR"
+      },
+      "sellingPriceDetails": [
+        {
+          "dealerCode": "*",
+          "isArchived": false,
+          "dealer": "*",
+          "salesType": "1",
+          "modelCode": "NEW-JIMNY-FE",
+          "variantCode": "6N415VX00012ATR",
+          "color": "*",
+          "colorCode": "*",
+          "landingPrice": 491500000,
+          "price1": 491500000,
+          "price2": 491500000,
+          "addressLevel1": "*",
+          "addressLevel2": "*",
+          "addressLevel3": "*",
+          "addressLevel4": "*",
+          "taxChargeDetails": []
+        }
+      ],
+      "isArchived": false
+    },
+    {
+      "code": "SP202600076",
+      "startDate": "2026-01-15T00:00:00.000Z",
+      "endDate": "2026-07-15T00:00:00.000Z",
+      "status": true,
+      "country": {
+        "code": "IDN",
+        "name": "INDONESIA"
+      },
+      "currency": {
+        "code": "IDR"
+      },
+      "sellingPriceDetails": [
+        {
+          "dealerCode": "*",
+          "isArchived": false,
+          "dealer": "*",
+          "salesType": "1",
+          "modelCode": "NEW-JIMNY-FE",
+          "variantCode": "6N415VX00013ATR",
+          "color": "*",
+          "colorCode": "*",
+          "landingPrice": 502600000,
+          "price1": 502600000,
+          "price2": 502600000,
+          "addressLevel1": "*",
+          "addressLevel2": "*",
+          "addressLevel3": "*",
+          "addressLevel4": "*",
+          "taxChargeDetails": []
+        }
+      ],
+      "isArchived": false
+    }
+  ]
+}

@@ -1,43 +1,26 @@
 import { NextResponse } from "next/server";
-import { PriceSource } from "@prisma/client";
 import { prisma } from "../../../../lib/prisma";
 
 export async function GET(_: Request, { params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const activePriceList = await prisma.priceList.findFirst({
-    where: {
-      source: PriceSource.OTR_IMAGE,
-      isActive: true,
-    },
-    orderBy: { createdAt: "desc" },
-  });
 
   const model = await prisma.carModel.findUnique({
     where: { slug },
     include: {
-      colors: {
-        orderBy: { sortOrder: "asc" },
-      },
       variants: {
         orderBy: { sortOrder: "asc" },
         include: {
           specs: {
-            orderBy: [{ specGroup: "asc" }, { sortOrder: "asc" }],
+            orderBy: [{ group: "asc" }, { sortOrder: "asc" }],
           },
-          prices: activePriceList
-            ? {
-                where: { priceListId: activePriceList.id },
-                orderBy: { otrPrice: "asc" },
-              }
-            : false,
+          price: true,
+          colors: true,
         },
       },
-      prices: activePriceList
-        ? {
-            where: { priceListId: activePriceList.id },
-            orderBy: { otrPrice: "asc" },
-          }
-        : false,
+      colors: true,
+      images: {
+        include: { contents: true },
+      },
     },
   });
 
@@ -45,37 +28,45 @@ export async function GET(_: Request, { params }: { params: Promise<{ slug: stri
     return NextResponse.json({ message: "Car not found" }, { status: 404 });
   }
 
+  const prices = model.variants
+    .map((v) => v.price?.otrPrice)
+    .filter(Boolean)
+    .sort((a, b) => (a && b ? Number(a - b) : 0));
+
+  const heroImage =
+    model.images.find((img) => img.type === "BANNER")?.url ?? null;
+
   const payload = {
     id: model.id,
     slug: model.slug,
     name: model.name,
-    tagline: model.tagline,
     category: model.category,
     vehicleType: model.vehicleType,
-    heroImage: model.heroImage,
-    startPrice: model.prices[0]?.otrPrice?.toString() ?? null,
-    colors: model.colors.map((color) => ({
-      id: color.id,
-      name: color.name,
-      hexCode: color.hexCode,
-      hexCodePrimary: color.hexCodePrimary,
-      hexCodeSecondary: color.hexCodeSecondary,
-      imageUrl: color.imageUrl,
+    heroImage,
+    startPrice: prices[0] ? prices[0].toString() : null,
+    colors: model.colors.map((c) => ({
+      id: c.id,
+      variantCode: c.carVariantCode,
+      colorCode: c.colorCode,
+    })),
+    images: model.images.map((img) => ({
+      id: img.id,
+      url: img.url,
+      type: img.type,
+      content: img.contents
+        ? { title: img.contents.title, content: img.contents.content }
+        : null,
     })),
     variants: model.variants.map((variant) => ({
       id: variant.id,
+      code: variant.code,
       name: variant.name,
-      transmission: variant.transmission,
-      engine: variant.engine,
-      drivetrain: variant.drivetrain,
-      isHybrid: variant.isHybrid,
-      price: variant.prices[0]?.otrPrice?.toString() ?? null,
+      price: variant.price?.otrPrice?.toString() ?? null,
       specs: variant.specs.map((spec) => ({
         id: spec.id,
-        group: spec.specGroup,
-        key: spec.specKey,
-        value: spec.specValue,
-        unit: spec.unit,
+        group: spec.group,
+        key: spec.key,
+        value: spec.value,
       })),
     })),
   };

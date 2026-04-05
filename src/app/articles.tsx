@@ -59,10 +59,10 @@ export default function Articles() {
   return (
     <section
       id="articles-section"
-      className="w-full bg-white py-16 container mx-auto px-4"
+      className="w-full bg-white pt-16 pb-8 container mx-auto px-4"
     >
       <h2 className="text-2xl font-semibold font-suzuki-pro-headline text-foreground mb-8">
-        Articles
+        Artikel Terbaru
       </h2>
       <div className="flex flex-col gap-8">
         <div

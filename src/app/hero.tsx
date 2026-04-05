@@ -1,30 +1,17 @@
 "use client";
 
-import { ChevronRight, PlusIcon } from "lucide-react";
-import Link from "next/link";
 import Image from "next/image";
 
 import SuzukiHeroImage from "../../public/images//suzuki-hero.webp";
+import BannerCarImage2 from "../../public/images/banner-cta-2.webp";
+import BannerCarImage from "../../public/images/banner-cta.webp";
 import JimnyImage from "../../public/images/jimny.webp";
-
-const heroCtaLinks = [
-  {
-    label: "Products",
-    href: "/cars",
-  },
-  {
-    label: "Contact",
-    href: "/contact",
-  },
-  {
-    label: "Reviews",
-    href: "/reviews",
-  },
-];
+import Button from "../components/button";
+import { WHATSAPP_NUMBER } from "../constants/whatsapp";
 
 export default function Hero() {
   return (
-    <div id="hero-section" className="relative min-h-screen">
+    <div id="hero-section" className="relative min-h-screen -mt-20">
       <div className="grid grid-cols-2 min-h-screen">
         {/* left section */}
         <div className="relative">
@@ -44,27 +31,63 @@ export default function Hero() {
                   className="object-cover"
                 />
               </div>
-              <div className="p-5 flex flex-col gap-2 justify-center">
-                <p className="text-semibold font-suzuki-pro-headline text-white text-2xl">
-                  Jimny gear to ProClaim
+              <div className="p-5 flex flex-col gap-1 justify-center">
+                <p className="text-semibold font-suzuki-pro-headline text-white text-lg">
+                  Taklukan medan dengan Jimny
                 </p>
-                <p className="font-sans text-white text-sm">
-                  Carve your own legendary path.
+                <p className="font-sans text-white text-xs">
+                  Mobil untuk segala medan.
                 </p>
-                <button className="flex items-center gap-3.5 mt-4">
-                  <div className="p-2 rounded-full bg-white flex items-center justify-center">
-                    <PlusIcon className="w-4 h-4 text-black" />
-                  </div>
-                  <p className="font-sans text-white text-sm">Explore</p>
-                </button>
+                <Button
+                  label="Klik disini"
+                  href="/cars/jimny"
+                  className="w-48 mt-4"
+                />
               </div>
             </div>
           </div>
         </div>
 
         {/* right section */}
-        <div className="relative bg-foreground w-full h-full flex flex-col justify-center gap-6 pb-10 pt-28 px-15 ">
-          <p className="font-suzuki-pro-headline text-white text-7xl">
+        <div className="relative bg-white w-full h-full flex flex-col">
+          <div className="relative h-full">
+            <div className="absolute top-72 left-20 h-full flex flex-col gap-4 z-30">
+              <p className="font-suzuki-pro-headline text-white text-xl w-10/12">
+                Eksplore produk kami
+              </p>
+              <Button label="Cari sekarang" href="/cars" />
+            </div>
+            <Image
+              src={BannerCarImage}
+              alt="banner-car"
+              fill
+              className="object-cover"
+            />
+          </div>
+          <div className="relative h-full">
+            <div className="absolute top-64 left-20 h-full flex flex-col gap-4 z-30">
+              <p className="font-suzuki-pro-headline text-white text-xl w-10/12">
+                Hubungi untuk mendapatkan penawaran terbaik
+              </p>
+              <Button
+                label="Hubungi sekarang"
+                onClick={() =>
+                  window.open(
+                    `https://wa.me/${WHATSAPP_NUMBER}?text=Halo%20Suzuki,%20saya%20ingin%20bertanya%20tentang%20mobil`,
+                    "_blank",
+                  )
+                }
+              />
+            </div>
+            <div className="relative h-full bg-foreground/50 backdrop-blur-md z-20"></div>
+            <Image
+              src={BannerCarImage2}
+              alt="banner-car-2"
+              fill
+              className="object-cover"
+            />
+          </div>
+          {/* <p className="font-suzuki-pro-headline text-white text-7xl">
             The joy of driving is back.
           </p>
           <p className="font-sans text-gray-200 text-sm">
@@ -103,7 +126,7 @@ export default function Hero() {
                 </p>
               </Link>
             ))}
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

@@ -3,8 +3,6 @@
 import Image from "next/image";
 
 import Articles from "./articles";
-import Contact from "./contact";
-import DealerAndService from "./dealer";
 import Hero from "./hero";
 import Testimonials from "./testimonials";
 
@@ -14,10 +12,13 @@ import FindYourSuzukiSection from "./find-you-suzuki";
 
 export default function HomePage() {
   return (
-    <main id="landing-page" className="w-full h-full min-h-screen">
+    <main
+      id="landing-page"
+      className="w-full h-full min-h-screen container mx-auto"
+    >
       <Hero />
       <FindYourSuzukiSection />
-      <Articles />
+      <Testimonials />
       <Link
         href="/cars/fronx"
         className="container mx-auto block w-full cursor-pointer"
@@ -30,9 +31,7 @@ export default function HomePage() {
           className="w-full h-auto"
         />
       </Link>
-      <Testimonials />
-      <DealerAndService />
-      <Contact />
+      <Articles />
     </main>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { ChevronDown, ChevronUp, InfoIcon } from "lucide-react";
+import { ChevronDown, ChevronRight, ChevronUp, InfoIcon } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import type { ComponentType } from "react";
@@ -11,6 +11,7 @@ import CarCityIcon from "../assets/icons/car-city";
 import CarCommercialIcon from "../assets/icons/car-commercial";
 import CarMPVIcon from "../assets/icons/car-mpv";
 import CarSUVIcon from "../assets/icons/car-suv";
+import { cn } from "../lib/style";
 
 const categories = [
   {
@@ -73,7 +74,11 @@ function normalizeVehicleType(type: string | null): string {
   return type?.toLowerCase() ?? "";
 }
 
-export default function FindYourSuzukiSection() {
+export default function FindYourSuzukiSection({
+  className,
+}: {
+  className?: string;
+}) {
   const router = useRouter();
   const [selectedAccordion, setSelectedAccordion] = useState<string[]>([
     "Category",
@@ -191,7 +196,10 @@ export default function FindYourSuzukiSection() {
   return (
     <motion.main
       id="find-your-suzuki-section"
-      className="w-full h-full container mx-auto bg-white py-16"
+      className={cn(
+        "w-full h-full container mx-auto bg-white py-16",
+        className,
+      )}
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: "-80px" }}
@@ -202,11 +210,12 @@ export default function FindYourSuzukiSection() {
         variants={itemVariants}
       >
         <p className="text-3xl font-suzuki-pro-headline text-black">
-          Discover and configure all Suzuki models.
+          Temukan dan atur semua model Suzuki.
         </p>
         <p className="font-sans text-gray-600 text-base">
-          Explore our extensive range of Suzuki cars, from compact city cars to
-          rugged SUVs, each designed to fit your lifestyle and needs.
+          Jelajahi beragam pilihan mobil Suzuki kami, mulai dari mobil kota yang
+          ringkas hingga SUV yang tangguh, yang masing-masing dirancang untuk
+          menyesuaikan gaya hidup dan kebutuhan Anda.
         </p>
       </motion.div>
       <motion.div className="flex gap-6" variants={containerVariants}>
@@ -218,7 +227,7 @@ export default function FindYourSuzukiSection() {
               className="flex flex-col gap-4"
             >
               <motion.div
-                className="flex items-center justify-between border-b border-gray-600 pb-4 cursor-pointer group transition-colors duration-300 hover:opacity-80 hover:border-primary-suzuki"
+                className="flex items-center justify-between border-b border-gray-600 pb-4 cursor-pointer group transition-colors duration-300 hover:opacity-80"
                 onClick={() => toggleAccordion(category.label)}
                 whileHover={{ x: 4 }}
                 transition={{ type: "spring", stiffness: 400, damping: 25 }}
@@ -270,7 +279,7 @@ export default function FindYourSuzukiSection() {
           ))}
         </div>
         <motion.div
-          className="flex-1 w-full bg-gray-100 p-4 min-h-[60.1875rem]"
+          className="flex-1 w-full p-4 min-h-[60.1875rem]"
           variants={itemVariants}
         >
           <motion.div className="grid grid-cols-3 gap-4">
@@ -446,7 +455,7 @@ function Categories({
             className={`flex flex-col gap-1.5 py-2 px-4 border group rounded cursor-pointer transition-colors duration-300 items-center min-w-16 ${
               isActive
                 ? "border-primary-suzuki bg-gray-50"
-                : "bg-transparent border-gray-400 hover:border-primary-suzuki hover:bg-gray-50"
+                : "bg-transparent border-gray-400 hover:bg-gray-50"
             }`}
           >
             {Icon && (
@@ -468,7 +477,7 @@ function formatPriceFullIdr(value: string | null): string {
   if (!value) return "Price on request";
   const numeric = Number(value);
   if (!Number.isFinite(numeric) || numeric <= 0) return "Price on request";
-  return `Rp ${numeric.toLocaleString("id-ID")} IDR`;
+  return `Rp ${numeric.toLocaleString("id-ID")}`;
 }
 
 function CarItemCard({
@@ -483,17 +492,17 @@ function CarItemCard({
     <button
       type="button"
       onClick={onClick}
-      className="bg-white p-4 flex flex-col gap-2 text-left cursor-pointer transition-colors duration-300 border border-transparent hover:border-gray-300"
+      className="group bg-white p-4 flex flex-col gap-2 text-left cursor-pointer transition-colors duration-300 border border-transparent"
     >
       {/* Badge type */}
       <div className="flex flex-col p-2">
         <p className="bg-foreground w-fit text-white px-2 text-[10px] py-1">
           {badge}
         </p>
-        <p className="text-2xl font-semibold font-suzuki-pro-headline text-foreground mt-1">
+        <p className="text-2xl font-semibold font-suzuki-pro-headline text-foreground my-2">
           {car.name}
         </p>
-        <div className="relative w-full aspect-video bg-gray-100">
+        <div className="relative w-full aspect-video">
           <Image
             src={
               car.imageUrl ??
@@ -507,13 +516,26 @@ function CarItemCard({
         </div>
 
         <div className="mt-2">
-          <div className="flex items-center gap-1">
-            <p className="text-sm text-gray-500">Start from</p>
-            <InfoIcon className="w-3 h-3 cursor-pointer text-gray-500" />
+          <div className="flex items-center justify-between">
+            <div className="flex flex-col">
+              <div className="flex items-center gap-1">
+                <p className="text-sm text-gray-500">Mulai dari</p>
+              </div>
+              <span className="font-semibold text-base text-black">
+                {formatPriceFullIdr(car.startPrice)}
+              </span>
+            </div>
+            <div
+              className="flex flex-col items-center gap-1.5 self-end"
+              aria-hidden
+            >
+              <ChevronRight
+                className="size-5 shrink-0 text-foreground transition-colors duration-300 ease-out group-hover:text-primary-suzuki"
+                strokeWidth={2.25}
+              />
+              <span className="h-px w-5 bg-foreground transition-colors duration-300 ease-out group-hover:bg-primary-suzuki" />
+            </div>
           </div>
-          <span className="font-semibold text-base text-black">
-            {formatPriceFullIdr(car.startPrice)}
-          </span>
         </div>
       </div>
     </button>

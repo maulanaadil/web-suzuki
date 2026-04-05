@@ -13,20 +13,24 @@ const headerLinks = [
     href: "/",
   },
   {
+    label: "Credit Calculator",
+    href: "/credit-calculator",
+  },
+  {
     label: "Contact",
     href: "/contact",
   },
   {
     label: "Products",
-    href: "/products",
+    href: "/cars",
   },
   {
     label: "Articles",
     href: "/articles",
   },
   {
-    label: "Others",
-    href: "/others",
+    label: "Testimonial",
+    href: "/reviews",
   },
 ];
 
@@ -36,43 +40,63 @@ export default function Header() {
   const router = useRouter();
 
   const isHomePage = pathname === "/";
+  const filteredHeaderLinks = useMemo(() => {
+    return headerLinks.filter((link) =>
+      isHomePage ? link.href !== "/" : true,
+    );
+  }, [isHomePage]);
 
   return (
-    <>
-      <header className={`px-4 py-5 ${isHomePage ? "" : "container"} mx-auto`}>
-        <div className="flex items-center justify-between">
-          <div className="flex items-center px-5 py-3 bg-transparent justify-center">
-            <Link
-              href="/"
-              className="cursor-pointer hover:opacity-80 transition-opacity duration-300"
-            >
-              <SuzukiLogo width={100} height={20} />
-            </Link>
-          </div>
-          <div className="flex items-center justify-between gap-32">
-            <SearchInput
-              variant={isHomePage ? "white" : "black"}
-              onSelect={(href) => router.push(href)}
-              onSearch={(query) => router.push(`/search?q=${encodeURIComponent(query)}`)}
-            />
-            <div className="flex items-center gap-2 mr-8">
-              <MenuIcon
-                className={`w-4 h-4 ${isHomePage ? "text-white" : "text-black"}`}
-                onClick={() => setIsOpen(true)}
-              />
-              <p
-                className={`font-normal text-base ${isHomePage ? "text-white" : "text-black"} font-suzuki-pro-headline`}
-              >
-                Menu
-              </p>
-            </div>
-          </div>
+    <header
+      className={`sticky top-0 z-50 px-4  py-2 bg-white/80 backdrop-blur-sm`}
+    >
+      <div
+        className={`flex items-center justify-between ${isHomePage && "container"} mx-auto`}
+      >
+        <div className="flex items-center px-5 py-3 bg-transparent w-full">
+          <Link
+            href="/"
+            className="cursor-pointer hover:opacity-80 transition-opacity duration-300"
+          >
+            <SuzukiLogo width={100} height={20} />
+          </Link>
         </div>
-      </header>
+        <div className="items-center justify-end flex gap-8 w-full pr-10">
+          {filteredHeaderLinks.map((link) => (
+            <Link
+              href={link.href}
+              key={link.label}
+              className="text-black hover:text-primary-suzuki transition-colors duration-300 border-b font-suzuki-pro-headline border-transparent hover:border-primary-suzuki w-fit"
+            >
+              <span className="font-normal">{link.label}</span>
+            </Link>
+          ))}
+        </div>
+        <div className="flex items-center justify-between">
+          {/* <SearchInput
+            variant={isHomePage ? "white" : "black"}
+            onSelect={(href) => router.push(href)}
+            onSearch={(query) =>
+              router.push(`/search?q=${encodeURIComponent(query)}`)
+            }
+          />
+          <div className="flex items-center gap-2 mr-8">
+            <MenuIcon
+              className={`w-4 h-4 ${isHomePage ? "text-white" : "text-black"}`}
+              onClick={() => setIsOpen(true)}
+            />
+            <p
+              className={`font-normal text-base ${isHomePage ? "text-white" : "text-black"} font-suzuki-pro-headline`}
+            >
+              Menu
+            </p>
+          </div> */}
+        </div>
+      </div>
       <AnimatePresence>
         {isOpen && <PopupSidebar setIsOpen={setIsOpen} isOpen={isOpen} />}
       </AnimatePresence>
-    </>
+    </header>
   );
 }
 
