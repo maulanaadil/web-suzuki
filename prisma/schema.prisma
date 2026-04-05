@@ -18,7 +18,7 @@ model CarModel {
   colors        CarColor[]
   images        CarImage[]
   testimonials  Testimonial[]
-  orderForms    CarOrderForm?
+  orderForms    CarOrderForm[]
   detailBanner  CarDetailBanner[] @relation("CarDetailBanner")
   detailCarousel CarDetailCarousel[] @relation("CarDetailCarousel")
 }
@@ -120,14 +120,18 @@ model Testimonial {
 
 model CarOrderForm {
   id             String   @id @default(cuid())
-  carModelId     String   @unique
+  carModelId     String
   carModel       CarModel @relation(fields: [carModelId], references: [id], onDelete: Cascade)
   name           String   @db.VarChar(255)
-  email          String   @db.VarChar(255)
-  idCardNumber   String   @unique @db.VarChar(255)
+  email          String?  @db.VarChar(255)
+  idCardNumber   String   @db.VarChar(255)
   phone          String   @db.VarChar(255)
+  city           String?  @db.VarChar(255)
+  vehicleType    String?  @db.VarChar(100)
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
+
+  @@index([carModelId])
 }
 
 model CarDetailBanner {
@@ -167,6 +171,18 @@ model CarDetailCarouselContent {
   updatedAt DateTime @updatedAt
 }
 
+model Article {
+  id        String   @id @default(cuid())
+  slug      String   @unique @db.VarChar(255)
+  title     String   @db.VarChar(255)
+  snippet   String   @db.VarChar(500)
+  category  String   @db.VarChar(100)
+  content   String   @db.Text
+  imageUrl  String   @db.VarChar(255)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 enum CarColorType {
   ONE_TONE
   SECONDARY
@@ -197,3 +213,4 @@ enum CarVehicleType {
   PASSENGER
   COMMERCIAL
 }
+

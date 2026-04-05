@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { ChevronDown, ChevronRight, ChevronUp, InfoIcon } from "lucide-react";
+import { ChevronDown, ChevronRight, ChevronUp } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import type { ComponentType } from "react";
@@ -156,6 +156,8 @@ export default function FindYourSuzukiSection({
     selectedTypeFilters,
   ]);
 
+  console.log(filteredCars);
+
   const toggleAccordion = (category: string) => {
     if (selectedAccordion.includes(category)) {
       setSelectedAccordion((prev) => prev.filter((c) => c !== category));
@@ -197,7 +199,7 @@ export default function FindYourSuzukiSection({
     <motion.main
       id="find-your-suzuki-section"
       className={cn(
-        "w-full h-full container mx-auto bg-white py-16",
+        "w-full h-full container mx-auto bg-white py-16 px-6 sm:px-0",
         className,
       )}
       initial="hidden"
@@ -218,8 +220,11 @@ export default function FindYourSuzukiSection({
           menyesuaikan gaya hidup dan kebutuhan Anda.
         </p>
       </motion.div>
-      <motion.div className="flex gap-6" variants={containerVariants}>
-        <div className="w-1/4 flex flex-col gap-6">
+      <motion.div
+        className="flex flex-col lg:flex-row gap-6"
+        variants={containerVariants}
+      >
+        <div className="w-full lg:w-1/4 flex flex-col gap-6">
           {categories.map((category) => (
             <motion.div
               key={category.label}
@@ -279,10 +284,10 @@ export default function FindYourSuzukiSection({
           ))}
         </div>
         <motion.div
-          className="flex-1 w-full p-4 min-h-[60.1875rem]"
+          className="flex-1 w-full p-0 sm:p-4 min-h-0 lg:min-h-240.75"
           variants={itemVariants}
         >
-          <motion.div className="grid grid-cols-3 gap-4">
+          <motion.div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {isLoadingCatalog ? (
               <p className="font-sans text-sm text-gray-600">Loading cars...</p>
             ) : filteredCars.length === 0 ? (
@@ -306,7 +311,7 @@ export default function FindYourSuzukiSection({
 }
 
 const PRICE_SCALE_MIN = 0;
-const PRICE_SCALE_MAX = 600_000_000; // 600 million IDR
+const PRICE_SCALE_MAX = 760_000_000; // 600 million IDR
 const PRICE_STEP = 10_000_000; // 10 million
 
 function formatPriceIdr(value: number): string {
@@ -431,7 +436,7 @@ function Categories({
 }) {
   return (
     <motion.div
-      className="flex flex-wrap gap-2 items-center"
+      className="flex flex-wrap gap-2 items-center px-0 "
       initial="hidden"
       animate="visible"
       variants={{
@@ -508,9 +513,11 @@ function CarItemCard({
               car.imageUrl ??
               "https://placehold.co/720x405/e5e7eb/9ca3af?text=Suzuki"
             }
+            width={720}
+            height={405}
             alt={`Suzuki ${car.name}`}
-            fill
             className="object-cover"
+            objectFit="cover"
             unoptimized
           />
         </div>

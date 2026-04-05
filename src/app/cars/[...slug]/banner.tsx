@@ -31,7 +31,7 @@ export default function Banner({
       <div className="relative w-full aspect-21/9 bg-gray-100">
         <Image src={imageUrl} alt={variant} fill className="object-cover" />
       </div>
-      <div className="flex items-center container mx-auto px-4">
+      <div className="flex items-center container mx-auto px-4 sm:flex-row flex-col">
         <div className="flex-1 w-full">
           <p className="text-3xl font-suzuki-pro-headline text-foreground">
             {title}

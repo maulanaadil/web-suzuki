@@ -47,56 +47,51 @@ export default function Header() {
   }, [isHomePage]);
 
   return (
-    <header
-      className={`sticky top-0 z-50 px-4  py-2 bg-white/80 backdrop-blur-sm`}
-    >
-      <div
-        className={`flex items-center justify-between ${isHomePage && "container"} mx-auto`}
-      >
-        <div className="flex items-center px-5 py-3 bg-transparent w-full">
-          <Link
-            href="/"
-            className="cursor-pointer hover:opacity-80 transition-opacity duration-300"
-          >
-            <SuzukiLogo width={100} height={20} />
-          </Link>
-        </div>
-        <div className="items-center justify-end flex gap-8 w-full pr-10">
-          {filteredHeaderLinks.map((link) => (
+    <>
+      <header className="sticky top-0 z-40 px-4 py-2 bg-white/80 backdrop-blur-sm">
+        <div
+          className={`flex items-center justify-between ${isHomePage && "container"} mx-auto`}
+        >
+          <div className="flex items-center px-3 sm:px-5 py-3 bg-transparent shrink-0">
             <Link
-              href={link.href}
-              key={link.label}
-              className="text-black hover:text-primary-suzuki transition-colors duration-300 border-b font-suzuki-pro-headline border-transparent hover:border-primary-suzuki w-fit"
+              href="/"
+              className="cursor-pointer hover:opacity-80 transition-opacity duration-300"
             >
-              <span className="font-normal">{link.label}</span>
+              <SuzukiLogo width={100} height={20} />
             </Link>
-          ))}
-        </div>
-        <div className="flex items-center justify-between">
-          {/* <SearchInput
-            variant={isHomePage ? "white" : "black"}
-            onSelect={(href) => router.push(href)}
-            onSearch={(query) =>
-              router.push(`/search?q=${encodeURIComponent(query)}`)
-            }
-          />
-          <div className="flex items-center gap-2 mr-8">
-            <MenuIcon
-              className={`w-4 h-4 ${isHomePage ? "text-white" : "text-black"}`}
-              onClick={() => setIsOpen(true)}
-            />
-            <p
-              className={`font-normal text-base ${isHomePage ? "text-white" : "text-black"} font-suzuki-pro-headline`}
-            >
+          </div>
+
+          {/* Desktop nav */}
+          <div className="hidden lg:flex items-center justify-end gap-8 w-full pr-10">
+            {filteredHeaderLinks.map((link) => (
+              <Link
+                href={link.href}
+                key={link.label}
+                className="text-black hover:text-primary-suzuki transition-colors duration-300 border-b font-suzuki-pro-headline border-transparent hover:border-primary-suzuki w-fit whitespace-nowrap"
+              >
+                <span className="font-normal">{link.label}</span>
+              </Link>
+            ))}
+          </div>
+
+          {/* Mobile menu button */}
+          <button
+            type="button"
+            className="lg:hidden flex items-center gap-2 px-3 py-2"
+            onClick={() => setIsOpen(true)}
+            aria-label="Open menu"
+          >
+            <MenuIcon className="w-5 h-5 text-black" />
+            <span className="font-suzuki-pro-headline font-normal text-sm text-black hidden sm:inline">
               Menu
-            </p>
-          </div> */}
+            </span>
+          </button>
         </div>
-      </div>
+      </header>
       <AnimatePresence>
         {isOpen && <PopupSidebar setIsOpen={setIsOpen} isOpen={isOpen} />}
       </AnimatePresence>
-    </header>
+    </>
   );
 }
 
@@ -254,7 +249,7 @@ const PopupSidebar = ({
 }) => {
   return (
     <motion.div
-      className="fixed inset-0 bg-black/20 z-40"
+      className="fixed inset-0 bg-black/20 z-40 h-full"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -270,17 +265,19 @@ const PopupSidebar = ({
         className="fixed top-0 right-0 w-full max-w-sm h-full bg-white backdrop-filter backdrop-blur-sm z-50 shadow-xl"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-center justify-end p-4">
+        <div className="flex items-center justify-between p-4">
+          <SuzukiLogo width={80} height={16} />
           <XIcon
-            className="w-4 h-4 text-black hover:cursor-pointer hover:text-primary-suzuki transition-colors duration-300"
+            className="w-5 h-5 text-black hover:cursor-pointer hover:text-primary-suzuki transition-colors duration-300"
             onClick={() => setIsOpen(false)}
           />
         </div>
-        <div className="flex flex-col gap-5 px-4 pb-4">
+        <div className="flex flex-col gap-5 px-4 pb-4 bg-white">
           {headerLinks.map((link) => (
             <Link
               href={link.href}
               key={link.label}
+              onClick={() => setIsOpen(false)}
               className="text-black hover:text-primary-suzuki transition-colors duration-300 border-b font-suzuki-pro-headline border-transparent hover:border-primary-suzuki pb-2 w-fit"
             >
               <span className="font-normal">{link.label}</span>

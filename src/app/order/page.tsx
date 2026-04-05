@@ -1,15 +1,23 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Loader2 } from "lucide-react";
 
 import { WHATSAPP_NUMBER } from "../../constants/whatsapp";
+
+type CarModel = {
+  id: string;
+  slug: string;
+  name: string;
+  category: string | null;
+  vehicleType: string | null;
+};
 
 type OrderFormState = {
   jenisKendaraan: string;
   produk: string;
-  model: string;
+  modelSlug: string;
   namaLengkap: string;
   noKtp: string;
   nomorHp: string;
@@ -20,7 +28,7 @@ type OrderFormState = {
 const initialState: OrderFormState = {
   jenisKendaraan: "",
   produk: "Mobil Suzuki",
-  model: "",
+  modelSlug: "",
   namaLengkap: "",
   noKtp: "",
   nomorHp: "",
@@ -31,32 +39,87 @@ const initialState: OrderFormState = {
 export default function OrderPage() {
   const params = useSearchParams();
   const initialModel = params.get("model") ?? "";
+
   const [form, setForm] = useState<OrderFormState>({
     ...initialState,
-    model: initialModel,
+    modelSlug: initialModel,
   });
+  const [carModels, setCarModels] = useState<CarModel[]>([]);
+  const [submitting, setSubmitting] = useState(false);
+
+  useEffect(() => {
+    fetch("/api/cars")
+      .then((res) => res.json())
+      .then((json) =>
+        setCarModels(
+          (json.data ?? []).map((c: CarModel) => ({
+            id: c.id,
+            slug: c.slug,
+            name: c.name,
+            category: c.category,
+            vehicleType: c.vehicleType,
+          })),
+        ),
+      )
+      .catch(() => {});
+  }, []);
+
+  const filteredModels = useMemo(() => {
+    if (!form.jenisKendaraan) return carModels;
+    return carModels.filter(
+      (c) =>
+        c.vehicleType?.toUpperCase() ===
+        form.jenisKendaraan.toUpperCase(),
+    );
+  }, [carModels, form.jenisKendaraan]);
+
+  const selectedModel = carModels.find((c) => c.slug === form.modelSlug);
 
   const isSubmitDisabled = useMemo(() => {
-    return !(
-      form.jenisKendaraan &&
-      form.produk &&
-      form.model &&
-      form.namaLengkap &&
-      form.noKtp &&
-      form.nomorHp &&
-      form.kotaDomisili
+    return (
+      submitting ||
+      !(
+        form.jenisKendaraan &&
+        form.produk &&
+        form.modelSlug &&
+        form.namaLengkap &&
+        form.noKtp &&
+        form.nomorHp &&
+        form.kotaDomisili
+      )
     );
-  }, [form]);
+  }, [form, submitting]);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setSubmitting(true);
+
+    try {
+      await fetch("/api/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          modelSlug: form.modelSlug,
+          name: form.namaLengkap,
+          idCardNumber: form.noKtp,
+          phone: form.nomorHp,
+          email: form.email || undefined,
+          city: form.kotaDomisili,
+          vehicleType: form.jenisKendaraan,
+        }),
+      });
+    } catch {
+      // still redirect to WhatsApp even if DB save fails
+    }
+
+    const modelName = selectedModel?.name ?? form.modelSlug;
 
     const message = [
       "Halo Suzuki, saya ingin order kendaraan dengan data berikut:",
       "",
       `- Jenis Kendaraan: ${form.jenisKendaraan}`,
       `- Produk: ${form.produk}`,
-      `- Model: ${form.model}`,
+      `- Model: ${modelName}`,
       `- Nama Lengkap: ${form.namaLengkap}`,
       `- No KTP: ${form.noKtp}`,
       `- Nomor HP: ${form.nomorHp}`,
@@ -75,73 +138,112 @@ export default function OrderPage() {
       <section className="container mx-auto px-4">
         <div className="mx-auto max-w-3xl overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
           <div className="bg-[#123C82] px-6 py-5 text-white">
-            <p className="text-xs uppercase tracking-[0.2em] text-white/80">Suzuki Finance</p>
-            <h1 className="mt-1 text-3xl font-suzuki-pro-headline">Form Pemesanan Kendaraan</h1>
+            <p className="text-xs uppercase tracking-[0.2em] text-white/80">
+              Suzuki Finance
+            </p>
+            <h1 className="mt-1 text-3xl font-suzuki-pro-headline">
+              Form Pemesanan Kendaraan
+            </h1>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-5 px-6 py-7 md:px-10">
+          <form
+            onSubmit={handleSubmit}
+            className="space-y-5 px-6 py-7 md:px-10"
+          >
             <FormSelect
               label="Pilih jenis kendaraan"
               value={form.jenisKendaraan}
-              onChange={(value) => setForm((prev) => ({ ...prev, jenisKendaraan: value }))}
-              options={["Passenger", "Commercial"]}
+              onChange={(value) =>
+                setForm((prev) => ({
+                  ...prev,
+                  jenisKendaraan: value,
+                  modelSlug: "",
+                }))
+              }
+              options={[
+                { label: "Passenger", value: "PASSENGER" },
+                { label: "Commercial", value: "COMMERCIAL" },
+              ]}
+              placeholder="Pilih jenis kendaraan"
             />
 
             <FormInput
               label="Produk"
               value={form.produk}
-              onChange={(value) => setForm((prev) => ({ ...prev, produk: value }))}
+              onChange={(value) =>
+                setForm((prev) => ({ ...prev, produk: value }))
+              }
               placeholder="Pilih Produk"
             />
 
-            <FormInput
+            <FormSelect
               label="Model"
-              value={form.model}
-              onChange={(value) => setForm((prev) => ({ ...prev, model: value }))}
+              value={form.modelSlug}
+              onChange={(value) =>
+                setForm((prev) => ({ ...prev, modelSlug: value }))
+              }
+              options={filteredModels.map((c) => ({
+                label: c.name,
+                value: c.slug,
+              }))}
               placeholder="Pilih Model"
             />
 
             <FormInput
               label="Nama Lengkap (Sesuai KTP)"
               value={form.namaLengkap}
-              onChange={(value) => setForm((prev) => ({ ...prev, namaLengkap: value }))}
+              onChange={(value) =>
+                setForm((prev) => ({ ...prev, namaLengkap: value }))
+              }
               placeholder="Masukan Nama Lengkap"
             />
 
             <FormInput
               label="No KTP"
               value={form.noKtp}
-              onChange={(value) => setForm((prev) => ({ ...prev, noKtp: value }))}
+              onChange={(value) =>
+                setForm((prev) => ({ ...prev, noKtp: value }))
+              }
               placeholder="Masukan Nomor KTP"
             />
 
             <FormInput
               label="Nomor HP"
               value={form.nomorHp}
-              onChange={(value) => setForm((prev) => ({ ...prev, nomorHp: value }))}
+              onChange={(value) =>
+                setForm((prev) => ({ ...prev, nomorHp: value }))
+              }
               placeholder="Masukan Nomor HP"
             />
 
             <FormInput
               label="Kota Domisili"
               value={form.kotaDomisili}
-              onChange={(value) => setForm((prev) => ({ ...prev, kotaDomisili: value }))}
+              onChange={(value) =>
+                setForm((prev) => ({ ...prev, kotaDomisili: value }))
+              }
               placeholder="Masukan Kota Domisili"
             />
 
             <FormInput
               label="Email"
               value={form.email}
-              onChange={(value) => setForm((prev) => ({ ...prev, email: value }))}
+              onChange={(value) =>
+                setForm((prev) => ({ ...prev, email: value }))
+              }
               placeholder="Masukan Email (opsional)"
+              required={false}
             />
 
             <div className="pt-3">
               <button
                 type="submit"
                 disabled={isSubmitDisabled}
-                className="inline-flex h-12 items-center justify-center rounded-md bg-[#123C82] px-10 text-base font-semibold text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
+                className="inline-flex h-12 items-center justify-center gap-2 rounded-md bg-[#123C82] px-10 text-base font-semibold text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
               >
+                {submitting && (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                )}
                 Kirim ke WhatsApp
               </button>
             </div>
@@ -157,16 +259,19 @@ function FormInput({
   value,
   placeholder,
   onChange,
+  required = true,
 }: {
   label: string;
   value: string;
   placeholder: string;
   onChange: (value: string) => void;
+  required?: boolean;
 }) {
   return (
     <label className="block">
       <span className="mb-2 block text-sm font-semibold text-gray-700">
-        {label} <span className="text-red-600">*</span>
+        {label}{" "}
+        {required && <span className="text-red-600">*</span>}
       </span>
       <input
         value={value}
@@ -183,11 +288,13 @@ function FormSelect({
   value,
   options,
   onChange,
+  placeholder,
 }: {
   label: string;
   value: string;
-  options: string[];
+  options: { label: string; value: string }[];
   onChange: (value: string) => void;
+  placeholder: string;
 }) {
   return (
     <label className="block">
@@ -200,10 +307,10 @@ function FormSelect({
           onChange={(event) => onChange(event.target.value)}
           className="h-13 w-full appearance-none rounded-md border border-gray-300 bg-white px-4 text-base text-gray-900 outline-none transition-colors focus:border-[#123C82]"
         >
-          <option value="">Pilih jenis kendaraan</option>
-          {options.map((option) => (
-            <option key={option} value={option}>
-              {option}
+          <option value="">{placeholder}</option>
+          {options.map((opt) => (
+            <option key={opt.value} value={opt.value}>
+              {opt.label}
             </option>
           ))}
         </select>

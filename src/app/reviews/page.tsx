@@ -2,89 +2,42 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { X, Star } from "lucide-react";
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
 import { useEffect, useState } from "react";
-
-import Review1Image from "../../../public/images/review-1.jpeg";
 
 type ReviewItem = {
   id: string;
   name: string;
-  city: string;
-  car: string;
-  rating: number;
   quote: string;
-  photoUrl: string | StaticImageData;
-  featured?: boolean;
+  imageUrl: string;
+  car: {
+    name: string;
+    slug: string;
+    imageUrl: string | null;
+  };
 };
 
-const reviews: ReviewItem[] = [
-  {
-    id: "featured",
-    name: "Rizky Pratama",
-    city: "Bandung",
-    car: "All New Jimny",
-    rating: 5,
-    quote:
-      "From test drive to delivery, everything felt premium. The team explained every feature clearly and helped me choose the right variant.",
-    photoUrl: Review1Image,
-    featured: true,
-  },
-  {
-    id: "1",
-    name: "Ayu Larasati",
-    city: "Jakarta",
-    car: "New Fronx",
-    rating: 4.9,
-    quote:
-      "The design is stunning and the driving experience is smooth. The promo details were transparent and easy to understand.",
-    photoUrl: Review1Image,
-  },
-  {
-    id: "2",
-    name: "Dimas Saputra",
-    city: "Surabaya",
-    car: "Ertiga",
-    rating: 4.8,
-    quote:
-      "Great family car recommendation. The advisor listened first, then suggested options that matched my budget perfectly.",
-    photoUrl: Review1Image,
-  },
-  {
-    id: "3",
-    name: "Siti Maharani",
-    city: "Semarang",
-    car: "XL7",
-    rating: 4.9,
-    quote:
-      "Fast WhatsApp response and friendly service. Financing simulation helped me decide confidently without pressure.",
-    photoUrl: Review1Image,
-  },
-  {
-    id: "4",
-    name: "Fajar Nugroho",
-    city: "Yogyakarta",
-    car: "Carry",
-    rating: 4.8,
-    quote:
-      "After-sales support has been excellent. Service reminders and maintenance handling are always on time.",
-    photoUrl: Review1Image,
-  },
-];
-
 export default function ReviewsPage() {
-  const reviewGrid = reviews;
+  const [reviews, setReviews] = useState<ReviewItem[]>([]);
   const [activeIndex, setActiveIndex] = useState(0);
   const [activeReview, setActiveReview] = useState<ReviewItem | null>(null);
+
+  useEffect(() => {
+    fetch("/api/testimonials")
+      .then((res) => res.json())
+      .then((json) => setReviews(json.data ?? []))
+      .catch(() => {});
+  }, []);
+
   const rotatingReview = reviews[activeIndex];
 
   useEffect(() => {
+    if (reviews.length === 0) return;
     const timer = window.setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % reviews.length);
     }, 4200);
-
     return () => window.clearInterval(timer);
-  }, []);
+  }, [reviews.length]);
 
   useEffect(() => {
     if (!activeReview) return;
@@ -94,6 +47,8 @@ export default function ReviewsPage() {
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [activeReview]);
+
+  if (reviews.length === 0) return null;
 
   return (
     <main className="bg-white">
@@ -113,27 +68,29 @@ export default function ReviewsPage() {
 
         <div className="mx-auto mt-12 max-w-5xl">
           <AnimatePresence mode="wait">
-            <motion.div
-              key={rotatingReview.id}
-              initial={{ opacity: 0, y: 20, scale: 0.98 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -16, scale: 0.98 }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
-              className="py-2"
-            >
-              <ReviewCard
-                review={rotatingReview}
-                dark
-                className="md:grid md:grid-cols-[1.2fr_1fr] md:gap-10 md:items-start"
-                imageClassName="h-80 md:h-[460px]"
-                onOpenImage={setActiveReview}
-              />
-            </motion.div>
+            {rotatingReview && (
+              <motion.div
+                key={rotatingReview.id}
+                initial={{ opacity: 0, y: 20, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -16, scale: 0.98 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+                className="py-2"
+              >
+                <ReviewCard
+                  review={rotatingReview}
+                  dark
+                  className="md:grid md:grid-cols-[1.2fr_1fr] md:gap-10 md:items-start"
+                  imageClassName="h-80 md:h-[460px]"
+                  onOpenImage={setActiveReview}
+                />
+              </motion.div>
+            )}
           </AnimatePresence>
         </div>
 
         <div className="mt-14 space-y-10">
-          {reviewGrid.map((review) => (
+          {reviews.map((review) => (
             <div key={review.id} className="border-t border-gray-200 pt-8">
               <ReviewCard
                 review={review}
@@ -165,7 +122,7 @@ export default function ReviewsPage() {
             </button>
             <div className="relative aspect-4/3 w-full">
               <Image
-                src={activeReview.photoUrl}
+                src={activeReview.imageUrl}
                 alt={`${activeReview.name} testimonial customer photo`}
                 fill
                 className="object-contain"
@@ -204,7 +161,7 @@ function ReviewCard({
         aria-label={`Open ${review.name} testimonial image`}
       >
         <Image
-          src={review.photoUrl}
+          src={review.imageUrl}
           alt={`${review.name} testimonial customer photo`}
           fill
           className="object-cover transition-transform duration-500 group-hover:scale-110"
@@ -217,16 +174,16 @@ function ReviewCard({
 
       <div className="flex items-center justify-between gap-3">
         <div>
-          <p className={`text-base font-semibold ${dark ? "text-foreground" : "text-foreground"}`}>
+          <p
+            className={`text-base font-semibold ${dark ? "text-foreground" : "text-foreground"}`}
+          >
             {review.name}
           </p>
-          <p className="text-sm text-gray-500">
-            {review.city} - {review.car}
-          </p>
+          <p className="text-sm text-gray-500">Suzuki {review.car.name}</p>
         </div>
 
         <span className="inline-flex items-center gap-1 text-sm font-medium text-foreground">
-          {review.rating}
+          5.0
           <Star className="h-4 w-4 fill-amber-400 text-amber-400" />
         </span>
       </div>

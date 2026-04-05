@@ -391,16 +391,16 @@ async function seedCar(car: CarDef) {
   console.log(`  ✓ CarPrices upserted: ${prices.size}`);
 }
 
-const FRONX_VARIANT_CODES = ["A3L415FM00GLMTS", "A3L415FM00GLATS"];
-const FRONX_COLOR_CODES = ["ZYZ", "PSW", "ZBD"];
+const FRONX_VARIANT_CODES = ["8IE1X0000000ATT"];
+const FRONX_COLOR_CODES = ["WB3"];
 
 async function seedColor() {
   const model = await prisma.carModel.findUnique({
-    where: { slug: "fronx" },
+    where: { slug: "evitara" },
     include: { variants: true },
   });
 
-  if (!model) throw new Error('CarModel "fronx" not found');
+  if (!model) throw new Error('CarModel "evitara" not found');
 
   const codesOnModel = new Set(model.variants.map((v) => v.code));
   const missing = FRONX_VARIANT_CODES.filter((c) => !codesOnModel.has(c));
@@ -493,7 +493,7 @@ async function carModelIdForImageFolder(modelFolder: string): Promise<string> {
  * `typeDir` maps to CarImageType (banner, carousel, interior, preview).
  * `url` is the public path (e.g. /images/fronx/carousel/feature.webp).
  */
-async function seedImage(modelSlugFolder = "fronx") {
+async function seedImage(modelSlugFolder = "evitara") {
   const publicDir = path.join(process.cwd(), "public");
   const modelRoot = path.join(publicDir, "images", modelSlugFolder);
 
@@ -606,56 +606,58 @@ async function seedImageContent(modelSlug = "fronx") {
 
 const DUMMY_TESTIMONIALS = [
   {
-    slug: "fronx",
     name: "Budi Santoso",
     quote:
-      "Fronx benar-benar mengubah pengalaman berkendara saya. Desainnya sporty, fiturnya lengkap, dan sangat irit bahan bakar. Pilihan terbaik untuk keluarga muda!",
-    imageUrl: "https://i.pravatar.cc/150?img=11",
+      "Mobil ini benar-benar mengubah pengalaman berkendara saya. Desainnya sporty, fiturnya lengkap, dan sangat irit bahan bakar. Pilihan terbaik untuk keluarga muda!",
+    imageUrl: "/images/testimonials/testimonial-1.jpeg",
   },
   {
-    slug: "fronx",
     name: "Rina Kartika",
     quote:
-      "Saya sudah pakai Fronx selama 6 bulan dan sangat puas. Kabinnya luas, AC-nya cepat dingin, dan fitur safety-nya bikin tenang di jalan.",
-    imageUrl: "https://i.pravatar.cc/150?img=5",
+      "Sudah 6 bulan pakai dan sangat puas. Kabinnya luas, AC-nya cepat dingin, dan fitur safety-nya bikin tenang di jalan. Recommended banget!",
+    imageUrl: "/images/testimonials/testimonial-2.jpeg",
   },
   {
-    slug: "fronx",
     name: "Andi Wijaya",
     quote:
       "Ground clearance-nya tinggi, cocok buat jalanan Jakarta yang sering banjir. Tampilan luarnya juga keren, banyak tetangga yang tanya mobilnya apa.",
-    imageUrl: "https://i.pravatar.cc/150?img=12",
+    imageUrl: "/images/testimonials/testimonial-3.jpeg",
   },
   {
-    slug: "all-new-ertiga",
     name: "Siti Nurhaliza",
     quote:
-      "Ertiga memang MPV sejati. Muat 7 orang dengan nyaman, bagasinya lega, dan konsumsi BBM-nya sangat irit. Cocok untuk mudik!",
-    imageUrl: "https://i.pravatar.cc/150?img=9",
+      "Konsumsi BBM-nya sangat irit dan kabin nyaman untuk perjalanan jauh. Cocok banget untuk mudik bersama keluarga besar!",
+    imageUrl: "/images/testimonials/testimonial-4.jpeg",
   },
   {
-    slug: "jimny",
     name: "Reza Mahendra",
     quote:
-      "Jimny itu bukan sekadar mobil, tapi gaya hidup. Bawa off-road tetap tangguh, di kota tetap stylish. Saya sudah jatuh cinta sejak pertama test drive.",
-    imageUrl: "https://i.pravatar.cc/150?img=53",
+      "Dari pertama test drive langsung jatuh cinta. Performanya tangguh di segala medan, di kota tetap stylish. Bukan sekadar mobil, tapi gaya hidup.",
+    imageUrl: "/images/testimonials/testimonial-5.jpeg",
+  },
+  {
+    name: "Dewi Anggraini",
+    quote:
+      "Teknologi di dalamnya sangat canggih tapi mudah digunakan. Head unit-nya responsif, koneksi wireless lancar, dan fitur keselamatannya bikin percaya diri di jalan.",
+    imageUrl: "/images/testimonials/testimonial-6.jpeg",
   },
 ];
 
 async function seedTestimonials() {
+  const allModels = await prisma.carModel.findMany();
+  if (allModels.length === 0) {
+    console.warn("  ⚠ No CarModel found, skipping testimonials");
+    return;
+  }
+
   let created = 0;
   for (const t of DUMMY_TESTIMONIALS) {
-    const model = await prisma.carModel.findUnique({
-      where: { slug: t.slug },
-    });
-    if (!model) {
-      console.warn(`  ⚠ CarModel "${t.slug}" not found, skipping testimonial`);
-      continue;
-    }
+    // Randomly pick a car model
+    const model = allModels[Math.floor(Math.random() * allModels.length)];
 
-    // Avoid duplicates by checking name + carModelId
+    // Avoid duplicates by checking name
     const existing = await prisma.testimonial.findFirst({
-      where: { name: t.name, carModelId: model.id },
+      where: { name: t.name },
     });
     if (existing) continue;
 
@@ -674,7 +676,7 @@ async function seedTestimonials() {
 
 async function seedDetailBanner() {
   const model = await prisma.carModel.findUnique({
-    where: { slug: "fronx" },
+    where: { slug: "evitara" },
   });
 
   if (!model) throw new Error('CarModel "fronx" not found');
@@ -682,13 +684,12 @@ async function seedDetailBanner() {
   await prisma.carDetailBanner.create({
     data: {
       carModelId: model.id,
-      title: "Feast On The Beauty From Any Angle",
-      description:
-        "Desain coupe-style SUV Suzuki Fronx yang elegan dan dinamis, memikat perhatian dari pandangan pertama.",
-      buttonLabel: "Jelajahi Eksterior",
-      buttonHref: "/cars/fronx/eksterior",
-      bannerVariant: CarImageType.EKSTERIOR,
-      imageUrl: "/images/fronx/banner/eksterior-banner.webp",
+      title: "Premium Comfort with Advanced Technology",
+      description: "Utility, refined for Maximum Ease",
+      buttonLabel: "Jelajahi Interior",
+      buttonHref: "/cars/evitara/interior",
+      bannerVariant: CarImageType.INTERIOR,
+      imageUrl: "/images/evitara/banner/interior-banner.webp",
     },
   });
   console.log(`  ✓ CarDetailBanner upserted for ${model.name}`);
@@ -696,10 +697,10 @@ async function seedDetailBanner() {
 
 async function seedDetailCarousel() {
   const model = await prisma.carModel.findUnique({
-    where: { slug: "fronx" },
+    where: { slug: "evitara" },
   });
 
-  if (!model) throw new Error('CarModel "fronx" not found');
+  if (!model) throw new Error('CarModel "evitara" not found');
 
   // Idempotent: re-run safe — CarDetailCarouselContent cascades on delete
   const deleted = await prisma.carDetailCarousel.deleteMany({
@@ -707,7 +708,7 @@ async function seedDetailCarousel() {
   });
   if (deleted.count > 0) {
     console.log(
-      `  ↺ Removed ${deleted.count} existing CarDetailCarousel row(s) for fronx`,
+      `  ↺ Removed ${deleted.count} existing CarDetailCarousel row(s) for evitara`,
     );
   }
 
@@ -739,192 +740,269 @@ async function seedDetailCarousel() {
       {
         title: "Suzuki Safety Support",
         content:
-          "Suzuki Fronx dilengkapi dengan sistem Suzuki Safety Support untuk perjalanan yang selalu aman dan nyaman",
-        imageUrl: "/images/fronx/carousel/safety-support.webp",
+          "A cabin that prioritizes safety with dual front, side and curtain airbags for all passengers.",
+        imageUrl: "/images/evitara/carousel/suzuki-safety-support.webp",
         carDetailCarouselId: carouselSecurity.id,
       },
       {
-        title: "Dual Sensor Brake Support II (DSBS II) (SGX Only)",
+        title: "Adaptive Cruise Control (ACC)",
         content:
-          "Berkendara dengan nyaman di jalan tol dan atur kecepatan yang sesuai untuk menjaga jarak yang aman dan sesuai. Sistem ini otomatis mempercepat, memperlambat, dan berhenti sambil mempertahankan jarak yang telah ditentukan dengan kendaraan di depan.",
-        imageUrl: "/images/fronx/carousel/dual-sensor-brake.webp",
+          "ACC helps reduce driver fatigue on long trips and when driving in traffic. The system uses millimetre-wave radar and a monocular camera to measure the distance to the vehicle ahead, accelerating or decelerating as needed to maintain the distance you have set. (You can choose from four distance settings.) If the road ahead is clear, it will maintain the speed at which you were travelling when you engaged the system. ACC can be linked to the traffic sign recognition system through the driver customisation setting. ACC set speed will be adjusted based on the posted speed limit.",
+        imageUrl: "/images/evitara/carousel/adaptive-cruise-control.webp",
         carDetailCarouselId: carouselSecurity.id,
       },
       {
-        title: "Blind Spot Monitor (BSM) (SGX Only)",
+        title: "Adaptive High Beam System (AHS)",
         content:
-          "Membantu pengemudi memeriksa arah belakang saat ingin berpindah jalur dengan menginformasikan keberadaan kendaraan yang mendekat dari arah belakang.",
-        imageUrl: "/images/fronx/carousel/blind-spot-monitoring.webp",
+          "AHS uses millimetre-wave radar and the monocular camera to detect the brightness of the surrounding area and the lights of other vehicles, and adjusts the brightness and illumination range of the headlamps as needed. It also adjusts high beam brightness and illumination angle according to vehicle speed, and switches to low beam in well-lit areas.",
+        imageUrl: "/images/evitara/carousel/ahs.webp",
         carDetailCarouselId: carouselSecurity.id,
       },
       {
-        title: "Lane Keep Assist (LKA) (SGX Only)",
+        title: "Blind Spot Monitor (BSM)",
         content:
-          "Menjaga kendaraan tetap di tengah lajur saat ﬁtur ACC aktif dengan mendeteksi garis marka di sisi kanan dan kiri dan mengarahkan kendaraan ke tengah lajur. Serta memberi bantuan kemudi untuk menjaga jarak aman jika sistem mendeteksi objek penghalang yang terlalu dekat.",
-        imageUrl: "/images/fronx/carousel/lane-keep-assists.webp",
+          "BSM uses millimetre-wave radar sensors in the rear bumper to detect vehicles located in or approaching either rear blind spot. When a vehicle is detected, a warning icon appears in the corresponding door mirror. If you activate the turn signal on that side, the icon flashes and an audio warning sounds. Approaching vehicle detection area.",
+        imageUrl: "/images/evitara/carousel/bms.webp",
         carDetailCarouselId: carouselSecurity.id,
       },
       {
-        title: "Rear Cross Traﬃc Alert (RCTA) (SGX Only)",
+        title: "Dual Sensor Brake Support II (DSBS II)",
         content:
-          "Saat mundur di area parkir dan semacamnya, sistem akan mendeteksi kendaraan yang mendekat dari sisi kiri dan kanan belakang kendaraan. Sistem akan memperingatkan pengemudi melalui tampilan peringatan di meter cluster, lampu indikator spion yang berkedip, dan suara peringatan.",
-        imageUrl: "/images/fronx/carousel/rear-cross-traffic-alert.webp",
+          "The system employs millimetre-wave radar sensors and a monocular camera to detect vehicles, motorcycle pedestrians and bicycles (daytime only) ahead of the e VITARA. Audio and visual warnings are issued to alert you if the possibility of a collision arises. If you respond with insufficient brake force, brake assist automatically engages to help slow the vehicle. And if the probability of a collision increases, brake force is applied automatically to help reduce impact force and mitigate damage.",
+        imageUrl: "/images/evitara/carousel/dsbs-2.webp",
         carDetailCarouselId: carouselSecurity.id,
       },
       {
-        title: "Lane Departure Warning (Peringatan Keluar Jalur)(*) (SGX Only)",
+        title: "Lane Departure Prevention (LDP)",
         content:
-          "Saat berkendara, sistem mendeteksi garis marka dan kondisi jalan di sisi kiri dan kanan, lalu memprediksi arah laju kendaraan. Jika sistem mendeteksi kendaraan hendak keluar jalur, sistem akan memperingatkan pengemudi melalui indikator visual di meter cluster dan peringatan suara atau getaran di roda kemudi. *Aktif pada kecepatan 50 km/jam atau lebih",
-        imageUrl: "/images/fronx/carousel/lane-departure-warning.webp",
+          "LDP detects the lane demarcation lines and predicts your path of travel as you drive. If you begin to drift due to inattention, the system alerts you by vibrating the steering wheel or sounding an audio alert. And if you fail to respond or correct, it provides steering assistance to help return your e VITARA to the centre of the lane.",
+        imageUrl: "/images/evitara/carousel/ldp.webp",
         carDetailCarouselId: carouselSecurity.id,
       },
       {
-        title:
-          "Vehicle Swaying Warning (Peringatan Vehicle Swaying)(*) (SGX Only)",
+        title: "Lane Keep Assist (LKA)",
         content:
-          "Digunakan saat berkendara jarak jauh, sistem mendeteksi garis marka di kedua sisi dan menganalisa pola mengemudi kendaraan. Jika sistem menentukan bahwa kendaraan berjalan tidak stabil (tidak lurus atau menyimpang), maka sistem akan memberikan himbauan peringatan suara dan indikator visual di dalam meter cluster agar pengemudi beristirahat sejenak. *Aktif pada kecepatan 50 km/jam atau lebih",
-        imageUrl: "/images/fronx/carousel/vehicle-swaying-warning.webp",
+          "When you have adaptive cruise control activated, LKA helps you keep the e VITARA in the centre of the lane in which you are travelling. And if it senses that you are drawing too close to an adjacent vehicle or other obstacle, LKA provides steering assistance to help maintain a safe distance.",
+        imageUrl: "/images/evitara/carousel/lka.webp",
         carDetailCarouselId: carouselSecurity.id,
       },
       {
-        title: "Lane Departure Prevention (LDP)(*) (SGX Only)",
+        title: "Multiple Collision Braking",
         content:
-          "Sistem akan membantu mengoreksi roda kemudi untuk menghindari kendaraan keluar dari jalur. *Aktif pada kecepatan 50 km/jam atau lebih",
-        imageUrl: "/images/fronx/carousel/lane-keep-assists.webp",
+          "When the brake system receives a signal from the airbag that a collision has occurred, it automatically activates the brakes and brake lamps to alert nearby vehicles and help prevent a secondary collision.",
+        imageUrl: "/images/evitara/carousel/multiple-collison-braking.webp",
         carDetailCarouselId: carouselSecurity.id,
       },
       {
-        title: "Hill Hold Control",
+        title: "Rear Cross Traffic Alert (RCTA)",
         content:
-          "Lewati tanjakan jalanan dengan mudah saat berpindah kaki dari pedal rem, dengan sistem yang mencegah mobil bergeser mundur selama dua detik.",
-        imageUrl: "/images/fronx/carousel/hill-hold-control.webp",
+          "RCTA is a supplementary safety feature that uses blind spot monitor to detect and warn of vehicles approaching from the left or right when backing out of a parking space or other location.",
+        imageUrl: "/images/evitara/carousel/rear-cross-traffic-alert.webp",
         carDetailCarouselId: carouselSecurity.id,
       },
       {
-        title: "Parking Sensor (Sensor Parkir)",
+        title: "Integrated Display Sistem",
         content:
-          "Saat pengemudi hendak parkir, empat sensor dirancang untuk mendeteksi objek di belakang. ultrasonik yang terintegrasi di bumper belakang Sistem akan memberikan peringatan kepada pengemudi melalui suara yang berubah menyesuaikan dengan jarak objek.",
-        imageUrl: "/images/fronx/carousel/parking-sensor.webp",
-        carDetailCarouselId: carouselSecurity.id,
-      },
-      {
-        title: "High Beam Assist (HBA)(**) (SGX Only)",
-        content:
-          "Mendeteksi sorotan cahaya dari lampu kendaraan di depan dan sekitar, lalu secara otomatis beralih antara lampu jauh atau lampu dekat. **Aktif pada kecepatan 30 km/jam atau lebih & dalam mode auto",
-        imageUrl: "/images/fronx/carousel/high-beam-assist.webp",
-        carDetailCarouselId: carouselSecurity.id,
-      },
-      {
-        title: "Around View Monitor (Kamera Tampilan 360°) (SGX Only)",
-        content:
-          "Tempat parkir sempit tidak lagi menjadi masalah dengan 360 Camera dan Back Camera yang membantu Anda melihat lingkungan sekitar secara jelas.",
-        imageUrl: "/images/fronx/carousel/360-camera.webp",
-        carDetailCarouselId: carouselSecurity.id,
-      },
-      {
-        title: "Adaptive Cruise Control (ACC) (SGX Only)",
-        content:
-          "Berkendara dengan nyaman di jalan tol dan atur kecepatan yang sesuai untuk menjaga jarak yang aman dan sesuai. Sistem ini otomatis mempercepat, memperlambat, dan berhenti sambil mempertahankan jarak yang telah ditentukan dengan kendaraan di depan.",
-        imageUrl: "/images/fronx/carousel/adaptive-cruise-control.webp",
-        carDetailCarouselId: carouselSecurity.id,
-      },
-      {
-        title: "HEAD-UP DISPLAY (TAMPILAN HEAD-UP) (SGX Only)",
-        content:
-          "Tetap fokus di jalan dengan informasi perjalanan di depan mata, tanpa harus mengalihkan penglihatan.",
-        imageUrl: "/images/fronx/carousel/head-up-display.webp",
-        carDetailCarouselId: carouselSecurity.id,
-      },
-      {
-        title: "Pedestrian Safety",
-        content:
-          "Struktur bodi yang dirancang untuk menyerap energi dan mengurangi dampak pada pejalan kaki jika terjadi kecelakaan.",
-        imageUrl: "/images/fronx/carousel/pedestrian-safety.webp",
-        carDetailCarouselId: carouselSafety.id,
-      },
-      {
-        title: "Immobilizer & Security Alarm System",
-        content:
-          "Perangkat keamanan elektronik yang membantu mencegah mesin mobil menyala kecuali jika kunci yang sesuai digunakan.",
-        imageUrl: "/images/fronx/carousel/immbolizier-and-alarm-system.webp",
-        carDetailCarouselId: carouselSafety.id,
-      },
-      {
-        title: "ABS",
-        content:
-          "Teknologi ini akan mengendalikan mesin dan rem untuk membantu Anda mengendalikan kendaraan saat pengereman darurat dan di jalan licin.",
-        imageUrl: "/images/fronx/carousel/abs.webp",
-        carDetailCarouselId: carouselSafety.id,
-      },
-      {
-        title: "Electronic Stability Program (ESP®)",
-        content:
-          "Secara otomatis mengambil alih mesin torsi dan rem agar Anda tetap memiliki kontrol di jalur yang licin atau ketika memutar setir dengan tajam.",
-        imageUrl: "/images/fronx/carousel/electronic-stability.webp",
-        carDetailCarouselId: carouselSafety.id,
-      },
-      {
-        title: "Minimum Turning Radius",
-        content:
-          "Dengan radius putar mobil paling kecil pada kelasnya di 4.8m, gerak dengan mudah diperjalanan kota dan parkiran yang sempit.",
-        imageUrl: "/images/fronx/carousel/minimum-turning-radius.webp",
-        carDetailCarouselId: carouselSafety.id,
-      },
-      {
-        title: "NOISE, VIBRATION, HARSHNESS (NVH) REDUCTION",
-        content:
-          "Kenyamanan kabin yang luar biasa dengan indeks artikulasi yang tinggi, memberikan keheningan yang menenangkan.",
-        imageUrl: "/images/fronx/carousel/nvh.webp",
-        carDetailCarouselId: carouselSafety.id,
-      },
-      {
-        title: "6 Airbags",
-        content:
-          "Kabin yang mengutamakan keselamatan dengan dual front, side dan curtain airbag untuk semua penumpang di semua tipe Fronx.",
-        imageUrl: "/images/fronx/carousel/6-airbags.webp",
-        carDetailCarouselId: carouselSafety.id,
-      },
-      {
-        title: "Tect Body",
-        content:
-          "Rangka Total Eﬀective Control Technology yang ringan dirancang oleh Suzuki untuk meredam energi benturan saat kecelakaan.",
-        imageUrl: "/images/fronx/carousel/tect-body.webp",
-        carDetailCarouselId: carouselSafety.id,
-      },
-      {
-        title: "Seatbelt Pretensioners",
-        content:
-          "Dilengkapi dengan mekanisme yang segera menarik kembali sabuk saat terjadi kecelakaan, serta mengurangi dampak pada dada penumpang.",
-        imageUrl: "/images/fronx/carousel/seatbelt-pretensioners.webp",
-        carDetailCarouselId: carouselSafety.id,
-      },
-      {
-        title: "Isofix",
-        content:
-          "Pasang ISOFIX child seat dengan mudah untuk memastikan keamanan si kecil selama perjalanan.",
-        imageUrl: "/images/fronx/carousel/isofix.webp",
-        carDetailCarouselId: carouselSafety.id,
-      },
-      {
-        title: "K15C + SMART HYBRID VEHICLE BY SUZUKI (SHVS) (SGX & GX Only)*",
-        content:
-          "Inovasi Suzuki lewat teknologi pintar Integrated Starter Generator (ISG) dengan baterai Lithium-ION yang menyimpan energi saat kendaraan melambat dan memberikan tambahan daya ke mesin saat akselerasi, juga memberikan efisiensi terbaik dengan fitur Engine Auto Stop saat kendaraan berhenti.   Konsumsi BBM yang semakin irit dan ramah lingkungan, ditambah fitur pintar, memberikan pengalaman berkendara yang lebih baik. *Tipe GL Menggunakan Mesin K15B",
-        imageUrl: "/images/fronx/carousel/k15c-hybrid.webp",
+          "The Integrated Display System brings essential vehicle functions together in one central display. It is designed to make daily operation simpler by allowing the driver to access comfort settings, vehicle information, and electric system controls through a clear and easy-to-use interface.",
+        imageUrl: "/images/evitara/carousel/integrated-display-sistem.webp",
         carDetailCarouselId: carouselPerformance.id,
       },
       {
-        title: "6AT Transmission (SGX & GX Only)",
+        title: "Air Conditioner Control",
         content:
-          "Sensasi mobil sporty dan dinamis dengan daya transmisi 6AT yang halus dan lebih efisien pada kecepatan tinggi.",
-        imageUrl: "/images/fronx/carousel/6at-transmission.webp",
+          "Air conditioning settings are operated directly from the display, enabling adjustment of temperature, airflow direction, and fan speed. The on-screen airflow visualisation helps the driver understand how air is distributed throughout the cabin for balanced and comfortable cooling",
+        imageUrl: "/images/evitara/carousel/ac-control.webp",
+        carDetailCarouselId: carouselPerformance.id,
+      },
+      {
+        title: "EV Setting",
+        content:
+          "The EV Setting screen provides access to key electric vehicle functions, including charging current adjustment, scheduled charging, and traction battery temperature information. These features support efficient charging management and help maintain optimal battery conditions",
+        imageUrl: "/images/evitara/carousel/ev-setting.webp",
+        carDetailCarouselId: carouselPerformance.id,
+      },
+      {
+        title: "Display Customisation",
+        content:
+          "Display Customisation allows the driver to configure how information is shown on the screen. Different functions such as climate control, media, and vehicle status can be displayed according to preference, making important information easier to view while driving.",
+        imageUrl: "/images/evitara/carousel/display-custom.webp",
         carDetailCarouselId: carouselPerformance.id,
       },
     ],
   });
 
   console.log(
-    `  ✓ CarDetailCarousel + content seeded for fronx (${carouselSecurity.variant} / ${carouselSafety.variant} / ${carouselPerformance.variant})`,
+    `  ✓ CarDetailCarousel + content seeded for evitara (${carouselSecurity.variant} / ${carouselSafety.variant} / ${carouselPerformance.variant})`,
   );
+}
+
+const ARTICLES = [
+  {
+    slug: "suzuki-evitara-mobil-listrik-pertama",
+    title:
+      "Suzuki e VITARA: Mobil Listrik Pertama dari Suzuki Hadir di Indonesia",
+    category: "News",
+    snippet:
+      "Suzuki resmi memperkenalkan e VITARA, kendaraan listrik pertama mereka di pasar Indonesia dengan desain futuristik dan teknologi canggih.",
+    content: `Suzuki Indonesia dengan bangga memperkenalkan e VITARA, mobil listrik pertama dari Suzuki yang kini hadir di pasar Indonesia. Dengan desain eksterior yang futuristik dan aerodinamis, e VITARA menawarkan pengalaman berkendara yang sepenuhnya baru.
+
+Dilengkapi dengan baterai berkapasitas besar, e VITARA mampu menempuh jarak hingga 400 km dalam sekali pengisian daya. Sistem pengisian cepat DC memungkinkan baterai terisi hingga 80% hanya dalam waktu 30 menit.
+
+Interior e VITARA menghadirkan kabin premium dengan Floating Centre Console, Custom Ambient Lighting, dan Squircle Steering Wheel yang memberikan kesan modern dan mewah. Sistem infotainment terintegrasi dengan layar sentuh besar mendukung konektivitas penuh.
+
+Dari sisi keamanan, e VITARA dilengkapi dengan Suzuki Safety Support yang mencakup Dual Sensor Brake Support II, Lane Departure Prevention, Adaptive Cruise Control, dan berbagai fitur keselamatan aktif lainnya.
+
+e VITARA tersedia dalam beberapa pilihan warna eksklusif dan siap menjadi pilihan utama bagi konsumen Indonesia yang ingin beralih ke mobilitas listrik tanpa kompromi pada kenyamanan dan performa.`,
+    imageUrl: "/images/evitara/banner/preview-banner.webp",
+  },
+  {
+    slug: "tips-merawat-suzuki-fronx",
+    title: "Tips Merawat Suzuki Fronx Agar Tetap Prima dan Awet",
+    category: "Tips",
+    snippet:
+      "Panduan lengkap perawatan Suzuki Fronx untuk menjaga performa mesin, tampilan eksterior, dan kenyamanan kabin tetap optimal.",
+    content: `Memiliki Suzuki Fronx adalah investasi yang perlu dijaga dengan perawatan rutin. Berikut tips lengkap agar Fronx Anda tetap prima di setiap perjalanan.
+
+**1. Perawatan Mesin Berkala**
+Lakukan servis rutin setiap 10.000 km atau 6 bulan sekali. Pastikan oli mesin, filter udara, dan busi selalu dalam kondisi baik. Mesin K15C pada Fronx dirancang efisien, namun tetap membutuhkan perawatan optimal.
+
+**2. Jaga Kebersihan Eksterior**
+Cuci mobil secara rutin minimal seminggu sekali. Gunakan sabun khusus mobil dan lap microfiber untuk menghindari goresan pada cat. Aplikasikan wax setiap 3 bulan untuk menjaga kilau cat.
+
+**3. Perawatan Interior**
+Bersihkan dashboard, jok, dan karpet secara berkala. Untuk jok berbahan synthetic leather, gunakan pembersih khusus agar tidak mudah retak. Pastikan AC selalu bersih dengan mengganti filter kabin sesuai jadwal.
+
+**4. Cek Sistem Kelistrikan**
+Periksa kondisi aki, lampu, dan sistem kelistrikan lainnya. Head unit touchscreen dan fitur wireless charger pada Fronx membutuhkan sistem kelistrikan yang stabil.
+
+**5. Perhatikan Ban dan Rem**
+Rotasi ban setiap 10.000 km dan periksa ketebalan kampas rem secara berkala. Pastikan tekanan ban selalu sesuai rekomendasi untuk kenyamanan dan keamanan berkendara.
+
+Dengan perawatan yang tepat, Suzuki Fronx Anda akan selalu siap menemani setiap petualangan dengan performa terbaiknya.`,
+    imageUrl: "/images/fronx/banner/preview-banner.webp",
+  },
+  {
+    slug: "keunggulan-teknologi-allgrip-e",
+    title: "Mengenal Teknologi ALLGRIP-e pada Suzuki e VITARA",
+    category: "Technology",
+    snippet:
+      "Teknologi ALLGRIP-e menghadirkan sistem penggerak empat roda elektrik yang memberikan traksi optimal di berbagai kondisi jalan.",
+    content: `Suzuki e VITARA hadir dengan teknologi ALLGRIP-e, sistem penggerak empat roda full-electric yang menjadi salah satu keunggulan utama kendaraan ini.
+
+**Apa itu ALLGRIP-e?**
+ALLGRIP-e adalah sistem AWD (All-Wheel Drive) elektrik dari Suzuki yang menggunakan dua motor listrik terpisah untuk menggerakkan roda depan dan belakang secara independen. Berbeda dengan sistem AWD konvensional yang membutuhkan transfer case dan propeller shaft, ALLGRIP-e sepenuhnya elektrik sehingga lebih efisien.
+
+**Keunggulan Utama**
+Sistem ini mampu mendistribusikan torsi secara instan ke setiap roda sesuai kebutuhan. Saat melewati jalan licin atau off-road ringan, sistem secara otomatis menyesuaikan distribusi tenaga untuk memastikan traksi optimal.
+
+**Mode Berkendara**
+ALLGRIP-e menawarkan beberapa mode berkendara yang dapat dipilih sesuai kondisi jalan: Normal untuk penggunaan sehari-hari, Snow untuk jalan licin, dan Lock untuk kondisi off-road yang membutuhkan traksi maksimal.
+
+**Efisiensi Energi**
+Keunggulan lain dari ALLGRIP-e adalah efisiensi energinya. Sistem regenerative braking yang terintegrasi membantu mengisi ulang baterai saat pengereman, sehingga jarak tempuh per pengisian daya menjadi lebih optimal.
+
+Dengan ALLGRIP-e, Suzuki e VITARA tidak hanya menjadi mobil listrik yang ramah lingkungan, tetapi juga tangguh di berbagai kondisi jalan di Indonesia.`,
+    imageUrl: "/images/evitara/eksterior/futuristic-look.webp",
+  },
+  {
+    slug: "perbandingan-biaya-ev-vs-bensin",
+    title:
+      "Perbandingan Biaya Operasional Mobil Listrik vs Bensin di Indonesia",
+    category: "Insight",
+    snippet:
+      "Analisis mendalam biaya operasional harian antara mobil listrik seperti e VITARA dengan mobil bensin konvensional di Indonesia.",
+    content: `Banyak calon pembeli mobil listrik yang masih ragu soal biaya operasional. Mari kita bandingkan secara detail biaya menjalankan mobil listrik vs bensin di Indonesia.
+
+**Biaya Energi/BBM**
+Mobil listrik seperti Suzuki e VITARA membutuhkan sekitar 15-18 kWh per 100 km. Dengan tarif listrik rumah tangga sekitar Rp 1.500/kWh, biaya per km hanya sekitar Rp 225-270. Bandingkan dengan mobil bensin yang mengonsumsi 8-10 liter per 100 km dengan harga Pertalite Rp 10.000/liter, biaya per km mencapai Rp 800-1.000.
+
+**Biaya Perawatan**
+Mobil listrik memiliki komponen bergerak yang jauh lebih sedikit. Tidak ada oli mesin, filter oli, busi, atau timing belt yang perlu diganti. Biaya servis berkala mobil listrik bisa 40-60% lebih rendah dibanding mobil bensin.
+
+**Pajak dan Insentif**
+Pemerintah Indonesia memberikan insentif pajak untuk kendaraan listrik, termasuk pembebasan PPnBM dan pengurangan PKB. Ini membuat biaya kepemilikan tahunan lebih ringan.
+
+**Total Cost of Ownership**
+Dalam jangka 5 tahun dengan pemakaian rata-rata 15.000 km per tahun, total penghematan menggunakan mobil listrik bisa mencapai Rp 30-50 juta dibanding mobil bensin sejenis.
+
+Dengan perhitungan ini, beralih ke mobil listrik bukan hanya keputusan ramah lingkungan, tapi juga keputusan finansial yang cerdas.`,
+    imageUrl: "/images/evitara/interior/wireless-charging.webp",
+  },
+  {
+    slug: "suzuki-fronx-crossover-anak-muda",
+    title: "Suzuki Fronx: Crossover Pilihan Generasi Muda Indonesia",
+    category: "Review",
+    snippet:
+      "Review lengkap Suzuki Fronx yang menjadi favorit anak muda Indonesia dengan desain sporty, fitur canggih, dan harga terjangkau.",
+    content: `Suzuki Fronx berhasil mencuri perhatian generasi muda Indonesia sejak pertama kali diluncurkan. Dengan konsep Coupe SUV yang sporty, Fronx menawarkan kombinasi sempurna antara gaya dan fungsionalitas.
+
+**Desain yang Memikat**
+Fronx hadir dengan garis desain yang tajam dan dinamis. Brilliant Front Lamps dengan LED DRL memberikan kesan modern, sementara siluet coupe-nya membuat Fronx terlihat berbeda dari crossover lainnya di kelasnya.
+
+**Teknologi Terkini**
+Head unit touchscreen 9 inci mendukung Apple CarPlay dan Android Auto, menjadikan Fronx selalu terhubung dengan dunia digital penggunanya. Ditambah wireless charger dan USB port yang tersebar di kabin, kebutuhan gadget selalu terpenuhi.
+
+**Performa Bertenaga**
+Mesin K15C 1.5L menghasilkan tenaga yang responsif untuk penggunaan harian di perkotaan maupun perjalanan jauh. Transmisi AGS memberikan kemudahan berkendara otomatis dengan efisiensi manual.
+
+**Fitur Keselamatan**
+Suzuki Fronx dilengkapi dengan dual SRS airbag, ABS, EBD, dan ESP untuk memastikan keselamatan pengemudi dan penumpang. Hill Hold Control juga tersedia untuk memudahkan berkendara di tanjakan.
+
+**Harga Kompetitif**
+Dengan segala fitur dan teknologi yang ditawarkan, Fronx hadir dengan harga yang sangat kompetitif di segmennya, menjadikannya pilihan cerdas bagi anak muda yang menginginkan mobil stylish tanpa menguras kantong.
+
+Suzuki Fronx membuktikan bahwa mobil crossover impian tidak harus mahal. Dengan desain yang menawan dan fitur yang lengkap, Fronx siap menjadi teman setia di setiap perjalanan Anda.`,
+    imageUrl: "/images/fronx/banner/eksterior-banner.webp",
+  },
+  {
+    slug: "fitur-keselamatan-evitara",
+    title:
+      "6 Fitur Keselamatan Canggih di Suzuki e VITARA yang Wajib Diketahui",
+    category: "Technology",
+    snippet:
+      "Suzuki e VITARA dilengkapi dengan Suzuki Safety Support yang menghadirkan berbagai fitur keselamatan aktif untuk perlindungan maksimal.",
+    content: `Keselamatan adalah prioritas utama Suzuki dalam mengembangkan e VITARA. Berikut 6 fitur keselamatan canggih yang menjadikan e VITARA salah satu kendaraan listrik teraman di kelasnya.
+
+**1. Dual Sensor Brake Support II (DSBS II)**
+Menggunakan sensor radar gelombang milimeter dan kamera monokuler untuk mendeteksi kendaraan, pejalan kaki, dan pesepeda di depan. Sistem ini memberikan peringatan audio dan visual, serta pengereman otomatis jika risiko tabrakan meningkat.
+
+**2. Adaptive Cruise Control (ACC)**
+ACC membantu mengurangi kelelahan pengemudi saat perjalanan jauh dengan menjaga jarak aman dari kendaraan di depan secara otomatis. Sistem ini dapat mempercepat dan memperlambat kendaraan sesuai kondisi lalu lintas.
+
+**3. Lane Departure Prevention (LDP)**
+LDP mendeteksi garis marka jalan dan memprediksi jalur kendaraan. Jika pengemudi mulai keluar jalur, sistem akan memberikan getaran pada setir sebagai peringatan dan memberikan bantuan kemudi untuk kembali ke tengah jalur.
+
+**4. Blind Spot Monitor (BSM)**
+Sensor radar di bumper belakang mendeteksi kendaraan di area blind spot. Ikon peringatan akan muncul di kaca spion, dan jika lampu sein diaktifkan ke arah tersebut, ikon akan berkedip disertai peringatan suara.
+
+**5. Rear Cross Traffic Alert (RCTA)**
+RCTA mendeteksi kendaraan yang mendekat dari samping saat mundur dari tempat parkir, memberikan peringatan kepada pengemudi untuk menghindari potensi tabrakan.
+
+**6. Adaptive High Beam System (AHS)**
+AHS secara otomatis menyesuaikan kecerahan dan jangkauan lampu depan berdasarkan kondisi sekitar dan keberadaan kendaraan lain, memastikan visibilitas optimal tanpa menyilaukan pengendara lain.
+
+Dengan keenam fitur keselamatan ini, Suzuki e VITARA memberikan perlindungan menyeluruh bagi pengemudi dan semua penumpang di setiap perjalanan.`,
+    imageUrl: "/images/evitara/banner/eksterior-banner.webp",
+  },
+];
+
+async function seedArticles() {
+  let upserted = 0;
+  for (const article of ARTICLES) {
+    await prisma.article.upsert({
+      where: { slug: article.slug },
+      create: article,
+      update: {
+        title: article.title,
+        snippet: article.snippet,
+        category: article.category,
+        content: article.content,
+        imageUrl: article.imageUrl,
+      },
+    });
+    upserted += 1;
+  }
+  console.log(`  ✓ Articles upserted: ${upserted}`);
 }
 
 async function main() {
@@ -933,12 +1011,14 @@ async function main() {
   //   await seedCar(car);
   // }
 
-  // await seedColorFronx();
-  // await seedImage("fronx");
+  // await seedColor();
+  // await seedImage("evitara");
+  // await seedImageContent("evitara");
   // await seedImageContent("fronx");
   // await seedTestimonials();
+  await seedArticles();
   // await seedDetailBanner();
-  await seedDetailCarousel();
+  // await seedDetailCarousel();
 
   console.log("\n✅ Seed complete!");
 }

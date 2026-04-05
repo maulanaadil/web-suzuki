@@ -1,0 +1,76 @@
+{
+  "interior": [
+    {
+      "imageFile": "6-speaker.webp",
+      "title": "6 Speakers with Infinity Premium Sound System + Subwoofer",
+      "content": "Nikmati pengalaman audio berkelas dengan 6 speaker Infinity Premium Sound System yang dilengkapi subwoofer, menghadirkan suara jernih dan bass yang kuat di setiap perjalanan."
+    },
+    {
+      "imageFile": "power-adjustable-driver.webp",
+      "title": "10-Way Power-Adjustable Driver Seat",
+      "content": "Temukan posisi berkendara paling nyaman dengan kursi pengemudi yang dapat disesuaikan secara elektrik dalam 10 arah untuk kenyamanan optimal."
+    },
+    {
+      "imageFile": "custom-ambient.webp",
+      "title": "Custom Ambient Lighting",
+      "content": "Ciptakan suasana kabin sesuai suasana hati Anda dengan pencahayaan ambient yang dapat dikustomisasi, memberikan nuansa premium di setiap perjalanan."
+    },
+    {
+      "imageFile": "floating-control-center.webp",
+      "title": "Floating Centre Console",
+      "content": "Desain konsol tengah melayang yang modern dan ergonomis, memberikan akses mudah ke berbagai kontrol kendaraan dengan tampilan yang elegan."
+    },
+    {
+      "imageFile": "front-center-usb.webp",
+      "title": "Front Center USB Port (Type A & C)",
+      "content": "Tetap terhubung dan isi daya perangkat Anda dengan port USB Type A dan Type C yang tersedia di bagian depan untuk kemudahan pengemudi dan penumpang."
+    },
+    {
+      "imageFile": "luggage-space.webp",
+      "title": "Luggage Space",
+      "content": "Ruang bagasi yang luas dan fleksibel, siap menampung segala kebutuhan perjalanan Anda dengan kapasitas yang memadai."
+    },
+    {
+      "imageFile": "panoramic-sunroof.webp",
+      "title": "Panoramic Glass Roof",
+      "content": "Nikmati pemandangan langit terbuka dengan atap kaca panoramik yang menghadirkan cahaya alami dan kesan luas di dalam kabin."
+    },
+    {
+      "imageFile": "rear-passenger-usb.webp",
+      "title": "Rear Passenger USB Port (Type A & C)",
+      "content": "Penumpang belakang juga dapat mengisi daya perangkat dengan mudah melalui port USB Type A dan Type C yang tersedia di baris kedua."
+    },
+    {
+      "imageFile": "squircle-steering-wheel.webp",
+      "title": "Squircle Steering Wheel",
+      "content": "Setir dengan desain squircle yang unik dan futuristik, memberikan pegangan yang nyaman serta tampilan sporty di kokpit."
+    },
+    {
+      "imageFile": "wireless-charging.webp",
+      "title": "Wireless Charger",
+      "content": "Isi daya ponsel pintar Anda secara nirkabel dengan Qi wireless charging, tanpa perlu repot menggunakan kabel."
+    }
+  ],
+  "eksterior": [
+    {
+      "imageFile": "front-led-matrix.webp",
+      "title": "Front LED Matrix Lamps",
+      "content": "Lampu depan LED Matrix yang canggih memberikan pencahayaan optimal di berbagai kondisi jalan, sekaligus menghadirkan tampilan depan yang futuristik dan tegas."
+    },
+    {
+      "imageFile": "rear-led-matric.webp",
+      "title": "Rear LED Matrix Lamps",
+      "content": "Lampu belakang LED Matrix dengan desain modern yang memastikan visibilitas tinggi bagi pengendara lain, sekaligus memperkuat karakter eksterior e VITARA."
+    },
+    {
+      "imageFile": "futuristic-look.webp",
+      "title": "Futuristic Front Look",
+      "content": "Desain depan yang bold dan futuristik mencerminkan era baru mobilitas listrik Suzuki, dengan garis-garis tajam yang aerodinamis dan penuh karakter."
+    },
+    {
+      "imageFile": "alloy-wheel.webp",
+      "title": "Alloy Wheel 18\"",
+      "content": "Velg alloy 18 inci dengan desain eksklusif yang menonjolkan kesan premium dan sporty, memberikan stabilitas serta tampilan yang menawan."
+    }
+  ]
+}
