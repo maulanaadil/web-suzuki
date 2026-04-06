@@ -16,10 +16,10 @@ import {
 } from "@prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import path from "path";
-// import dotenv from "dotenv";
+import dotenv from "dotenv";
 import { existsSync, readFileSync, readdirSync } from "fs";
 
-// dotenv.config({ path: path.resolve(__dirname, "../.env") });
+dotenv.config({ path: path.resolve(__dirname, "../.env") });
 
 const connectionString = process.env.DATABASE_URL;
 if (!connectionString) throw new Error("DATABASE_URL is not set.");
@@ -604,76 +604,6 @@ async function seedImageContent(modelSlug = "fronx") {
   );
 }
 
-const DUMMY_TESTIMONIALS = [
-  {
-    name: "Budi Santoso",
-    quote:
-      "Mobil ini benar-benar mengubah pengalaman berkendara saya. Desainnya sporty, fiturnya lengkap, dan sangat irit bahan bakar. Pilihan terbaik untuk keluarga muda!",
-    imageUrl: "/images/testimonials/testimonial-1.jpeg",
-  },
-  {
-    name: "Rina Kartika",
-    quote:
-      "Sudah 6 bulan pakai dan sangat puas. Kabinnya luas, AC-nya cepat dingin, dan fitur safety-nya bikin tenang di jalan. Recommended banget!",
-    imageUrl: "/images/testimonials/testimonial-2.jpeg",
-  },
-  {
-    name: "Andi Wijaya",
-    quote:
-      "Ground clearance-nya tinggi, cocok buat jalanan Jakarta yang sering banjir. Tampilan luarnya juga keren, banyak tetangga yang tanya mobilnya apa.",
-    imageUrl: "/images/testimonials/testimonial-3.jpeg",
-  },
-  {
-    name: "Siti Nurhaliza",
-    quote:
-      "Konsumsi BBM-nya sangat irit dan kabin nyaman untuk perjalanan jauh. Cocok banget untuk mudik bersama keluarga besar!",
-    imageUrl: "/images/testimonials/testimonial-4.jpeg",
-  },
-  {
-    name: "Reza Mahendra",
-    quote:
-      "Dari pertama test drive langsung jatuh cinta. Performanya tangguh di segala medan, di kota tetap stylish. Bukan sekadar mobil, tapi gaya hidup.",
-    imageUrl: "/images/testimonials/testimonial-5.jpeg",
-  },
-  {
-    name: "Dewi Anggraini",
-    quote:
-      "Teknologi di dalamnya sangat canggih tapi mudah digunakan. Head unit-nya responsif, koneksi wireless lancar, dan fitur keselamatannya bikin percaya diri di jalan.",
-    imageUrl: "/images/testimonials/testimonial-6.jpeg",
-  },
-];
-
-async function seedTestimonials() {
-  const allModels = await prisma.carModel.findMany();
-  if (allModels.length === 0) {
-    console.warn("  ⚠ No CarModel found, skipping testimonials");
-    return;
-  }
-
-  let created = 0;
-  for (const t of DUMMY_TESTIMONIALS) {
-    // Randomly pick a car model
-    const model = allModels[Math.floor(Math.random() * allModels.length)];
-
-    // Avoid duplicates by checking name
-    const existing = await prisma.testimonial.findFirst({
-      where: { name: t.name },
-    });
-    if (existing) continue;
-
-    await prisma.testimonial.create({
-      data: {
-        carModelId: model.id,
-        name: t.name,
-        quote: t.quote,
-        imageUrl: t.imageUrl,
-      },
-    });
-    created += 1;
-  }
-  console.log(`  ✓ Testimonials created: ${created}`);
-}
-
 async function seedDetailBanner() {
   const model = await prisma.carModel.findUnique({
     where: { slug: "evitara" },
@@ -836,175 +766,6 @@ async function seedDetailCarousel() {
   );
 }
 
-const ARTICLES = [
-  {
-    slug: "suzuki-evitara-mobil-listrik-pertama",
-    title:
-      "Suzuki e VITARA: Mobil Listrik Pertama dari Suzuki Hadir di Indonesia",
-    category: "News",
-    snippet:
-      "Suzuki resmi memperkenalkan e VITARA, kendaraan listrik pertama mereka di pasar Indonesia dengan desain futuristik dan teknologi canggih.",
-    content: `Suzuki Indonesia dengan bangga memperkenalkan e VITARA, mobil listrik pertama dari Suzuki yang kini hadir di pasar Indonesia. Dengan desain eksterior yang futuristik dan aerodinamis, e VITARA menawarkan pengalaman berkendara yang sepenuhnya baru.
-
-Dilengkapi dengan baterai berkapasitas besar, e VITARA mampu menempuh jarak hingga 400 km dalam sekali pengisian daya. Sistem pengisian cepat DC memungkinkan baterai terisi hingga 80% hanya dalam waktu 30 menit.
-
-Interior e VITARA menghadirkan kabin premium dengan Floating Centre Console, Custom Ambient Lighting, dan Squircle Steering Wheel yang memberikan kesan modern dan mewah. Sistem infotainment terintegrasi dengan layar sentuh besar mendukung konektivitas penuh.
-
-Dari sisi keamanan, e VITARA dilengkapi dengan Suzuki Safety Support yang mencakup Dual Sensor Brake Support II, Lane Departure Prevention, Adaptive Cruise Control, dan berbagai fitur keselamatan aktif lainnya.
-
-e VITARA tersedia dalam beberapa pilihan warna eksklusif dan siap menjadi pilihan utama bagi konsumen Indonesia yang ingin beralih ke mobilitas listrik tanpa kompromi pada kenyamanan dan performa.`,
-    imageUrl: "/images/evitara/banner/preview-banner.webp",
-  },
-  {
-    slug: "tips-merawat-suzuki-fronx",
-    title: "Tips Merawat Suzuki Fronx Agar Tetap Prima dan Awet",
-    category: "Tips",
-    snippet:
-      "Panduan lengkap perawatan Suzuki Fronx untuk menjaga performa mesin, tampilan eksterior, dan kenyamanan kabin tetap optimal.",
-    content: `Memiliki Suzuki Fronx adalah investasi yang perlu dijaga dengan perawatan rutin. Berikut tips lengkap agar Fronx Anda tetap prima di setiap perjalanan.
-
-**1. Perawatan Mesin Berkala**
-Lakukan servis rutin setiap 10.000 km atau 6 bulan sekali. Pastikan oli mesin, filter udara, dan busi selalu dalam kondisi baik. Mesin K15C pada Fronx dirancang efisien, namun tetap membutuhkan perawatan optimal.
-
-**2. Jaga Kebersihan Eksterior**
-Cuci mobil secara rutin minimal seminggu sekali. Gunakan sabun khusus mobil dan lap microfiber untuk menghindari goresan pada cat. Aplikasikan wax setiap 3 bulan untuk menjaga kilau cat.
-
-**3. Perawatan Interior**
-Bersihkan dashboard, jok, dan karpet secara berkala. Untuk jok berbahan synthetic leather, gunakan pembersih khusus agar tidak mudah retak. Pastikan AC selalu bersih dengan mengganti filter kabin sesuai jadwal.
-
-**4. Cek Sistem Kelistrikan**
-Periksa kondisi aki, lampu, dan sistem kelistrikan lainnya. Head unit touchscreen dan fitur wireless charger pada Fronx membutuhkan sistem kelistrikan yang stabil.
-
-**5. Perhatikan Ban dan Rem**
-Rotasi ban setiap 10.000 km dan periksa ketebalan kampas rem secara berkala. Pastikan tekanan ban selalu sesuai rekomendasi untuk kenyamanan dan keamanan berkendara.
-
-Dengan perawatan yang tepat, Suzuki Fronx Anda akan selalu siap menemani setiap petualangan dengan performa terbaiknya.`,
-    imageUrl: "/images/fronx/banner/preview-banner.webp",
-  },
-  {
-    slug: "keunggulan-teknologi-allgrip-e",
-    title: "Mengenal Teknologi ALLGRIP-e pada Suzuki e VITARA",
-    category: "Technology",
-    snippet:
-      "Teknologi ALLGRIP-e menghadirkan sistem penggerak empat roda elektrik yang memberikan traksi optimal di berbagai kondisi jalan.",
-    content: `Suzuki e VITARA hadir dengan teknologi ALLGRIP-e, sistem penggerak empat roda full-electric yang menjadi salah satu keunggulan utama kendaraan ini.
-
-**Apa itu ALLGRIP-e?**
-ALLGRIP-e adalah sistem AWD (All-Wheel Drive) elektrik dari Suzuki yang menggunakan dua motor listrik terpisah untuk menggerakkan roda depan dan belakang secara independen. Berbeda dengan sistem AWD konvensional yang membutuhkan transfer case dan propeller shaft, ALLGRIP-e sepenuhnya elektrik sehingga lebih efisien.
-
-**Keunggulan Utama**
-Sistem ini mampu mendistribusikan torsi secara instan ke setiap roda sesuai kebutuhan. Saat melewati jalan licin atau off-road ringan, sistem secara otomatis menyesuaikan distribusi tenaga untuk memastikan traksi optimal.
-
-**Mode Berkendara**
-ALLGRIP-e menawarkan beberapa mode berkendara yang dapat dipilih sesuai kondisi jalan: Normal untuk penggunaan sehari-hari, Snow untuk jalan licin, dan Lock untuk kondisi off-road yang membutuhkan traksi maksimal.
-
-**Efisiensi Energi**
-Keunggulan lain dari ALLGRIP-e adalah efisiensi energinya. Sistem regenerative braking yang terintegrasi membantu mengisi ulang baterai saat pengereman, sehingga jarak tempuh per pengisian daya menjadi lebih optimal.
-
-Dengan ALLGRIP-e, Suzuki e VITARA tidak hanya menjadi mobil listrik yang ramah lingkungan, tetapi juga tangguh di berbagai kondisi jalan di Indonesia.`,
-    imageUrl: "/images/evitara/eksterior/futuristic-look.webp",
-  },
-  {
-    slug: "perbandingan-biaya-ev-vs-bensin",
-    title:
-      "Perbandingan Biaya Operasional Mobil Listrik vs Bensin di Indonesia",
-    category: "Insight",
-    snippet:
-      "Analisis mendalam biaya operasional harian antara mobil listrik seperti e VITARA dengan mobil bensin konvensional di Indonesia.",
-    content: `Banyak calon pembeli mobil listrik yang masih ragu soal biaya operasional. Mari kita bandingkan secara detail biaya menjalankan mobil listrik vs bensin di Indonesia.
-
-**Biaya Energi/BBM**
-Mobil listrik seperti Suzuki e VITARA membutuhkan sekitar 15-18 kWh per 100 km. Dengan tarif listrik rumah tangga sekitar Rp 1.500/kWh, biaya per km hanya sekitar Rp 225-270. Bandingkan dengan mobil bensin yang mengonsumsi 8-10 liter per 100 km dengan harga Pertalite Rp 10.000/liter, biaya per km mencapai Rp 800-1.000.
-
-**Biaya Perawatan**
-Mobil listrik memiliki komponen bergerak yang jauh lebih sedikit. Tidak ada oli mesin, filter oli, busi, atau timing belt yang perlu diganti. Biaya servis berkala mobil listrik bisa 40-60% lebih rendah dibanding mobil bensin.
-
-**Pajak dan Insentif**
-Pemerintah Indonesia memberikan insentif pajak untuk kendaraan listrik, termasuk pembebasan PPnBM dan pengurangan PKB. Ini membuat biaya kepemilikan tahunan lebih ringan.
-
-**Total Cost of Ownership**
-Dalam jangka 5 tahun dengan pemakaian rata-rata 15.000 km per tahun, total penghematan menggunakan mobil listrik bisa mencapai Rp 30-50 juta dibanding mobil bensin sejenis.
-
-Dengan perhitungan ini, beralih ke mobil listrik bukan hanya keputusan ramah lingkungan, tapi juga keputusan finansial yang cerdas.`,
-    imageUrl: "/images/evitara/interior/wireless-charging.webp",
-  },
-  {
-    slug: "suzuki-fronx-crossover-anak-muda",
-    title: "Suzuki Fronx: Crossover Pilihan Generasi Muda Indonesia",
-    category: "Review",
-    snippet:
-      "Review lengkap Suzuki Fronx yang menjadi favorit anak muda Indonesia dengan desain sporty, fitur canggih, dan harga terjangkau.",
-    content: `Suzuki Fronx berhasil mencuri perhatian generasi muda Indonesia sejak pertama kali diluncurkan. Dengan konsep Coupe SUV yang sporty, Fronx menawarkan kombinasi sempurna antara gaya dan fungsionalitas.
-
-**Desain yang Memikat**
-Fronx hadir dengan garis desain yang tajam dan dinamis. Brilliant Front Lamps dengan LED DRL memberikan kesan modern, sementara siluet coupe-nya membuat Fronx terlihat berbeda dari crossover lainnya di kelasnya.
-
-**Teknologi Terkini**
-Head unit touchscreen 9 inci mendukung Apple CarPlay dan Android Auto, menjadikan Fronx selalu terhubung dengan dunia digital penggunanya. Ditambah wireless charger dan USB port yang tersebar di kabin, kebutuhan gadget selalu terpenuhi.
-
-**Performa Bertenaga**
-Mesin K15C 1.5L menghasilkan tenaga yang responsif untuk penggunaan harian di perkotaan maupun perjalanan jauh. Transmisi AGS memberikan kemudahan berkendara otomatis dengan efisiensi manual.
-
-**Fitur Keselamatan**
-Suzuki Fronx dilengkapi dengan dual SRS airbag, ABS, EBD, dan ESP untuk memastikan keselamatan pengemudi dan penumpang. Hill Hold Control juga tersedia untuk memudahkan berkendara di tanjakan.
-
-**Harga Kompetitif**
-Dengan segala fitur dan teknologi yang ditawarkan, Fronx hadir dengan harga yang sangat kompetitif di segmennya, menjadikannya pilihan cerdas bagi anak muda yang menginginkan mobil stylish tanpa menguras kantong.
-
-Suzuki Fronx membuktikan bahwa mobil crossover impian tidak harus mahal. Dengan desain yang menawan dan fitur yang lengkap, Fronx siap menjadi teman setia di setiap perjalanan Anda.`,
-    imageUrl: "/images/fronx/banner/eksterior-banner.webp",
-  },
-  {
-    slug: "fitur-keselamatan-evitara",
-    title:
-      "6 Fitur Keselamatan Canggih di Suzuki e VITARA yang Wajib Diketahui",
-    category: "Technology",
-    snippet:
-      "Suzuki e VITARA dilengkapi dengan Suzuki Safety Support yang menghadirkan berbagai fitur keselamatan aktif untuk perlindungan maksimal.",
-    content: `Keselamatan adalah prioritas utama Suzuki dalam mengembangkan e VITARA. Berikut 6 fitur keselamatan canggih yang menjadikan e VITARA salah satu kendaraan listrik teraman di kelasnya.
-
-**1. Dual Sensor Brake Support II (DSBS II)**
-Menggunakan sensor radar gelombang milimeter dan kamera monokuler untuk mendeteksi kendaraan, pejalan kaki, dan pesepeda di depan. Sistem ini memberikan peringatan audio dan visual, serta pengereman otomatis jika risiko tabrakan meningkat.
-
-**2. Adaptive Cruise Control (ACC)**
-ACC membantu mengurangi kelelahan pengemudi saat perjalanan jauh dengan menjaga jarak aman dari kendaraan di depan secara otomatis. Sistem ini dapat mempercepat dan memperlambat kendaraan sesuai kondisi lalu lintas.
-
-**3. Lane Departure Prevention (LDP)**
-LDP mendeteksi garis marka jalan dan memprediksi jalur kendaraan. Jika pengemudi mulai keluar jalur, sistem akan memberikan getaran pada setir sebagai peringatan dan memberikan bantuan kemudi untuk kembali ke tengah jalur.
-
-**4. Blind Spot Monitor (BSM)**
-Sensor radar di bumper belakang mendeteksi kendaraan di area blind spot. Ikon peringatan akan muncul di kaca spion, dan jika lampu sein diaktifkan ke arah tersebut, ikon akan berkedip disertai peringatan suara.
-
-**5. Rear Cross Traffic Alert (RCTA)**
-RCTA mendeteksi kendaraan yang mendekat dari samping saat mundur dari tempat parkir, memberikan peringatan kepada pengemudi untuk menghindari potensi tabrakan.
-
-**6. Adaptive High Beam System (AHS)**
-AHS secara otomatis menyesuaikan kecerahan dan jangkauan lampu depan berdasarkan kondisi sekitar dan keberadaan kendaraan lain, memastikan visibilitas optimal tanpa menyilaukan pengendara lain.
-
-Dengan keenam fitur keselamatan ini, Suzuki e VITARA memberikan perlindungan menyeluruh bagi pengemudi dan semua penumpang di setiap perjalanan.`,
-    imageUrl: "/images/evitara/banner/eksterior-banner.webp",
-  },
-];
-
-async function seedArticles() {
-  let upserted = 0;
-  for (const article of ARTICLES) {
-    await prisma.article.upsert({
-      where: { slug: article.slug },
-      create: article,
-      update: {
-        title: article.title,
-        snippet: article.snippet,
-        category: article.category,
-        content: article.content,
-        imageUrl: article.imageUrl,
-      },
-    });
-    upserted += 1;
-  }
-  console.log(`  ✓ Articles upserted: ${upserted}`);
-}
-
 async function main() {
   console.log("🌱 Starting seed...\n");
   // for (const car of CARS) {
@@ -1015,8 +776,6 @@ async function main() {
   // await seedImage("evitara");
   // await seedImageContent("evitara");
   // await seedImageContent("fronx");
-  // await seedTestimonials();
-  await seedArticles();
   // await seedDetailBanner();
   // await seedDetailCarousel();
 

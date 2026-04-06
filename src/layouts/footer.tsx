@@ -10,12 +10,12 @@ import { WHATSAPP_NUMBER } from "../constants/whatsapp";
 const socialLinks = [
   {
     label: "Facebook",
-    href: "https://www.facebook.com/people/Suzuki_rancaekek/100087901575418/",
+    href: "https://www.facebook.com/fauzi.suzuki.2025/",
     Icon: Facebook,
   },
   {
     label: "Instagram",
-    href: "https://www.instagram.com/servicenjs_rancaekek",
+    href: "https://www.instagram.com/suzukibandungraya5758/",
     Icon: Instagram,
   },
   {
