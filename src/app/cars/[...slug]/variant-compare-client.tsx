@@ -43,28 +43,53 @@ export default function VariantCompareClient({
   colors: CompareColor[];
 }) {
   const defaultColor = colors[0] ?? null;
-  const [selectedColorByVariant, setSelectedColorByVariant] = useState<Record<string, string | null>>(
-    Object.fromEntries(variants.map((variant) => [variant.id, defaultColor?.id ?? null])),
+  const [selectedColorByVariant, setSelectedColorByVariant] = useState<
+    Record<string, string | null>
+  >(
+    Object.fromEntries(
+      variants.map((variant) => [variant.id, defaultColor?.id ?? null]),
+    ),
   );
 
-  const colorById = useMemo(() => new Map(colors.map((color) => [color.id, color])), [colors]);
+  const colorById = useMemo(
+    () => new Map(colors.map((color) => [color.id, color])),
+    [colors],
+  );
 
   return (
     <section className="grid grid-cols-1 lg:grid-cols-3 gap-6">
       {variants.map((variant) => {
         const selectedColorId = selectedColorByVariant[variant.id];
-        const selectedColor = (selectedColorId ? colorById.get(selectedColorId) : null) ?? defaultColor;
-        const selectedImage = selectedColor?.imageUrl ?? heroImage ?? "https://placehold.co/640x360/e5e7eb/9ca3af?text=Suzuki";
+        const selectedColor =
+          (selectedColorId ? colorById.get(selectedColorId) : null) ??
+          defaultColor;
+        const selectedImage =
+          selectedColor?.imageUrl ??
+          heroImage ??
+          "https://placehold.co/640x360/e5e7eb/9ca3af?text=Suzuki";
 
         return (
-          <article key={variant.id} className="rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
+          <article
+            key={variant.id}
+            className="rounded-2xl border border-gray-200 bg-white p-4 shadow-sm"
+          >
             <div className="rounded-xl border border-gray-200 px-3 py-2">
-              <p className="text-sm font-sans uppercase text-gray-500">{modelName}</p>
-              <p className="font-sans font-semibold text-foreground">{variant.name}</p>
+              <p className="text-sm font-sans uppercase text-gray-500">
+                {modelName}
+              </p>
+              <p className="font-sans font-semibold text-foreground">
+                {variant.name}
+              </p>
             </div>
 
             <div className="relative mt-3 w-full aspect-video rounded-xl bg-gray-50">
-              <Image src={selectedImage} alt={variant.name} fill className="object-contain" unoptimized />
+              <Image
+                src={selectedImage}
+                alt={variant.name}
+                fill
+                className="object-contain"
+                unoptimized
+              />
             </div>
 
             <div className="mt-3">
@@ -82,7 +107,9 @@ export default function VariantCompareClient({
                         }))
                       }
                       className={`w-5 h-5 rounded-full border transition-all ${
-                        isActive ? "border-foreground ring-1 ring-foreground" : "border-gray-300"
+                        isActive
+                          ? "border-foreground ring-1 ring-foreground"
+                          : "border-gray-300"
                       }`}
                       style={getSwatchStyle(color)}
                       aria-label={`Select ${color.name}`}
@@ -92,9 +119,15 @@ export default function VariantCompareClient({
                 })}
               </div>
 
-              <p className="text-xs font-sans uppercase text-gray-500">{selectedColor?.name ?? "Color option"}</p>
-              <p className="mt-1 font-sans text-2xl font-bold text-foreground">{variant.priceText}</p>
-              <p className="mt-1 text-xs font-sans text-gray-500">OTR D.K.I Jakarta</p>
+              <p className="text-xs font-sans uppercase text-gray-500">
+                {selectedColor?.name ?? "Color option"}
+              </p>
+              <p className="mt-1 font-sans text-2xl font-bold text-foreground">
+                {variant.priceText}
+              </p>
+              <p className="mt-1 text-xs font-sans text-gray-500">
+                OTR Bandung
+              </p>
             </div>
           </article>
         );

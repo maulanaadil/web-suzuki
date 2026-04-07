@@ -3,7 +3,14 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useMemo, type CSSProperties } from "react";
-import { ChevronLeft, ChevronRight, Check, Minus, ChevronDown, Info } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  Check,
+  Minus,
+  ChevronDown,
+  Info,
+} from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 /* ───── Types ───── */
@@ -193,7 +200,9 @@ function VariantCompareSection({
           return (
             <div key={variant.key} className="flex flex-col items-center">
               <div className="w-full rounded-lg border border-gray-200 bg-gray-50 px-5 py-4 text-center">
-                <p className="text-lg font-bold text-foreground uppercase">{carName}</p>
+                <p className="text-lg font-bold text-foreground uppercase">
+                  {carName}
+                </p>
                 <p className="text-sm text-gray-600">{variant.label}</p>
               </div>
 
@@ -246,7 +255,7 @@ function VariantCompareSection({
               <p className="mt-3 text-2xl font-bold text-foreground">
                 {formatPriceIDR(variant.otrPrice)}
               </p>
-              <p className="mt-1 text-xs text-gray-500">OTR D.K.I Jakarta</p>
+              <p className="mt-1 text-xs text-gray-500">OTR Bandung</p>
             </div>
           );
         })}
@@ -303,8 +312,12 @@ export default function CarDetailClient({
         <div className="container mx-auto px-4 pt-28 pb-12 md:pt-36 md:pb-16">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
             <div>
-              <p className="text-sm uppercase tracking-widest text-white/60">Suzuki Indonesia</p>
-              <h1 className="mt-3 text-5xl font-suzuki-pro-headline md:text-7xl">{data.name}</h1>
+              <p className="text-sm uppercase tracking-widest text-white/60">
+                Suzuki Indonesia
+              </p>
+              <h1 className="mt-3 text-5xl font-suzuki-pro-headline md:text-7xl">
+                {data.name}
+              </h1>
               <p className="mt-4 max-w-md text-base text-white/80 leading-relaxed">
                 {config.description}
               </p>
@@ -372,7 +385,9 @@ export default function CarDetailClient({
         {/* Interior Gallery */}
         {config.interiorImages && config.interiorImages.length > 0 && (
           <section className="mb-16">
-            <h2 className="text-sm uppercase tracking-widest text-primary-suzuki">Interior</h2>
+            <h2 className="text-sm uppercase tracking-widest text-primary-suzuki">
+              Interior
+            </h2>
             <p className="mt-2 text-3xl font-suzuki-pro-headline text-foreground md:text-4xl">
               A Scene Of Bliss That You Adore
             </p>
@@ -412,7 +427,9 @@ export default function CarDetailClient({
                 <h2 className="text-xl font-suzuki-pro-headline text-white md:text-2xl">
                   Fitur Keselamatan
                 </h2>
-                <p className="mt-1 text-sm text-white/70">Suzuki Safety Support</p>
+                <p className="mt-1 text-sm text-white/70">
+                  Suzuki Safety Support
+                </p>
               </div>
               <ChevronDown
                 className={`w-5 h-5 text-white transition ${featuresExpanded ? "rotate-180" : ""}`}
@@ -432,7 +449,9 @@ export default function CarDetailClient({
                           key={v.key}
                           className="px-4 py-4 text-center text-xs font-semibold uppercase tracking-wider text-gray-500"
                         >
-                          <span className="text-primary-suzuki">{v.shortLabel}</span>
+                          <span className="text-primary-suzuki">
+                            {v.shortLabel}
+                          </span>
                         </th>
                       ))}
                     </tr>
@@ -451,7 +470,9 @@ export default function CarDetailClient({
                         {cols.map((col) => (
                           <td key={col} className="px-4 py-4 text-center">
                             <div className="flex justify-center">
-                              <FeatureValue value={getFeatureVal(feature, col)} />
+                              <FeatureValue
+                                value={getFeatureVal(feature, col)}
+                              />
                             </div>
                           </td>
                         ))}
@@ -495,7 +516,9 @@ export default function CarDetailClient({
                           key={v.key}
                           className="px-4 py-4 text-center text-xs font-semibold uppercase tracking-wider text-gray-500"
                         >
-                          <span className="text-foreground">{v.shortLabel}</span>
+                          <span className="text-foreground">
+                            {v.shortLabel}
+                          </span>
                         </th>
                       ))}
                     </tr>
@@ -512,7 +535,10 @@ export default function CarDetailClient({
                           {spec.featureName.trim()}
                         </td>
                         {cols.map((col) => (
-                          <td key={col} className="px-4 py-4 text-center text-sm text-gray-700">
+                          <td
+                            key={col}
+                            className="px-4 py-4 text-center text-sm text-gray-700"
+                          >
                             {getFeatureVal(spec, col) ?? "-"}
                           </td>
                         ))}
@@ -527,11 +553,13 @@ export default function CarDetailClient({
 
         {/* Pricing */}
         <section id="harga" className="mb-12 scroll-mt-32">
-          <h2 className="text-sm uppercase tracking-widest text-primary-suzuki">Harga</h2>
+          <h2 className="text-sm uppercase tracking-widest text-primary-suzuki">
+            Harga
+          </h2>
           <p className="mt-2 text-3xl font-suzuki-pro-headline text-foreground md:text-4xl">
             Pilih Varian Anda
           </p>
-          <p className="mt-2 text-sm text-gray-500">Harga OTR D.K.I Jakarta</p>
+          <p className="mt-2 text-sm text-gray-500">Harga OTR</p>
 
           <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {sortedVariants.map((variant, idx) => {
@@ -557,7 +585,9 @@ export default function CarDetailClient({
                   <p className="text-xs font-medium uppercase tracking-wider text-gray-500">
                     Suzuki
                   </p>
-                  <h3 className="mt-1 text-lg font-semibold text-foreground">{variant.name}</h3>
+                  <h3 className="mt-1 text-lg font-semibold text-foreground">
+                    {variant.name}
+                  </h3>
                   <p className="mt-4 text-2xl font-bold text-primary-suzuki">
                     {formatPrice(variant.price)}
                   </p>
@@ -580,8 +610,8 @@ export default function CarDetailClient({
               Siap Memiliki {data.name}?
             </h3>
             <p className="mt-3 text-base text-white/80 leading-relaxed">
-              Isi form pemesanan untuk mendapatkan penawaran terbaik, estimasi cicilan, dan jadwal
-              test drive dari dealer terdekat.
+              Isi form pemesanan untuk mendapatkan penawaran terbaik, estimasi
+              cicilan, dan jadwal test drive dari dealer terdekat.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
               <Link

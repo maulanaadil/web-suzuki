@@ -498,9 +498,7 @@ export default function CarDetailClient({
                       <p className="mt-3 text-2xl font-bold text-foreground">
                         {formatPrice(variant.price)}
                       </p>
-                      <p className="mt-1 text-xs text-gray-500">
-                        OTR D.K.I Jakarta
-                      </p>
+                      <p className="mt-1 text-xs text-gray-500">OTR Bandung</p>
                     </>
                   )}
                 </div>
@@ -616,7 +614,7 @@ export default function CarDetailClient({
         <h2 className="mt-2 text-3xl font-suzuki-pro-headline text-foreground md:text-4xl">
           Pilih Varian Anda
         </h2>
-        <p className="mt-2 text-sm text-gray-500">OTR D.K.I Jakarta</p>
+        <p className="mt-2 text-sm text-gray-500">OTR bandung</p>
 
         <div className="mt-8 overflow-x-auto">
           <table className="w-full min-w-[500px]">

@@ -18,7 +18,7 @@ const geistMono = Geist_Mono({
 });
 
 const siteTitle =
-  "Suzuki Indonesia | Mobil Baru, Spesifikasi, Promo & Info Dealer";
+  "GEBYAR PROMO SUZUKI BANDUNG | Mobil Baru, Spesifikasi, Promo & Info Dealer";
 const siteDescription =
   "Jelajahi mobil Suzuki terbaru di Indonesia: daftar model, spesifikasi, review, artikel, dan kalkulator kredit. Hubungi dealer lewat WhatsApp untuk harga, promo, dan jadwal test drive.";
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     title: siteTitle,
     description: siteDescription,
     type: "website",
-    siteName: "Suzuki Indonesia",
+    siteName: "GEBYAR PROMO SUZUKI BANDUNG",
   },
   twitter: {
     card: "summary_large_image",
