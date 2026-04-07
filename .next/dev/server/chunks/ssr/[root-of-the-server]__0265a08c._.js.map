@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 14, "column": 0}, "map": {"version":3,"sources":["file:///Users/maulanaadil/Development/personal/web-suzuki/src/app/cars/page.tsx"],"sourcesContent":["import React from \"react\";\n\nexport default function CarsPage() {\n  return (\n    <section id=\"cars-section\" className=\"w-full container mx-auto py-16\">\n      <h2 className=\"text-2xl font-semibold font-suzuki-pro-headline text-foreground mb-8\">\n        Cars\n      </h2>\n    </section>\n  );\n}\n"],"names":[],"mappings":";;;;;;AAEe,SAAS;IACtB,qBACE,+YAAC;QAAQ,IAAG;QAAe,WAAU;kBACnC,cAAA,+YAAC;YAAG,WAAU;sBAAuE;;;;;;;;;;;AAK3F"}}]
+}

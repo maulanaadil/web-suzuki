@@ -1,0 +1,26 @@
+/* [project]/src/app/myfont_cb98d54f.module.css [app-client] (css) */
+@font-face {
+  font-family: myFont;
+  src: url("../media/Suzuki_PRO_Headline-s.p.fa46b3e5.otf") format("opentype");
+  font-display: swap;
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: myFont Fallback;
+  src: local(Arial);
+  ascent-override: 124.06%;
+  descent-override: 35.54%;
+  line-gap-override: 0.0%;
+  size-adjust: 77.38%;
+}
+
+.myfont_cb98d54f-module__hgKJMW__className {
+  font-family: myFont, myFont Fallback;
+}
+
+.myfont_cb98d54f-module__hgKJMW__variable {
+  --font-suzuki-pro-headline: "myFont", "myFont Fallback";
+}
+
+/*# sourceMappingURL=src_app_myfont_cb98d54f_module_css_bad6b30c._.single.css.map*/
