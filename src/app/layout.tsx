@@ -44,7 +44,9 @@ export const metadata: Metadata = {
     description: siteDescription,
   },
   icons: {
-    icon: "https://suzukicdn.com/themes/default2019/icons/favicon-32x32.webp",
+    icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
+    shortcut: "/icon.svg",
+    apple: "/icon.svg",
   },
 };
 
