@@ -1,3 +1,0 @@
-module.exports=[93695,(a,b,c)=>{b.exports=a.x("next/dist/shared/lib/no-fallback-error.external.js",()=>require("next/dist/shared/lib/no-fallback-error.external.js"))},50645,a=>{a.n(a.i(27572))},9014,a=>{a.n(a.i(70055))},79070,a=>{a.n(a.i(96918))},77303,a=>{a.n(a.i(77645))},80757,a=>{a.n(a.i(51548))},66098,a=>{"use strict";var b=a.i(33256);function c(){return(0,b.jsx)("main",{className:"min-h-screen bg-white pt-8",children:(0,b.jsx)("section",{className:"container mx-auto px-4",children:(0,b.jsx)("iframe",{src:"https://www.sfi.co.id/credit_simulation",className:"w-full min-h-screen"})})})}a.s(["default",()=>c])}];
-
-//# sourceMappingURL=%5Broot-of-the-server%5D__fa2ed136._.js.map

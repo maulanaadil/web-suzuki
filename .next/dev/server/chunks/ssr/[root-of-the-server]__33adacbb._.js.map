@@ -1,6 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 14, "column": 0}, "map": {"version":3,"sources":["file:///Users/maulanaadil/Development/personal/web-suzuki/src/app/credit-calculator/page.tsx"],"sourcesContent":["import React from \"react\";\n\nexport default function CreditCalculatorPage() {\n  return (\n    <main className=\"min-h-screen bg-white pt-8\">\n      <section className=\"container mx-auto px-4\">\n        <iframe\n          src=\"https://www.sfi.co.id/credit_simulation\"\n          className=\"w-full min-h-screen\"\n        />\n      </section>\n    </main>\n  );\n}\n"],"names":[],"mappings":";;;;;;AAEe,SAAS;IACtB,qBACE,+YAAC;QAAK,WAAU;kBACd,cAAA,+YAAC;YAAQ,WAAU;sBACjB,cAAA,+YAAC;gBACC,KAAI;gBACJ,WAAU;;;;;;;;;;;;;;;;AAKpB"}}]
-}
