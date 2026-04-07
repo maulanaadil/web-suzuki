@@ -1,0 +1,146 @@
+{
+  "interior": [
+    {
+      "imageFile": "digital-tft.webp",
+      "title": "7\" Digital TFT Color Multi-Information Display",
+      "content": "Layar TFT digital 7 inci berwarna yang menampilkan informasi kendaraan secara lengkap dan mudah dibaca."
+    },
+    {
+      "imageFile": "ventilated-seats.webp",
+      "title": "Ventilated Seats",
+      "content": "Jok dengan ventilasi udara yang menjaga kenyamanan suhu duduk di segala kondisi cuaca."
+    },
+    {
+      "imageFile": "spot-map.webp",
+      "title": "Spot Map Lamp (LED)",
+      "content": "Lampu baca LED yang memberikan pencahayaan fokus untuk kenyamanan penumpang di malam hari."
+    },
+    {
+      "imageFile": "cabin-lamp.webp",
+      "title": "Cabin Lamp",
+      "content": "Lampu kabin yang memberikan penerangan merata untuk kenyamanan seluruh penumpang."
+    },
+    {
+      "imageFile": "electronic-parking-brake.webp",
+      "title": "Electronic Parking Brake + Auto Hold",
+      "content": "Rem parkir elektronik dengan fitur auto hold yang memudahkan saat berhenti di tanjakan atau kemacetan."
+    },
+    {
+      "imageFile": "wireless-charger.webp",
+      "title": "Wireless Charger",
+      "content": "Pengisian daya nirkabel untuk ponsel pintar Anda tanpa perlu kabel."
+    },
+    {
+      "imageFile": "head-unit.webp",
+      "title": "9\" Head Unit & 360° View Camera",
+      "content": "Head unit layar sentuh 9 inci dengan kamera 360 derajat untuk visibilitas menyeluruh saat bermanuver."
+    },
+    {
+      "imageFile": "panoramic-sunroof.webp",
+      "title": "Panoramic Sunroof",
+      "content": "Sunroof panoramik yang menghadirkan cahaya alami dan udara segar ke dalam kabin."
+    },
+    {
+      "imageFile": "rear-ac-vent.webp",
+      "title": "Rear AC Vent",
+      "content": "Ventilasi AC belakang yang memastikan kenyamanan suhu bagi penumpang baris kedua."
+    },
+    {
+      "imageFile": "rear-usb-port.webp",
+      "title": "Rear USB Port",
+      "content": "Port USB belakang untuk kemudahan mengisi daya perangkat penumpang."
+    },
+    {
+      "imageFile": "6-speed.webp",
+      "title": "6 Speed Automatic Transmission",
+      "content": "Transmisi otomatis 6 percepatan untuk perpindahan gigi yang halus dan efisien."
+    },
+    {
+      "imageFile": "mid-speedometers.webp",
+      "title": "MID with Speedometers",
+      "content": "Multi Information Display terintegrasi dengan speedometer untuk informasi berkendara yang komprehensif."
+    },
+    {
+      "imageFile": "hud.webp",
+      "title": "Head-Up Display (HUD)",
+      "content": "Tampilan head-up yang memproyeksikan informasi penting ke kaca depan agar mata tetap fokus ke jalan."
+    },
+    {
+      "imageFile": "paddle-shift.webp",
+      "title": "Paddle Shift + Cruise Control",
+      "content": "Paddle shift untuk kendali perpindahan gigi manual dan cruise control untuk kenyamanan perjalanan jauh."
+    },
+    {
+      "imageFile": "spacious-baggage.webp",
+      "title": "Spacious Baggage",
+      "content": "Ruang bagasi yang luas untuk membawa semua kebutuhan perjalanan Anda."
+    },
+    {
+      "imageFile": "auto-climate-ac.webp",
+      "title": "Auto Climate AC",
+      "content": "AC otomatis yang menjaga suhu kabin tetap ideal secara otomatis."
+    },
+    {
+      "imageFile": "auto-dimming.webp",
+      "title": "Auto Dimming Inside Rear View Mirror",
+      "content": "Spion dalam auto dimming yang mengurangi silau dari kendaraan di belakang saat berkendara malam."
+    },
+    {
+      "imageFile": "premium-seat.webp",
+      "title": "Premium Seat With Synthetic Leather",
+      "content": "Jok premium dengan bahan kulit sintetis yang nyaman dan elegan."
+    }
+  ],
+  "eksterior": [
+    {
+      "imageFile": "dual-tone-alloy-wheel.webp",
+      "title": "17\" Dual-Tone Alloy Wheels",
+      "content": "Take on any course with optimized traction that go the distance."
+    },
+    {
+      "imageFile": "dual-tone-precision-cut.webp",
+      "title": "Dual Tone Precision Cut Alloy Wheels (GX)",
+      "content": "Velg alloy precision cut dual tone yang memberikan tampilan premium dan sporty."
+    },
+    {
+      "imageFile": "painted-silver-alloy.webp",
+      "title": "Painted Silver Alloy Wheel (GL)",
+      "content": "Velg alloy berwarna silver yang memberikan tampilan elegan pada varian GL."
+    },
+    {
+      "imageFile": "backlamps.webp",
+      "title": "Backlamps",
+      "content": "Lampu belakang dengan desain modern yang memberikan visibilitas optimal dan tampilan menarik."
+    },
+    {
+      "imageFile": "shark-fin.webp",
+      "title": "Shark Fin Antenna",
+      "content": "Antena shark fin yang memberikan tampilan aerodinamis dan modern."
+    },
+    {
+      "imageFile": "rear-upper-spoiler.webp",
+      "title": "Rear Upper Spoiler with LED High Mount Stop Lamp",
+      "content": "Spoiler atas belakang dengan lampu rem LED posisi tinggi untuk aerodinamika dan keamanan."
+    },
+    {
+      "imageFile": "3-point-led.png",
+      "title": "3 Point LED",
+      "content": "Striking 3-point LED front lights, offering enhanced visibility and a sleek, modern design that elevates both safety and style."
+    },
+    {
+      "imageFile": "210-ground-clear.png",
+      "title": "210 MM Ground Clearance",
+      "content": "Providing excellent capability to tackle rough terrains while ensuring a smooth and confident drive on any road."
+    },
+    {
+      "imageFile": "guide-me-light.png",
+      "title": "Guide Me Light (To Car & To Home)",
+      "content": "Fitur guide me light yang menerangi jalan menuju dan dari kendaraan untuk kenyamanan di malam hari."
+    },
+    {
+      "imageFile": "led-projector.webp",
+      "title": "LED Projector Headlamp + Guide Me Light",
+      "content": "Lampu depan LED projector dengan guide me light untuk penerangan optimal di segala kondisi."
+    }
+  ]
+}

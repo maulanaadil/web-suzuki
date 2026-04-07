@@ -1,0 +1,141 @@
+{
+  "interior": [
+    {
+      "imageFile": "arm-rest.webp",
+      "title": "2nd Row Armrest (Cruise & GX)",
+      "content": "Sandaran tangan baris kedua yang nyaman untuk perjalanan jauh, menjaga kenyamanan penumpang di setiap perjalanan."
+    },
+    {
+      "imageFile": "ac-digital-auto-climate.webp",
+      "title": "AC Digital Auto Climate With Heater (Cruise & GX)",
+      "content": "Kabin selalu berada di suhu yang tepat dengan AC digital intuitif yang dilengkapi heater dan menyesuaikan secara otomatis dengan iklim."
+    },
+    {
+      "imageFile": "black-and-gray.webp",
+      "title": "Black & Gray Interior Ambience",
+      "content": "Desain interior dengan nuansa hitam dan abu-abu yang memberikan kesan elegan dan modern di setiap perjalanan."
+    },
+    {
+      "imageFile": "cruise-control.webp",
+      "title": "Cruise Control (Cruise & GX)",
+      "content": "Nikmati perjalanan jauh yang lebih nyaman dengan fitur cruise control yang membantu menjaga kecepatan konstan."
+    },
+    {
+      "imageFile": "head-unit-8-inch.webp",
+      "title": "Head Unit 8 Inch Touchscreen With Mirroring (Cruise & GX)",
+      "content": "Sistem infotainment layar sentuh 8 inci dengan fitur mirroring yang memudahkan Anda mengakses hiburan dan navigasi."
+    },
+    {
+      "imageFile": "large-luggage-capacity.webp",
+      "title": "Large Luggage Capacity",
+      "content": "Ruang bagasi yang luas untuk membawa semua kebutuhan Anda di setiap perjalanan."
+    },
+    {
+      "imageFile": "meter-cluster.webp",
+      "title": "Meter Cluster With MID (Cruise & GX)",
+      "content": "Panel instrumen dengan Multi Information Display yang memberikan informasi lengkap tentang kondisi kendaraan."
+    },
+    {
+      "imageFile": "ventilated-cup.webp",
+      "title": "Ventilated Cup Holder (Cruise & GX)",
+      "content": "Cup holder dengan ventilasi yang menjaga minuman Anda tetap dingin selama perjalanan."
+    },
+    {
+      "imageFile": "carbon-fiber-interior.webp",
+      "title": "Carbon Fiber Interior Ornament",
+      "content": "Ornamen interior bertekstur carbon fiber yang menambah kesan sporty dan modern pada kabin."
+    },
+    {
+      "imageFile": "red-stich-cover.webp",
+      "title": "Red Stitch Seat Cover",
+      "content": "Jok dengan jahitan merah yang memberikan sentuhan sporty dan premium pada interior."
+    },
+    {
+      "imageFile": "push-start.webp",
+      "title": "Push Start or Stop Button (Cruise & GX)",
+      "content": "Nyalakan dan matikan mesin dengan mudah hanya dengan satu sentuhan tombol."
+    },
+    {
+      "imageFile": "black-look-seat.webp",
+      "title": "Black Look Seat (GA & GL Only)",
+      "content": "Jok dengan tampilan serba hitam yang memberikan kesan elegan dan mudah dirawat."
+    }
+  ],
+  "eksterior": [
+    {
+      "imageFile": "front-garnish-bumper.webp",
+      "title": "Front Garnish Bumper",
+      "content": "Garnish bumper depan yang menambah kesan sporty dan modern pada tampilan depan kendaraan."
+    },
+    {
+      "imageFile": "front-under-spoiler.webp",
+      "title": "Front Under Spoiler",
+      "content": "Spoiler bawah depan yang meningkatkan aerodinamika dan memberikan tampilan lebih agresif."
+    },
+    {
+      "imageFile": "rear-under-spoiler.webp",
+      "title": "Rear Under Spoiler",
+      "content": "Spoiler bawah belakang untuk stabilitas yang lebih baik saat berkecepatan tinggi."
+    },
+    {
+      "imageFile": "rear-spoiler.webp",
+      "title": "Rear Upper Spoiler",
+      "content": "Spoiler atas belakang yang meningkatkan aerodinamika sekaligus menambah tampilan sporty."
+    },
+    {
+      "imageFile": "dual-tone-alloy-wheel.webp",
+      "title": "Dual Tone Alloy Wheel",
+      "content": "Velg alloy dual tone yang memberikan tampilan elegan dan performa berkendara optimal."
+    },
+    {
+      "imageFile": "two-tone-color.webp",
+      "title": "Two Tone Color (Pearl Snow White Body Color + Cool Black)",
+      "content": "Pilihan warna two tone yang eksklusif dengan kombinasi Pearl Snow White dan Cool Black untuk tampilan yang unik."
+    },
+    {
+      "imageFile": "side-under.webp",
+      "title": "Side Under Spoiler & Side Body Decal",
+      "content": "Spoiler samping bawah dan decal bodi samping yang memperkuat karakter sporty kendaraan."
+    },
+    {
+      "imageFile": "smart-key.webp",
+      "title": "Smart Entry & Smart Key (Cruise, GX)",
+      "content": "Akses kendaraan dengan mudah tanpa perlu mengeluarkan kunci dari saku Anda."
+    },
+    {
+      "imageFile": "bakdoor-garnish.webp",
+      "title": "Backdoor Garnish",
+      "content": "Garnish pintu belakang yang menambah detail premium pada tampilan belakang kendaraan."
+    },
+    {
+      "imageFile": "hybrid-emblem.webp",
+      "title": "Hybrid Emblem (Cruise, GX)",
+      "content": "Emblem hybrid yang menandakan teknologi ramah lingkungan pada kendaraan Anda."
+    },
+    {
+      "imageFile": "led-rear-combination.webp",
+      "title": "Led Rear Combination Lamp With Light Guide (Cruise, GX)",
+      "content": "Lampu kombinasi belakang LED dengan light guide yang memberikan visibilitas optimal dan tampilan modern."
+    },
+    {
+      "imageFile": "led-high-mount.webp",
+      "title": "Led High Mount Stop Lamp (Cruise, GX)",
+      "content": "Lampu rem tambahan LED di posisi tinggi untuk keamanan berkendara yang lebih baik."
+    },
+    {
+      "imageFile": "short-pole-antenna.webp",
+      "title": "Short Pole Antenna (Cruise, GX)",
+      "content": "Antena pendek yang memberikan tampilan lebih rapi tanpa mengurangi kualitas penerimaan sinyal."
+    },
+    {
+      "imageFile": "projector-headlamps.webp",
+      "title": "Projector Headlamps with Auto Headlight & Guide Me Light (Cruise, GX)",
+      "content": "Lampu depan projector dengan fitur auto headlight dan guide me light untuk penerangan optimal di segala kondisi."
+    },
+    {
+      "imageFile": "electric-and-auto-folded.webp",
+      "title": "Electric and Auto Foldable Mirror with Turn Signal Lamp (Cruise, GX)",
+      "content": "Spion lipat otomatis dengan lampu sein yang memudahkan parkir dan meningkatkan keselamatan berkendara."
+    }
+  ]
+}

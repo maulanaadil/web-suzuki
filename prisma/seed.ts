@@ -10,6 +10,7 @@
  */
 
 import {
+  CarColorType,
   CarDetailCarouselVariant,
   CarImageType,
   PrismaClient,
@@ -391,22 +392,129 @@ async function seedCar(car: CarDef) {
   console.log(`  ✓ CarPrices upserted: ${prices.size}`);
 }
 
-const FRONX_VARIANT_CODES = ["8IE1X0000000ATT"];
-const FRONX_COLOR_CODES = ["WB3"];
+const GRAND_VITARA_VARIANT_CODES = ["PQ5FX00012GXATS", "PQ5FX00002GXATS"];
+const GRAND_VITARA_COLOR_CODES = [
+  {
+    code: "ERD",
+    name: "PRIME SPLENDID SILVER + BLACK",
+    primaryColorCode: "d7d7d6",
+    secondaryColorCode: "000000",
+    type: CarColorType.SECONDARY,
+  },
+  {
+    code: "C9J",
+    name: "PEARL ARCTIC WHITE + BLACK",
+    primaryColorCode: "e9e9ea",
+    secondaryColorCode: "000000",
+    type: CarColorType.SECONDARY,
+  },
+  {
+    code: "ZAM",
+    name: "PEARL MIDNIGHT BLACK",
+    primaryColorCode: "041322",
+    secondaryColorCode: null,
+    type: CarColorType.ONE_TONE,
+  },
+  {
+    code: "ZQD",
+    name: "PEARL CAVE BLACK",
+    primaryColorCode: "524d44",
+    secondaryColorCode: null,
+    type: CarColorType.ONE_TONE,
+  },
+];
+
+const ESPRESSO_VARIANT_CODES = ["BU4FL0000001ATP", "BU4FL0000001MTP"];
+const ESPRESSO_COLOR_CODES = [
+  {
+    code: "ZZT",
+    name: "PEARL WHITE",
+    primaryColorCode: "e4e5e7",
+    secondaryColorCode: null,
+    type: CarColorType.ONE_TONE,
+  },
+  {
+    code: "Z2S",
+    name: "SILVER METALLIC",
+    primaryColorCode: "CFD0D4",
+    secondaryColorCode: null,
+    type: CarColorType.ONE_TONE,
+  },
+  {
+    code: "Z4Q",
+    name: "GRAPHITE GREY METALLIC",
+    primaryColorCode: "838384",
+    secondaryColorCode: null,
+    type: CarColorType.ONE_TONE,
+  },
+  {
+    code: "26U",
+    name: "BURGUNDY RED",
+    primaryColorCode: "761842",
+    secondaryColorCode: null,
+    type: CarColorType.ONE_TONE,
+  },
+  {
+    code: "ZTN",
+    name: "COOL BLACK METALLIC",
+    primaryColorCode: "000000",
+    secondaryColorCode: null,
+    type: CarColorType.ONE_TONE,
+  },
+];
+
+const FRONX_VARIANT_CODES = ["6G415VX00001ATP"];
+const FRONX_COLOR_CODES = [
+  {
+    code: "Z2S",
+    name: "METALLIC SILKY SILVER",
+    primaryColorCode: "999",
+    secondaryColorCode: null,
+    type: CarColorType.ONE_TONE,
+  },
+  {
+    code: "ZJ3",
+    name: "PEARL BLUISH BLACK 3",
+    primaryColorCode: "141414",
+    secondaryColorCode: null,
+    type: CarColorType.ONE_TONE,
+  },
+  {
+    code: "ZVL",
+    name: "MEDIUM GRAY",
+    primaryColorCode: "5A5856",
+    secondaryColorCode: null,
+    type: CarColorType.ONE_TONE,
+  },
+  {
+    code: "ZVR",
+    name: "PEARL PURE WHITE",
+    primaryColorCode: "FFFFFF",
+    secondaryColorCode: null,
+    type: CarColorType.ONE_TONE,
+  },
+  {
+    code: "ZZC",
+    name: "JUNGLE GREEN",
+    primaryColorCode: "3D4238",
+    secondaryColorCode: null,
+    type: CarColorType.ONE_TONE,
+  },
+];
 
 async function seedColor() {
   const model = await prisma.carModel.findUnique({
-    where: { slug: "evitara" },
+    where: { slug: "jimny" },
     include: { variants: true },
   });
 
-  if (!model) throw new Error('CarModel "evitara" not found');
+  if (!model) throw new Error('CarModel "apv" not found');
 
   const codesOnModel = new Set(model.variants.map((v) => v.code));
   const missing = FRONX_VARIANT_CODES.filter((c) => !codesOnModel.has(c));
   if (missing.length > 0) {
     throw new Error(
-      `Fronx variants missing in DB: ${missing.join(", ")} (have: ${[...codesOnModel].join(", ") || "none"})`,
+      `apv variants missing in DB: ${missing.join(", ")} (have: ${[...codesOnModel].join(", ") || "none"})`,
     );
   }
 
@@ -415,12 +523,19 @@ async function seedColor() {
     for (const colorCode of FRONX_COLOR_CODES) {
       await prisma.carColor.upsert({
         where: {
-          carVariantCode_colorCode: { carVariantCode: variantCode, colorCode },
+          carVariantCode_colorCode: {
+            carVariantCode: variantCode,
+            colorCode: colorCode.code,
+          },
         },
         create: {
           carModelId: model.id,
           carVariantCode: variantCode,
-          colorCode,
+          colorCode: colorCode.code,
+          name: colorCode.name,
+          primaryColorCode: colorCode.primaryColorCode,
+          secondaryColorCode: colorCode.secondaryColorCode,
+          type: colorCode.type,
         },
         update: {},
       });
@@ -430,6 +545,100 @@ async function seedColor() {
 
   console.log(
     `  ✓ CarColors upserted for fronx (${upserted} rows): variants ${FRONX_VARIANT_CODES.join(", ")} × colors ${FRONX_COLOR_CODES.join(", ")}`,
+  );
+}
+
+async function seedGrandVitaraColor() {
+  const model = await prisma.carModel.findUnique({
+    where: { slug: "grand-vitara" },
+    include: { variants: true },
+  });
+
+  if (!model) throw new Error('CarModel "grand-vitara" not found');
+
+  const codesOnModel = new Set(model.variants.map((v) => v.code));
+  const missing = GRAND_VITARA_VARIANT_CODES.filter(
+    (c) => !codesOnModel.has(c),
+  );
+  if (missing.length > 0) {
+    throw new Error(
+      `grand-vitara variants missing in DB: ${missing.join(", ")} (have: ${[...codesOnModel].join(", ") || "none"})`,
+    );
+  }
+
+  let upserted = 0;
+  for (const variantCode of GRAND_VITARA_VARIANT_CODES) {
+    for (const colorCode of GRAND_VITARA_COLOR_CODES) {
+      await prisma.carColor.upsert({
+        where: {
+          carVariantCode_colorCode: {
+            carVariantCode: variantCode,
+            colorCode: colorCode.code,
+          },
+        },
+        create: {
+          carModelId: model.id,
+          carVariantCode: variantCode,
+          colorCode: colorCode.code,
+          name: colorCode.name,
+          primaryColorCode: colorCode.primaryColorCode,
+          secondaryColorCode: colorCode.secondaryColorCode,
+          type: colorCode.type,
+        },
+        update: {},
+      });
+      upserted += 1;
+    }
+  }
+
+  console.log(
+    `  ✓ CarColors upserted for grand-vitara (${upserted} rows): variants ${GRAND_VITARA_VARIANT_CODES.join(", ")} × colors ${GRAND_VITARA_COLOR_CODES.map((c) => c.code).join(", ")}`,
+  );
+}
+
+async function seedEspressoColor() {
+  const model = await prisma.carModel.findUnique({
+    where: { slug: "espresso" },
+    include: { variants: true },
+  });
+
+  if (!model) throw new Error('CarModel "espresso" not found');
+
+  const codesOnModel = new Set(model.variants.map((v) => v.code));
+  const missing = ESPRESSO_VARIANT_CODES.filter((c) => !codesOnModel.has(c));
+  if (missing.length > 0) {
+    throw new Error(
+      `espresso variants missing in DB: ${missing.join(", ")} (have: ${[...codesOnModel].join(", ") || "none"})`,
+    );
+  }
+
+  let upserted = 0;
+  for (const variantCode of ESPRESSO_VARIANT_CODES) {
+    for (const colorCode of ESPRESSO_COLOR_CODES) {
+      await prisma.carColor.upsert({
+        where: {
+          carVariantCode_colorCode: {
+            carVariantCode: variantCode,
+            colorCode: colorCode.code,
+          },
+        },
+        create: {
+          carModelId: model.id,
+          carVariantCode: variantCode,
+          colorCode: colorCode.code,
+          name: colorCode.name,
+          primaryColorCode: colorCode.primaryColorCode,
+          secondaryColorCode: colorCode.secondaryColorCode,
+          type: colorCode.type,
+        },
+        update: {},
+      });
+      upserted += 1;
+    }
+  }
+
+  console.log(
+    `  ✓ CarColors upserted for espresso (${upserted} rows): variants ${ESPRESSO_VARIANT_CODES.join(", ")} × colors ${ESPRESSO_COLOR_CODES.map((c) => c.code).join(", ")}`,
   );
 }
 
@@ -606,20 +815,21 @@ async function seedImageContent(modelSlug = "fronx") {
 
 async function seedDetailBanner() {
   const model = await prisma.carModel.findUnique({
-    where: { slug: "evitara" },
+    where: { slug: "grand-vitara" },
   });
 
-  if (!model) throw new Error('CarModel "fronx" not found');
+  if (!model) throw new Error('CarModel "grand-vitara" not found');
 
   await prisma.carDetailBanner.create({
     data: {
       carModelId: model.id,
-      title: "Premium Comfort with Advanced Technology",
-      description: "Utility, refined for Maximum Ease",
-      buttonLabel: "Jelajahi Interior",
-      buttonHref: "/cars/evitara/interior",
+      title: "Elegance in Motion",
+      description:
+        "Premium finishes, advanced features, and thoughtful seat design can enhance the soothing atmosphere in the cabin.",
+      buttonLabel: "Explore Interior",
+      buttonHref: "/cars/grand-vitara/interior",
       bannerVariant: CarImageType.INTERIOR,
-      imageUrl: "/images/evitara/banner/interior-banner.webp",
+      imageUrl: "/images/grand-vitara/banner/interior-banner.webp",
     },
   });
   console.log(`  ✓ CarDetailBanner upserted for ${model.name}`);
@@ -627,39 +837,120 @@ async function seedDetailBanner() {
 
 async function seedDetailCarousel() {
   const model = await prisma.carModel.findUnique({
-    where: { slug: "evitara" },
+    where: { slug: "jimny" },
   });
 
-  if (!model) throw new Error('CarModel "evitara" not found');
+  if (!model) throw new Error('CarModel "apv" not found');
 
   // Idempotent: re-run safe — CarDetailCarouselContent cascades on delete
-  const deleted = await prisma.carDetailCarousel.deleteMany({
-    where: { carModelId: model.id },
+  // const deleted = await prisma.carDetailCarousel.deleteMany({
+  //   where: { carModelId: model.id },
+  // });
+  // if (deleted.count > 0) {
+  //   console.log(
+  //     `  ↺ Removed ${deleted.count} existing CarDetailCarousel row(s) for apv`,
+  //   );
+  // }
+
+  // const carouselSecurity = await prisma.carDetailCarousel.create({
+  //   data: {
+  //     carModelId: model.id,
+  //     variant: CarDetailCarouselVariant.SECURITY,
+  //     carouselVariant: CarImageType.CAROUSEL,
+  //   },
+  // });
+  // const carouselSafety = await prisma.carDetailCarousel.create({
+  //   data: {
+  //     carModelId: model.id,
+  //     variant: CarDetailCarouselVariant.SAFETY,
+  //     carouselVariant: CarImageType.CAROUSEL,
+  //   },
+  // });
+
+  // const carouselPerformance = await prisma.carDetailCarousel.create({
+  //   data: {
+  //     carModelId: model.id,
+  //     variant: CarDetailCarouselVariant.PERFORMANCE,
+  //     carouselVariant: CarImageType.CAROUSEL,
+  //   },
+  // });
+
+  // // await prisma.carDetailCarouselContent.createMany({
+  // //   data: [
+  // //     {
+  // //       title: "NEW FEATURES DUAL SRS-AIRBAG",
+  // //       content: "Melindungi pengemudi & penumpang apabila terjadi kecelakaan.",
+  // //       imageUrl: "/images/apv/carousel/air-bags.webp",
+  // //       carDetailCarouselId: carouselSecurity.id,
+  // //     },
+  // //     {
+  // //       title: "MONOCOQUE WITH LADDER FRAME",
+  // //       content: "Lebih kokoh, kuat dan aman saat terjadi benturan.",
+  // //       imageUrl: "/images/apv/carousel/monocoque-frame.webp",
+  // //       carDetailCarouselId: carouselSecurity.id,
+  // //     },
+  // //     {
+  // //       title: "Side Impact Beam",
+  // //       content:
+  // //         "Melindungi pengendara saat terjadi benturan dari samping kendaraan.",
+  // //       imageUrl: "/images/apv/carousel/side-impact-beam.webp",
+  // //       carDetailCarouselId: carouselSecurity.id,
+  // //     },
+  // //     {
+  // //       title: "Tect Body",
+  // //       content:
+  // //         "Teknologi yang dapat meredam energi benturan sehingga meningkatkan keamanan saat terjadi kecelakaan.",
+  // //       imageUrl: "/images/apv/carousel/tect-body.webp",
+  // //       carDetailCarouselId: carouselSecurity.id,
+  // //     },
+  // //     {
+  // //       title: "Alat Pemadam Api Ringan (APAR)",
+  // //       content:
+  // //         "Fitur keselamatan makin lengkap dengan tersedianya alat pemadam api ringan.",
+  // //       imageUrl: "/images/apv/carousel/fire.webp",
+  // //       carDetailCarouselId: carouselSecurity.id,
+  // //     },
+  // //     {
+  // //       title: "Performa Tangguh",
+  // //       content:
+  // //         "Mesin type G15A berkapasitas 1500cc lebih bertenaga di tanjakan dan irit bahan bakar.",
+  // //       imageUrl: "/images/apv/carousel/machine.webp",
+  // //       carDetailCarouselId: carouselPerformance.id,
+  // //     },
+  // //   ],
+  // // });
+
+  // // console.log(
+  // //   `  ✓ CarDetailCarousel + content seeded for apv (${carouselSecurity.variant} / ${carouselSafety.variant} / ${carouselPerformance.variant})`,
+  // // );
+
+  // ── Jimny ──
+  const jimny = await prisma.carModel.findUnique({
+    where: { slug: "jimny" },
   });
-  if (deleted.count > 0) {
+
+  if (!jimny) throw new Error('CarModel "jimny" not found');
+
+  const deletedJimny = await prisma.carDetailCarousel.deleteMany({
+    where: { carModelId: jimny.id },
+  });
+  if (deletedJimny.count > 0) {
     console.log(
-      `  ↺ Removed ${deleted.count} existing CarDetailCarousel row(s) for evitara`,
+      `  ↺ Removed ${deletedJimny.count} existing CarDetailCarousel row(s) for jimny`,
     );
   }
 
-  const carouselSecurity = await prisma.carDetailCarousel.create({
+  const jimnySafety = await prisma.carDetailCarousel.create({
     data: {
-      carModelId: model.id,
-      variant: CarDetailCarouselVariant.SECURITY,
-      carouselVariant: CarImageType.CAROUSEL,
-    },
-  });
-  const carouselSafety = await prisma.carDetailCarousel.create({
-    data: {
-      carModelId: model.id,
+      carModelId: jimny.id,
       variant: CarDetailCarouselVariant.SAFETY,
       carouselVariant: CarImageType.CAROUSEL,
     },
   });
 
-  const carouselPerformance = await prisma.carDetailCarousel.create({
+  const jimnyPerformance = await prisma.carDetailCarousel.create({
     data: {
-      carModelId: model.id,
+      carModelId: jimny.id,
       variant: CarDetailCarouselVariant.PERFORMANCE,
       carouselVariant: CarImageType.CAROUSEL,
     },
@@ -668,101 +959,271 @@ async function seedDetailCarousel() {
   await prisma.carDetailCarouselContent.createMany({
     data: [
       {
-        title: "Suzuki Safety Support",
-        content:
-          "A cabin that prioritizes safety with dual front, side and curtain airbags for all passengers.",
-        imageUrl: "/images/evitara/carousel/suzuki-safety-support.webp",
-        carDetailCarouselId: carouselSecurity.id,
+        title: "Rear View Camera",
+        content: "Rear View Camera (Jimny 5-door)",
+        imageUrl: "/images/jimny/carousel/rear-view-camera.webp",
+        carDetailCarouselId: jimnySafety.id,
       },
       {
-        title: "Adaptive Cruise Control (ACC)",
+        title: "Air Bags",
         content:
-          "ACC helps reduce driver fatigue on long trips and when driving in traffic. The system uses millimetre-wave radar and a monocular camera to measure the distance to the vehicle ahead, accelerating or decelerating as needed to maintain the distance you have set. (You can choose from four distance settings.) If the road ahead is clear, it will maintain the speed at which you were travelling when you engaged the system. ACC can be linked to the traffic sign recognition system through the driver customisation setting. ACC set speed will be adjusted based on the posted speed limit.",
-        imageUrl: "/images/evitara/carousel/adaptive-cruise-control.webp",
-        carDetailCarouselId: carouselSecurity.id,
+          "Be extra prepared to navigate uncertainties with the six airbags for 5-door & dual airbags for 3-door, ensuring your safety.",
+        imageUrl: "/images/jimny/carousel/air-bags.webp",
+        carDetailCarouselId: jimnySafety.id,
       },
       {
-        title: "Adaptive High Beam System (AHS)",
+        title: "Brake Limited Slip Differential Traction Control",
         content:
-          "AHS uses millimetre-wave radar and the monocular camera to detect the brightness of the surrounding area and the lights of other vehicles, and adjusts the brightness and illumination range of the headlamps as needed. It also adjusts high beam brightness and illumination angle according to vehicle speed, and switches to low beam in well-lit areas.",
-        imageUrl: "/images/evitara/carousel/ahs.webp",
-        carDetailCarouselId: carouselSecurity.id,
+          "Experience quicker brake response with reduced pedal pressure and improved braking performance to prevent slipping on slippery surfaces.",
+        imageUrl: "/images/jimny/carousel/brake-limited-slips.webp",
+        carDetailCarouselId: jimnySafety.id,
       },
       {
-        title: "Blind Spot Monitor (BSM)",
+        title: "ESP® (Electronic Stability Programme)",
         content:
-          "BSM uses millimetre-wave radar sensors in the rear bumper to detect vehicles located in or approaching either rear blind spot. When a vehicle is detected, a warning icon appears in the corresponding door mirror. If you activate the turn signal on that side, the icon flashes and an audio warning sounds. Approaching vehicle detection area.",
-        imageUrl: "/images/evitara/carousel/bms.webp",
-        carDetailCarouselId: carouselSecurity.id,
+          "Enhances braking stability on slippery and curved roads, preventing both oversteer and understeer.",
+        imageUrl: "/images/jimny/carousel/esp.webp",
+        carDetailCarouselId: jimnySafety.id,
       },
       {
-        title: "Dual Sensor Brake Support II (DSBS II)",
+        title: "TECT Body",
         content:
-          "The system employs millimetre-wave radar sensors and a monocular camera to detect vehicles, motorcycle pedestrians and bicycles (daytime only) ahead of the e VITARA. Audio and visual warnings are issued to alert you if the possibility of a collision arises. If you respond with insufficient brake force, brake assist automatically engages to help slow the vehicle. And if the probability of a collision increases, brake force is applied automatically to help reduce impact force and mitigate damage.",
-        imageUrl: "/images/evitara/carousel/dsbs-2.webp",
-        carDetailCarouselId: carouselSecurity.id,
+          "The frame structure effectively absorbs and distributes energy during bumps and crashes, ensuring the cabin space remains intact.",
+        imageUrl: "/images/jimny/carousel/tect-body.webp",
+        carDetailCarouselId: jimnySafety.id,
       },
       {
-        title: "Lane Departure Prevention (LDP)",
+        title: "Hill Descent Control",
         content:
-          "LDP detects the lane demarcation lines and predicts your path of travel as you drive. If you begin to drift due to inattention, the system alerts you by vibrating the steering wheel or sounding an audio alert. And if you fail to respond or correct, it provides steering assistance to help return your e VITARA to the centre of the lane.",
-        imageUrl: "/images/evitara/carousel/ldp.webp",
-        carDetailCarouselId: carouselSecurity.id,
+          "Control your vehicle speed gracefully while descending steep roads.",
+        imageUrl: "/images/jimny/carousel/hill-descent-body.webp",
+        carDetailCarouselId: jimnySafety.id,
       },
       {
-        title: "Lane Keep Assist (LKA)",
+        title: "Hill Hold Assist",
         content:
-          "When you have adaptive cruise control activated, LKA helps you keep the e VITARA in the centre of the lane in which you are travelling. And if it senses that you are drawing too close to an adjacent vehicle or other obstacle, LKA provides steering assistance to help maintain a safe distance.",
-        imageUrl: "/images/evitara/carousel/lka.webp",
-        carDetailCarouselId: carouselSecurity.id,
+          "Prevent the vehicle from rolling backward when bravely facing a new peak.",
+        imageUrl: "/images/jimny/carousel/hill-hold-assist.webp",
+        carDetailCarouselId: jimnySafety.id,
       },
       {
-        title: "Multiple Collision Braking",
-        content:
-          "When the brake system receives a signal from the airbag that a collision has occurred, it automatically activates the brakes and brake lamps to alert nearby vehicles and help prevent a secondary collision.",
-        imageUrl: "/images/evitara/carousel/multiple-collison-braking.webp",
-        carDetailCarouselId: carouselSecurity.id,
+        title: "4 Spots Parking Sensor",
+        content: "4 Spots Parking Sensor (Jimny 5-door)",
+        imageUrl: "/images/jimny/carousel/parking-sensor.webp",
+        carDetailCarouselId: jimnySafety.id,
       },
       {
-        title: "Rear Cross Traffic Alert (RCTA)",
+        title: "Engine Performance",
         content:
-          "RCTA is a supplementary safety feature that uses blind spot monitor to detect and warn of vehicles approaching from the left or right when backing out of a parking space or other location.",
-        imageUrl: "/images/evitara/carousel/rear-cross-traffic-alert.webp",
-        carDetailCarouselId: carouselSecurity.id,
+          "The responsive 1.5L K15B engine maintains off-road driving capability, producing strong torque throughout RPM range to provide unwavering power.",
+        imageUrl: "/images/jimny/carousel/engine-performance.webp",
+        carDetailCarouselId: jimnyPerformance.id,
       },
       {
-        title: "Integrated Display Sistem",
+        title: "Ladder Frame Chassis",
         content:
-          "The Integrated Display System brings essential vehicle functions together in one central display. It is designed to make daily operation simpler by allowing the driver to access comfort settings, vehicle information, and electric system controls through a clear and easy-to-use interface.",
-        imageUrl: "/images/evitara/carousel/integrated-display-sistem.webp",
-        carDetailCarouselId: carouselPerformance.id,
+          "Built with a robust Ladder Frame structure, the Jimny guides you through rugged topographies with full-width rigid axles at front and rear.",
+        imageUrl: "/images/jimny/carousel/ladder-frame-chasis.webp",
+        carDetailCarouselId: jimnyPerformance.id,
       },
       {
-        title: "Air Conditioner Control",
+        title: "All Grip Pro",
         content:
-          "Air conditioning settings are operated directly from the display, enabling adjustment of temperature, airflow direction, and fan speed. The on-screen airflow visualisation helps the driver understand how air is distributed throughout the cabin for balanced and comfortable cooling",
-        imageUrl: "/images/evitara/carousel/ac-control.webp",
-        carDetailCarouselId: carouselPerformance.id,
+          "Transfer lever modes: 2H for driving at normal speeds on roads, 4H for off-road driving, 4L for navigating rough rocks, mud, and more challenging terrain.",
+        imageUrl: "/images/jimny/carousel/all-grip.webp",
+        carDetailCarouselId: jimnyPerformance.id,
       },
       {
-        title: "EV Setting",
+        title: "3-Link Rigid Axle Suspension with Coil Spring",
         content:
-          "The EV Setting screen provides access to key electric vehicle functions, including charging current adjustment, scheduled charging, and traction battery temperature information. These features support efficient charging management and help maintain optimal battery conditions",
-        imageUrl: "/images/evitara/carousel/ev-setting.webp",
-        carDetailCarouselId: carouselPerformance.id,
-      },
-      {
-        title: "Display Customisation",
-        content:
-          "Display Customisation allows the driver to configure how information is shown on the screen. Different functions such as climate control, media, and vehicle status can be displayed according to preference, making important information easier to view while driving.",
-        imageUrl: "/images/evitara/carousel/display-custom.webp",
-        carDetailCarouselId: carouselPerformance.id,
+          "The Jimny features tough 3-link suspension and rigid axles ensuring stability on any terrain.",
+        imageUrl: "/images/jimny/carousel/3-link.webp",
+        carDetailCarouselId: jimnyPerformance.id,
       },
     ],
   });
 
   console.log(
-    `  ✓ CarDetailCarousel + content seeded for evitara (${carouselSecurity.variant} / ${carouselSafety.variant} / ${carouselPerformance.variant})`,
+    `  ✓ CarDetailCarousel + content seeded for jimny (${jimnySafety.variant} / ${jimnyPerformance.variant})`,
+  );
+
+  // ── S-Presso (espresso) ──
+  const espresso = await prisma.carModel.findUnique({
+    where: { slug: "espresso" },
+  });
+
+  if (!espresso) throw new Error('CarModel "espresso" not found');
+
+  const deletedEspresso = await prisma.carDetailCarousel.deleteMany({
+    where: { carModelId: espresso.id },
+  });
+  if (deletedEspresso.count > 0) {
+    console.log(
+      `  ↺ Removed ${deletedEspresso.count} existing CarDetailCarousel row(s) for espresso`,
+    );
+  }
+
+  const espressoSafety = await prisma.carDetailCarousel.create({
+    data: {
+      carModelId: espresso.id,
+      variant: CarDetailCarouselVariant.SAFETY,
+      carouselVariant: CarImageType.CAROUSEL,
+    },
+  });
+
+  const espressoPerformance = await prisma.carDetailCarousel.create({
+    data: {
+      carModelId: espresso.id,
+      variant: CarDetailCarouselVariant.PERFORMANCE,
+      carouselVariant: CarImageType.CAROUSEL,
+    },
+  });
+
+  await prisma.carDetailCarouselContent.createMany({
+    data: [
+      {
+        title: "Dual SRS Airbag",
+        content:
+          "Melindungi pengemudi dan penumpang depan apabila terjadi kecelakaan.",
+        imageUrl: "/images/espresso/carousel/dual-srs-airbag.webp",
+        carDetailCarouselId: espressoSafety.id,
+      },
+      {
+        title: "Alat Pemadam Api Ringan (APAR)",
+        content:
+          "Fitur keselamatan makin lengkap dengan tersedianya alat pemadam api ringan.",
+        imageUrl: "/images/espresso/carousel/pemadam.webp",
+        carDetailCarouselId: espressoSafety.id,
+      },
+      {
+        title: "ISOFIX",
+        content:
+          "Sistem penguncian kursi anak yang aman dan mudah dipasang untuk keselamatan penumpang kecil.",
+        imageUrl: "/images/espresso/carousel/isofix.webp",
+        carDetailCarouselId: espressoSafety.id,
+      },
+      {
+        title: "Rear Parking Sensor",
+        content:
+          "Sensor parkir belakang yang membantu Anda bermanuver dengan aman saat parkir.",
+        imageUrl: "/images/espresso/carousel/rear-parking-sensor.webp",
+        carDetailCarouselId: espressoSafety.id,
+      },
+      {
+        title: "ABS dan EBD",
+        content:
+          "Anti-lock Braking System dan Electronic Brake-force Distribution untuk pengereman yang lebih stabil dan aman.",
+        imageUrl: "/images/espresso/carousel/abs-ebd.webp",
+        carDetailCarouselId: espressoSafety.id,
+      },
+      {
+        title: "Electronic Stability Programme (ESP)",
+        content:
+          "Meningkatkan stabilitas pengereman di jalan licin dan tikungan, mencegah oversteer dan understeer.",
+        imageUrl: "/images/espresso/carousel/esp.webp",
+        carDetailCarouselId: espressoSafety.id,
+      },
+      {
+        title: "Strong Performance",
+        content:
+          "Mesin K10C berkapasitas 998cc dengan teknologi VVT yang bertenaga dan irit bahan bakar.",
+        imageUrl: "/images/espresso/carousel/machine.webp",
+        carDetailCarouselId: espressoPerformance.id,
+      },
+      {
+        title: "Engine Auto Start Stop",
+        content:
+          "Fitur auto start stop yang menghemat bahan bakar dengan mematikan mesin secara otomatis saat berhenti.",
+        imageUrl: "/images/espresso/carousel/engine-auto-start-stop.webp",
+        carDetailCarouselId: espressoPerformance.id,
+      },
+    ],
+  });
+
+  console.log(
+    `  ✓ CarDetailCarousel + content seeded for espresso (${espressoSafety.variant} / ${espressoPerformance.variant})`,
+  );
+
+  // ── Grand Vitara ──
+  const grandVitara = await prisma.carModel.findUnique({
+    where: { slug: "grand-vitara" },
+  });
+
+  if (!grandVitara) throw new Error('CarModel "grand-vitara" not found');
+
+  const deletedGrandVitara = await prisma.carDetailCarousel.deleteMany({
+    where: { carModelId: grandVitara.id },
+  });
+  if (deletedGrandVitara.count > 0) {
+    console.log(
+      `  ↺ Removed ${deletedGrandVitara.count} existing CarDetailCarousel row(s) for grand-vitara`,
+    );
+  }
+
+  const grandVitaraSafety = await prisma.carDetailCarousel.create({
+    data: {
+      carModelId: grandVitara.id,
+      variant: CarDetailCarouselVariant.SAFETY,
+      carouselVariant: CarImageType.CAROUSEL,
+    },
+  });
+
+  const grandVitaraPerformance = await prisma.carDetailCarousel.create({
+    data: {
+      carModelId: grandVitara.id,
+      variant: CarDetailCarouselVariant.PERFORMANCE,
+      carouselVariant: CarImageType.CAROUSEL,
+    },
+  });
+
+  await prisma.carDetailCarouselContent.createMany({
+    data: [
+      {
+        title: "Electronic Stability Program (ESP®)",
+        content:
+          "ESP® can detect a wheel slip and helps you stay in directional control.",
+        imageUrl: "/images/grand-vitara/carousel/esp.webp",
+        carDetailCarouselId: grandVitaraSafety.id,
+      },
+      {
+        title: "6 Airbags",
+        content:
+          "A cabin that prioritizes safety with dual front, side and curtain airbags.",
+        imageUrl: "/images/grand-vitara/carousel/6-airbag.webp",
+        carDetailCarouselId: grandVitaraSafety.id,
+      },
+      {
+        title: "Braking System (ABS, EBD & BA)",
+        content: "Excellent control to keep you safe wherever you drive.",
+        imageUrl: "/images/grand-vitara/carousel/braking-system.webp",
+        carDetailCarouselId: grandVitaraSafety.id,
+      },
+      {
+        title: "Suzuki's TECT Concept",
+        content:
+          "The body embodies Suzuki's TECT concept for lightness and occupant safety.",
+        imageUrl: "/images/grand-vitara/carousel/suzuko-tech.webp",
+        carDetailCarouselId: grandVitaraSafety.id,
+      },
+      {
+        title: "Hill Hold Control",
+        content:
+          "Easily navigate through inclines as the system prevents rolling backwards.",
+        imageUrl: "/images/grand-vitara/carousel/will-hold-control.webp",
+        carDetailCarouselId: grandVitaraSafety.id,
+      },
+      {
+        title: "K15C + Smart Hybrid Vehicle By Suzuki (SHVS)",
+        content:
+          "With 1.5 litre engine that produces eco-friendly and optimum torque output.",
+        imageUrl: "/images/grand-vitara/carousel/machine.webp",
+        carDetailCarouselId: grandVitaraPerformance.id,
+      },
+    ],
+  });
+
+  console.log(
+    `  ✓ CarDetailCarousel + content seeded for grand-vitara (${grandVitaraSafety.variant} / ${grandVitaraPerformance.variant})`,
   );
 }
 
@@ -773,11 +1234,11 @@ async function main() {
   // }
 
   // await seedColor();
-  // await seedImage("evitara");
-  // await seedImageContent("evitara");
-  // await seedImageContent("fronx");
-  // await seedDetailBanner();
+  // await seedImage("grand-vitara");
+  // await seedImageContent("grand-vitara");
+  await seedDetailBanner();
   // await seedDetailCarousel();
+  // await seedGrandVitaraColor();
 
   console.log("\n✅ Seed complete!");
 }

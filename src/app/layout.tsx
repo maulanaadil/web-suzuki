@@ -17,10 +17,32 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const siteTitle =
+  "Suzuki Indonesia | Mobil Baru, Spesifikasi, Promo & Info Dealer";
+const siteDescription =
+  "Jelajahi mobil Suzuki terbaru di Indonesia: daftar model, spesifikasi, review, artikel, dan kalkulator kredit. Hubungi dealer lewat WhatsApp untuk harga, promo, dan jadwal test drive.";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+const metadataBase = new URL(siteUrl);
+
 export const metadata: Metadata = {
-  title: "Suzuki",
-  description:
-    "Discover Suzuki's innovative automotive lineup, find your ideal car, explore features, and get the latest news and offers on Suzuki vehicles.",
+  metadataBase,
+  title: siteTitle,
+  description: siteDescription,
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    url: "/",
+    title: siteTitle,
+    description: siteDescription,
+    type: "website",
+    siteName: "Suzuki Indonesia",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: siteTitle,
+    description: siteDescription,
+  },
   icons: {
     icon: "https://suzukicdn.com/themes/default2019/icons/favicon-32x32.webp",
   },
@@ -37,8 +59,31 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const organizationJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "AutoDealer",
+    name: "Suzuki Indonesia",
+    url: siteUrl,
+    sameAs: [
+      "https://www.facebook.com/fauzi.suzuki.2025/",
+      "https://www.instagram.com/suzukibandungraya5758/",
+    ],
+  };
+
+  const websiteJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "Suzuki Indonesia",
+    url: siteUrl,
+    potentialAction: {
+      "@type": "SearchAction",
+      target: `${siteUrl}/search?q={search_term_string}`,
+      "query-input": "required name=search_term_string",
+    },
+  };
+
   return (
-    <html lang="en">
+    <html lang="id">
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${suzukiFont.variable} antialiased relative`}
       >
@@ -57,6 +102,20 @@ export default function RootLayout({
             gtag('js', new Date());
             gtag('config', 'G-TRFF392KJJ');
           `}
+        </Script>
+        <Script
+          id="jsonld-organization"
+          type="application/ld+json"
+          strategy="afterInteractive"
+        >
+          {JSON.stringify(organizationJsonLd)}
+        </Script>
+        <Script
+          id="jsonld-website"
+          type="application/ld+json"
+          strategy="afterInteractive"
+        >
+          {JSON.stringify(websiteJsonLd)}
         </Script>
       </body>
     </html>

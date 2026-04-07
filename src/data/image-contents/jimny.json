@@ -1,0 +1,91 @@
+{
+  "interior": [
+    {
+      "imageFile": "auto-ac.webp",
+      "title": "Auto Climate AC with Heater",
+      "content": "AC otomatis dengan heater yang menjaga suhu kabin tetap nyaman di segala kondisi cuaca."
+    },
+    {
+      "imageFile": "touchscreen.webp",
+      "title": "6.8\" Touchscreen Head Unit",
+      "content": "Head unit layar sentuh 6.8 inci untuk mengakses hiburan dan navigasi dengan mudah saat berkendara."
+    },
+    {
+      "imageFile": "mid-interface.webp",
+      "title": "MID Interface",
+      "content": "Multi Information Display yang menampilkan informasi lengkap tentang kondisi kendaraan secara real-time."
+    },
+    {
+      "imageFile": "luggage.webp",
+      "title": "Luggage",
+      "content": "Ruang bagasi yang fungsional untuk membawa perlengkapan petualangan Anda."
+    },
+    {
+      "imageFile": "manual-transmision.webp",
+      "title": "Manual Transmission",
+      "content": "Transmisi manual yang memberikan kendali penuh bagi pengemudi di berbagai medan."
+    },
+    {
+      "imageFile": "automatic-transition.webp",
+      "title": "Automatic Transmission",
+      "content": "Transmisi otomatis untuk pengalaman berkendara yang lebih mudah dan nyaman."
+    },
+    {
+      "imageFile": "touch-screen-head-unit.webp",
+      "title": "9\" Touch Screen Head Unit",
+      "content": "Head unit layar sentuh 9 inci dengan fitur yang lebih lengkap untuk pengalaman infotainment terbaik."
+    }
+  ],
+  "eksterior": [
+    {
+      "imageFile": "headlamps-washer.webp",
+      "title": "Headlamps Washer",
+      "content": "Pembersih lampu depan yang menjaga visibilitas tetap optimal saat berkendara di kondisi kotor."
+    },
+    {
+      "imageFile": "led-projector.webp",
+      "title": "LED Projector Headlamps with Leveling Feature",
+      "content": "Lampu depan LED projector dengan fitur leveling untuk penerangan yang optimal di berbagai kondisi medan."
+    },
+    {
+      "imageFile": "drip-rails.webp",
+      "title": "Drip Rails",
+      "content": "Drip rails yang fungsional untuk mengalirkan air hujan dan memudahkan pemasangan aksesori atap."
+    },
+    {
+      "imageFile": "three-angles.webp",
+      "title": "Three Angles",
+      "content": "Desain sudut tiga dimensi yang ikonik, memberikan karakter khas Jimny yang tangguh dan legendaris."
+    },
+    {
+      "imageFile": "manual-levelling.webp",
+      "title": "Manual Leveling LED Projector Headlamp with Washer",
+      "content": "Lampu depan LED projector dengan pengaturan leveling manual dan washer untuk visibilitas terbaik."
+    },
+    {
+      "imageFile": "5-slots-chrome.webp",
+      "title": "5 Slots Chrome Grille",
+      "content": "Grille chrome 5 slot yang menjadi ciri khas Jimny, memberikan tampilan klasik yang gagah."
+    },
+    {
+      "imageFile": "fog-lamp.webp",
+      "title": "Fog Lamp",
+      "content": "Fog lamp yang meningkatkan visibilitas saat berkendara di kondisi berkabut atau cuaca buruk."
+    },
+    {
+      "imageFile": "black-painted.webp",
+      "title": "Black Painted Outside Mirror (Electrically Adjustable and Foldable)",
+      "content": "Spion eksterior hitam yang dapat diatur dan dilipat secara elektrik untuk kemudahan penggunaan."
+    },
+    {
+      "imageFile": "scratch-resistant.webp",
+      "title": "Scratch-Resistant Bumper with Wheel Arch Extension",
+      "content": "Bumper tahan gores dengan perpanjangan wheel arch yang melindungi bodi saat melewati medan berat."
+    },
+    {
+      "imageFile": "high-mount-stop.webp",
+      "title": "High Mount Stop Lamp",
+      "content": "Lampu rem tambahan di posisi tinggi untuk meningkatkan keamanan dengan visibilitas yang lebih baik bagi pengendara di belakang."
+    }
+  ]
+}
