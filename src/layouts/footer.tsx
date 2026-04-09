@@ -6,6 +6,7 @@ import { SVGProps } from "react";
 import SuzukiLogo from "../assets/icons/suzuki-logo";
 import WhatsappIcon from "../assets/icons/whatsapp";
 import { WHATSAPP_NUMBER } from "../constants/whatsapp";
+import TiktokIcon from "../assets/icons/tiktok";
 
 const socialLinks = [
   {
@@ -19,10 +20,15 @@ const socialLinks = [
     Icon: Instagram,
   },
   {
+    label: "Tiktok",
+    href: "https://www.tiktok.com/@masfauzisuzuki",
+    Icon: (props: SVGProps<SVGSVGElement>) => <TiktokIcon {...props} />,
+  },
+  {
     label: "Whatsapp",
     href: `https://wa.me/${WHATSAPP_NUMBER}`,
     Icon: (props: SVGProps<SVGSVGElement>) => (
-      <WhatsappIcon size={24} color="#003478" {...props} />
+      <WhatsappIcon size={24} color="black" {...props} />
     ),
   },
 ];
@@ -67,7 +73,7 @@ export default function Footer() {
                   rel="noopener noreferrer"
                   className="font-sans text-foreground text-sm flex items-center gap-2 hover:text-primary-suzuki hover:underline underline-offset-2 transition-colors"
                 >
-                  <span className="text-primary-suzuki">
+                  <span className="text-black">
                     <Icon />
                   </span>
                   <span className="hidden sm:inline">{label}</span>
